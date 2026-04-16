@@ -1,0 +1,10 @@
+/*!
+ * @jonmatum/next-shell — semantic design tokens
+ *
+ * Placeholder shipped during Phase 0 to validate the static-asset copy step
+ * in the tsup build. The real token contract lands in Phase 1 (see issue #2).
+ */
+
+:root {
+  --next-shell-token-schema-version: '0.0.0';
+}
