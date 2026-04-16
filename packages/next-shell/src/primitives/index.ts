@@ -24,6 +24,7 @@ export {
   AlertDialogTrigger,
 } from './alert-dialog.js';
 export { Button, buttonVariants } from './button.js';
+export { Checkbox } from './checkbox.js';
 export {
   ContextMenu,
   ContextMenuCheckboxItem,
@@ -123,6 +124,19 @@ export {
   PopoverTitle,
   PopoverTrigger,
 } from './popover.js';
+export { RadioGroup, RadioGroupItem } from './radio-group.js';
+export {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectScrollDownButton,
+  SelectScrollUpButton,
+  SelectSeparator,
+  SelectTrigger,
+  SelectValue,
+} from './select.js';
 export { Separator } from './separator.js';
 export {
   Sheet,
@@ -135,5 +149,9 @@ export {
   SheetTrigger,
 } from './sheet.js';
 export { Skeleton } from './skeleton.js';
+export { Slider } from './slider.js';
+export { Switch } from './switch.js';
 export { Textarea } from './textarea.js';
+export { Toggle, toggleVariants } from './toggle.js';
+export { ToggleGroup, ToggleGroupItem } from './toggle-group.js';
 export { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './tooltip.js';

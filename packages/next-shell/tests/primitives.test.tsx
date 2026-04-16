@@ -6,6 +6,7 @@ import userEvent from '@testing-library/user-event';
 import * as Primitives from '../src/primitives/index.js';
 import {
   Button,
+  Checkbox,
   Dialog,
   DialogTrigger,
   DropdownMenu,
@@ -14,9 +15,19 @@ import {
   Label,
   Popover,
   PopoverTrigger,
+  RadioGroup,
+  RadioGroupItem,
+  Select,
+  SelectTrigger,
+  SelectValue,
   Separator,
   Skeleton,
+  Slider,
+  Switch,
   Textarea,
+  Toggle,
+  ToggleGroup,
+  ToggleGroupItem,
   Tooltip,
   TooltipProvider,
   TooltipTrigger,
@@ -158,7 +169,7 @@ describe('Textarea', () => {
  *     Popover, DropdownMenu.
  * ──────────────────────────────────────────────────────────────────────── */
 
-describe('Primitives barrel — overlay exports', () => {
+describe('Primitives barrel — overlay + form exports', () => {
   // Enumerated so a typo or missing export fails loudly with the name.
   const expected = [
     // Alert dialog
@@ -281,6 +292,26 @@ describe('Primitives barrel — overlay exports', () => {
     'TooltipContent',
     'TooltipProvider',
     'TooltipTrigger',
+    // Form controls (3d)
+    'Checkbox',
+    'RadioGroup',
+    'RadioGroupItem',
+    'Select',
+    'SelectContent',
+    'SelectGroup',
+    'SelectItem',
+    'SelectLabel',
+    'SelectScrollDownButton',
+    'SelectScrollUpButton',
+    'SelectSeparator',
+    'SelectTrigger',
+    'SelectValue',
+    'Slider',
+    'Switch',
+    'Toggle',
+    'toggleVariants',
+    'ToggleGroup',
+    'ToggleGroupItem',
   ] as const;
 
   it.each(expected)('exports %s as a callable', (name) => {
@@ -337,5 +368,118 @@ describe('DropdownMenu (closed render)', () => {
     );
     const trigger = screen.getByText('Menu');
     expect(trigger).toHaveAttribute('data-slot', 'dropdown-menu-trigger');
+  });
+});
+
+/* ────────────────────────────────────────────────────────────────────────
+ * Form controls (3d): Checkbox, RadioGroup, Switch, Select, Slider,
+ * Toggle, ToggleGroup. These are simpler than overlays — the root element
+ * renders visibly without needing a trigger + portal, so we can do
+ * render + interaction tests directly.
+ * ──────────────────────────────────────────────────────────────────────── */
+
+describe('Checkbox', () => {
+  it('renders a role=checkbox with data-slot and toggles on click', async () => {
+    const user = userEvent.setup();
+    render(<Checkbox aria-label="terms" />);
+    const cb = screen.getByRole('checkbox', { name: 'terms' });
+    expect(cb).toHaveAttribute('data-slot', 'checkbox');
+    expect(cb).toHaveAttribute('data-state', 'unchecked');
+    await user.click(cb);
+    expect(cb).toHaveAttribute('data-state', 'checked');
+  });
+});
+
+describe('RadioGroup', () => {
+  it('renders grouped radios and selects on click', async () => {
+    const user = userEvent.setup();
+    render(
+      <RadioGroup defaultValue="a" aria-label="letters">
+        <RadioGroupItem value="a" aria-label="option-a" />
+        <RadioGroupItem value="b" aria-label="option-b" />
+      </RadioGroup>,
+    );
+    const a = screen.getByRole('radio', { name: 'option-a' });
+    const b = screen.getByRole('radio', { name: 'option-b' });
+    expect(a).toHaveAttribute('data-slot', 'radio-group-item');
+    expect(a).toHaveAttribute('data-state', 'checked');
+    expect(b).toHaveAttribute('data-state', 'unchecked');
+    await user.click(b);
+    expect(a).toHaveAttribute('data-state', 'unchecked');
+    expect(b).toHaveAttribute('data-state', 'checked');
+  });
+});
+
+describe('Switch', () => {
+  it('renders a role=switch with data-slot and toggles on click', async () => {
+    const user = userEvent.setup();
+    render(<Switch aria-label="notifications" />);
+    const sw = screen.getByRole('switch', { name: 'notifications' });
+    expect(sw).toHaveAttribute('data-slot', 'switch');
+    expect(sw).toHaveAttribute('data-state', 'unchecked');
+    await user.click(sw);
+    expect(sw).toHaveAttribute('data-state', 'checked');
+  });
+});
+
+describe('Select (closed render)', () => {
+  it('renders a trigger with the select-trigger data-slot', () => {
+    render(
+      <Select>
+        <SelectTrigger aria-label="theme">
+          <SelectValue placeholder="Pick" />
+        </SelectTrigger>
+      </Select>,
+    );
+    const trigger = screen.getByRole('combobox', { name: 'theme' });
+    expect(trigger).toHaveAttribute('data-slot', 'select-trigger');
+  });
+});
+
+describe('Slider', () => {
+  it('renders the root with data-slot and exposes slider semantics on the thumb', () => {
+    const { container } = render(<Slider defaultValue={[25]} max={100} />);
+    const root = container.querySelector('[data-slot="slider"]');
+    expect(root).toBeTruthy();
+    const thumb = screen.getByRole('slider');
+    expect(thumb).toHaveAttribute('data-slot', 'slider-thumb');
+    expect(thumb).toHaveAttribute('aria-valuenow', '25');
+    expect(thumb).toHaveAttribute('aria-valuemax', '100');
+  });
+});
+
+describe('Toggle', () => {
+  it('renders a button with data-slot and flips pressed state on click', async () => {
+    const user = userEvent.setup();
+    render(<Toggle aria-label="bold">B</Toggle>);
+    const btn = screen.getByRole('button', { name: 'bold' });
+    expect(btn).toHaveAttribute('data-slot', 'toggle');
+    expect(btn).toHaveAttribute('data-state', 'off');
+    await user.click(btn);
+    expect(btn).toHaveAttribute('data-state', 'on');
+  });
+});
+
+describe('ToggleGroup', () => {
+  it('renders a group and selects one item at a time in single mode', async () => {
+    const user = userEvent.setup();
+    render(
+      <ToggleGroup type="single" aria-label="align">
+        <ToggleGroupItem value="left" aria-label="align-left">
+          L
+        </ToggleGroupItem>
+        <ToggleGroupItem value="right" aria-label="align-right">
+          R
+        </ToggleGroupItem>
+      </ToggleGroup>,
+    );
+    const left = screen.getByRole('radio', { name: 'align-left' });
+    const right = screen.getByRole('radio', { name: 'align-right' });
+    expect(left).toHaveAttribute('data-slot', 'toggle-group-item');
+    await user.click(left);
+    expect(left).toHaveAttribute('data-state', 'on');
+    await user.click(right);
+    expect(left).toHaveAttribute('data-state', 'off');
+    expect(right).toHaveAttribute('data-state', 'on');
   });
 });
