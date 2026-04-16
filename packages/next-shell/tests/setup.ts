@@ -31,3 +31,11 @@ if (typeof globalThis.ResizeObserver === 'undefined') {
     disconnect(): void {}
   };
 }
+
+// jsdom doesn't implement `Element.prototype.scrollIntoView`, which cmdk
+// calls to keep the active CommandItem in view. Stub to a no-op.
+if (typeof Element !== 'undefined' && typeof Element.prototype.scrollIntoView !== 'function') {
+  Element.prototype.scrollIntoView = function scrollIntoView(): void {
+    /* no-op in jsdom */
+  };
+}

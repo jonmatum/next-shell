@@ -345,6 +345,25 @@ describe('Primitives barrel — overlay + form exports', () => {
     'toggleVariants',
     'ToggleGroup',
     'ToggleGroupItem',
+    // cmdk / sonner / table (3g2)
+    'Command',
+    'CommandDialog',
+    'CommandEmpty',
+    'CommandGroup',
+    'CommandInput',
+    'CommandItem',
+    'CommandList',
+    'CommandSeparator',
+    'CommandShortcut',
+    'Table',
+    'TableBody',
+    'TableCaption',
+    'TableCell',
+    'TableFooter',
+    'TableHead',
+    'TableHeader',
+    'TableRow',
+    'Toaster',
     // Simple primitives (3g1)
     'Accordion',
     'AccordionContent',
@@ -760,5 +779,83 @@ describe('Tabs', () => {
     expect(screen.getByText('Panel A')).toBeInTheDocument();
     await user.click(screen.getByRole('tab', { name: 'B' }));
     expect(screen.getByRole('tab', { name: 'B' })).toHaveAttribute('data-state', 'active');
+  });
+});
+
+/* ────────────────────────────────────────────────────────────────────────
+ * cmdk / sonner / table (3g2).
+ * ──────────────────────────────────────────────────────────────────────── */
+
+describe('Command (cmdk)', () => {
+  it('renders the command palette with input, list, and filtered items', async () => {
+    const user = userEvent.setup();
+    const Command = Primitives.Command;
+    const CommandInput = Primitives.CommandInput;
+    const CommandList = Primitives.CommandList;
+    const CommandEmpty = Primitives.CommandEmpty;
+    const CommandGroup = Primitives.CommandGroup;
+    const CommandItem = Primitives.CommandItem;
+    render(
+      <Command>
+        <CommandInput placeholder="Search…" />
+        <CommandList>
+          <CommandEmpty>No results</CommandEmpty>
+          <CommandGroup heading="Actions">
+            <CommandItem>New file</CommandItem>
+            <CommandItem>Open folder</CommandItem>
+          </CommandGroup>
+        </CommandList>
+      </Command>,
+    );
+    const input = screen.getByPlaceholderText('Search…');
+    expect(input).toHaveAttribute('data-slot', 'command-input');
+    expect(screen.getByText('New file')).toHaveAttribute('data-slot', 'command-item');
+    await user.type(input, 'new');
+    // Filtered: "New file" remains; "Open folder" gets hidden by cmdk
+    expect(screen.getByText('New file')).toBeVisible();
+  });
+});
+
+describe('Table', () => {
+  it('renders semantic HTML table elements with data-slots', () => {
+    const Table = Primitives.Table;
+    const TableHeader = Primitives.TableHeader;
+    const TableRow = Primitives.TableRow;
+    const TableHead = Primitives.TableHead;
+    const TableBody = Primitives.TableBody;
+    const TableCell = Primitives.TableCell;
+    const TableCaption = Primitives.TableCaption;
+    const { container } = render(
+      <Table>
+        <TableCaption>Users</TableCaption>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Name</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          <TableRow>
+            <TableCell>Alice</TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>,
+    );
+    expect(container.querySelector('table')).toHaveAttribute('data-slot', 'table');
+    expect(container.querySelector('thead')).toHaveAttribute('data-slot', 'table-header');
+    expect(container.querySelector('tbody')).toHaveAttribute('data-slot', 'table-body');
+    expect(container.querySelector('caption')).toHaveAttribute('data-slot', 'table-caption');
+    expect(screen.getByText('Alice').tagName).toBe('TD');
+  });
+});
+
+describe('Toaster (sonner)', () => {
+  it('renders an ol container when mounted', () => {
+    const Toaster = Primitives.Toaster;
+    const { container } = render(<Toaster />);
+    // sonner mounts a `<section>` + `<ol>` at the end of body via portal.
+    // Even without dispatching a toast, the section is present for a11y.
+    expect(
+      container.ownerDocument.querySelector('section[aria-label*="otifications" i]'),
+    ).toBeTruthy();
   });
 });

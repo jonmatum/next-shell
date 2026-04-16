@@ -57,6 +57,17 @@ export {
 export { Checkbox } from './checkbox.js';
 export { Collapsible, CollapsibleContent, CollapsibleTrigger } from './collapsible.js';
 export {
+  Command,
+  CommandDialog,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+  CommandSeparator,
+  CommandShortcut,
+} from './command.js';
+export {
   ContextMenu,
   ContextMenuCheckboxItem,
   ContextMenuContent,
@@ -193,8 +204,19 @@ export {
 export { Skeleton } from './skeleton.js';
 export { Slider } from './slider.js';
 export { Switch } from './switch.js';
+export {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from './table.js';
 export { Tabs, TabsContent, TabsList, TabsTrigger, tabsListVariants } from './tabs.js';
 export { Textarea } from './textarea.js';
+export { Toaster } from './sonner.js';
 export { Toggle, toggleVariants } from './toggle.js';
 export { ToggleGroup, ToggleGroupItem } from './toggle-group.js';
 export { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './tooltip.js';
