@@ -10,7 +10,7 @@ import { existsSync } from 'node:fs';
  * when bundling, so we re-add them to these specific entry outputs after
  * the build completes.
  */
-const CLIENT_ENTRIES = ['providers/index'] as const;
+const CLIENT_ENTRIES = ['providers/index', 'primitives/index'] as const;
 
 async function prependUseClient(path: string) {
   if (!existsSync(path)) return;

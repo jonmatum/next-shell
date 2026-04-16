@@ -36,6 +36,12 @@ export const colorTokens = [
   'surface',
   'surface-foreground',
 
+  'card',
+  'card-foreground',
+
+  'popover',
+  'popover-foreground',
+
   'muted',
   'muted-foreground',
 

@@ -110,7 +110,9 @@
     }
   },
   "dependencies": {
-    "next-themes": "^0.4.4"
+    "clsx": "^2.1.1",
+    "next-themes": "^0.4.4",
+    "tailwind-merge": "^3.3.0"
   },
   "devDependencies": {
     "@testing-library/dom": "^10.4.0",
