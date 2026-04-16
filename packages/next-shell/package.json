@@ -57,6 +57,11 @@
       "import": "./dist/providers/index.js",
       "require": "./dist/providers/index.cjs"
     },
+    "./providers/server": {
+      "types": "./dist/providers/server/index.d.ts",
+      "import": "./dist/providers/server/index.js",
+      "require": "./dist/providers/server/index.cjs"
+    },
     "./auth": {
       "types": "./dist/auth/index.d.ts",
       "import": "./dist/auth/index.js",
@@ -104,10 +109,14 @@
       "optional": true
     }
   },
+  "dependencies": {
+    "next-themes": "^0.4.4"
+  },
   "devDependencies": {
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.1.0",
+    "@testing-library/user-event": "^14.5.2",
     "@types/node": "^22.10.1",
     "@types/react": "^19.0.1",
     "@types/react-dom": "^19.0.1",

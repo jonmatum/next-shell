@@ -1,6 +1,12 @@
 import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
+  esbuild: {
+    // tsconfig keeps `jsx: "preserve"` so tsup/Next can handle the pass-through,
+    // but Vitest needs the automatic runtime so tests don't require a manual
+    // `import React`.
+    jsx: 'automatic',
+  },
   test: {
     environment: 'jsdom',
     globals: true,
