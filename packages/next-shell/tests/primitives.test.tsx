@@ -345,6 +345,21 @@ describe('Primitives barrel — overlay + form exports', () => {
     'toggleVariants',
     'ToggleGroup',
     'ToggleGroupItem',
+    // Data primitives (3g3)
+    'Carousel',
+    'CarouselContent',
+    'CarouselItem',
+    'CarouselNext',
+    'CarouselPrevious',
+    'ChartContainer',
+    'ChartLegend',
+    'ChartLegendContent',
+    'ChartStyle',
+    'ChartTooltip',
+    'ChartTooltipContent',
+    'ResizableHandle',
+    'ResizablePanel',
+    'ResizablePanelGroup',
     // Form + date + OTP (3e)
     'Calendar',
     'CalendarDayButton',
@@ -430,10 +445,15 @@ describe('Primitives barrel — overlay + form exports', () => {
     'tabsListVariants',
   ] as const;
 
-  it.each(expected)('exports %s as a callable', (name) => {
+  it.each(expected)('exports %s as a component or hook', (name) => {
     const value = (Primitives as Record<string, unknown>)[name];
     expect(value, `Primitives.${name} should be defined`).toBeDefined();
-    expect(typeof value).toBe('function');
+    // Components can be plain functions, memo()/forwardRef() objects,
+    // cva functions, etc. Accept any function OR any non-null object.
+    expect(['function', 'object']).toContain(typeof value);
+    if (typeof value === 'object') {
+      expect(value).not.toBeNull();
+    }
   });
 });
 
@@ -940,6 +960,63 @@ describe('Form (react-hook-form)', () => {
       'form-description',
     );
     expect(screen.getByPlaceholderText('you@site.com')).toBeInTheDocument();
+  });
+});
+
+/* ────────────────────────────────────────────────────────────────────────
+ * Heavy data primitives (3g3): Carousel, Chart, Resizable.
+ * ──────────────────────────────────────────────────────────────────────── */
+
+describe('Carousel', () => {
+  it('renders a carousel with content and item data-slots', () => {
+    const Carousel = Primitives.Carousel;
+    const CarouselContent = Primitives.CarouselContent;
+    const CarouselItem = Primitives.CarouselItem;
+    const { container } = render(
+      <Carousel>
+        <CarouselContent>
+          <CarouselItem>Slide 1</CarouselItem>
+          <CarouselItem>Slide 2</CarouselItem>
+        </CarouselContent>
+      </Carousel>,
+    );
+    expect(container.querySelector('[data-slot="carousel"]')).toBeTruthy();
+    expect(container.querySelector('[data-slot="carousel-content"]')).toBeTruthy();
+    const items = container.querySelectorAll('[data-slot="carousel-item"]');
+    expect(items.length).toBe(2);
+    expect(items[0]).toHaveTextContent('Slide 1');
+  });
+});
+
+describe('ChartContainer', () => {
+  it('mounts a chart container with chart-id + data-chart attributes', () => {
+    const ChartContainer = Primitives.ChartContainer;
+    const { container } = render(
+      <ChartContainer config={{ visitors: { label: 'Visitors', color: 'var(--chart-1)' } }}>
+        <div>chart slot</div>
+      </ChartContainer>,
+    );
+    const root = container.querySelector('[data-slot="chart"]') as HTMLElement;
+    expect(root).toBeTruthy();
+    expect(root.getAttribute('data-chart')).toMatch(/^chart-/);
+  });
+});
+
+describe('Resizable', () => {
+  it('renders a panel group with handles and data-slot attributes', () => {
+    const ResizablePanelGroup = Primitives.ResizablePanelGroup;
+    const ResizablePanel = Primitives.ResizablePanel;
+    const ResizableHandle = Primitives.ResizableHandle;
+    const { container } = render(
+      <ResizablePanelGroup direction="horizontal">
+        <ResizablePanel defaultSize={50}>left</ResizablePanel>
+        <ResizableHandle />
+        <ResizablePanel defaultSize={50}>right</ResizablePanel>
+      </ResizablePanelGroup>,
+    );
+    expect(container.querySelector('[data-slot="resizable-panel-group"]')).toBeTruthy();
+    expect(container.querySelectorAll('[data-slot="resizable-panel"]').length).toBe(2);
+    expect(container.querySelector('[data-slot="resizable-handle"]')).toBeTruthy();
   });
 });
 

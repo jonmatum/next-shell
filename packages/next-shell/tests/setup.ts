@@ -39,3 +39,19 @@ if (typeof Element !== 'undefined' && typeof Element.prototype.scrollIntoView !=
     /* no-op in jsdom */
   };
 }
+
+// jsdom doesn't implement `IntersectionObserver`, which embla-carousel
+// uses to track which slides are in view. Stub to a no-op class.
+if (typeof globalThis.IntersectionObserver === 'undefined') {
+  globalThis.IntersectionObserver = class IntersectionObserver {
+    readonly root = null;
+    readonly rootMargin = '';
+    readonly thresholds: ReadonlyArray<number> = [];
+    observe(): void {}
+    unobserve(): void {}
+    disconnect(): void {}
+    takeRecords(): IntersectionObserverEntry[] {
+      return [];
+    }
+  } as unknown as typeof IntersectionObserver;
+}
