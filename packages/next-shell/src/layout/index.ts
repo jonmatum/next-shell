@@ -1,20 +1,21 @@
 /**
- * Layout — client surface.
+ * Layout — client-boundary surface.
  *
  * Subpath: `@jonmatum/next-shell/layout`
  *
- * The app-shell composition surface (Phase 4): AppShell, Sidebar, TopBar,
- * CommandBar, PageHeader, ContentContainer, Footer, EmptyState,
- * ErrorState, LoadingState. Currently the stateless content surfaces +
- * types + isomorphic cookie helpers are exposed. The interactive islands
- * (Sidebar, TopBar, CommandBar, AppShell) land in subsequent 4c–4f PRs.
+ * The tsup post-build hook prepends `'use client'` to the bundled
+ * output (see `CLIENT_ENTRIES` in tsup.config.ts) because `Sidebar` +
+ * `SidebarProvider` use React context and effects.
  *
- * Every component in this module is server-renderable — safe to import
- * from a Next.js Server Component without forcing a client boundary.
- * Server-only SSR cookie helpers also live at
- * `@jonmatum/next-shell/layout/server`.
+ * For Server-Component consumption of the stateless surfaces
+ * (ContentContainer, PageHeader, Footer, status states) + the SSR
+ * cookie helpers, import from `@jonmatum/next-shell/layout/server`
+ * instead — it has no client boundary.
  */
 
+// Stateless content surfaces — also re-exported from `/layout/server`
+// for RSC consumers. Duplicated on both subpaths so the ergonomics are
+// straightforward regardless of the consumer's render context.
 export { ContentContainer, contentContainerVariants } from './content-container.js';
 export type { ContentContainerProps } from './content-container.js';
 export { Footer } from './footer.js';
@@ -26,6 +27,36 @@ export type { EmptyStateProps, ErrorStateProps, LoadingStateProps } from './stat
 export { TopBar } from './topbar.js';
 export type { TopBarProps } from './topbar.js';
 
+// Interactive sidebar (client-only).
+export {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarGroupAction,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarHeader,
+  SidebarInput,
+  SidebarInset,
+  SidebarMenu,
+  SidebarMenuAction,
+  SidebarMenuBadge,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarMenuSkeleton,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
+  SidebarProvider,
+  SidebarRail,
+  SidebarSeparator,
+  SidebarTrigger,
+  useSidebar,
+} from './sidebar.js';
+
+// Cookie contract types + constants are also safe to import client-
+// side (no React, no document access). Re-export for convenience.
 export type { SidebarState } from './sidebar-state-cookie.js';
 export {
   SIDEBAR_STATE_COOKIE_NAME,

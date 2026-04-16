@@ -1,8 +1,12 @@
 /**
- * Utility hooks — cn, useBreakpoint, useDisclosure, useLocalStorage, etc.
+ * Cross-cutting hooks.
  *
- * See the Phase 8 issue for the full specification.
- * This module is scaffolded during Phase 0 and populated in Phase 8.
+ * Subpath: `@jonmatum/next-shell/hooks`
+ *
+ * Currently exposes `useIsMobile` (populated in Phase 4d to back the
+ * Sidebar's mobile-drawer mode). The broader Phase 8 surface
+ * (`useBreakpoint`, `useDisclosure`, `useLocalStorage`, etc.) lands
+ * separately.
  */
 
-export {};
+export { useIsMobile } from './use-mobile.js';
