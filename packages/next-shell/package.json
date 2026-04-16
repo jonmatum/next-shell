@@ -47,6 +47,11 @@
       "import": "./dist/layout/index.js",
       "require": "./dist/layout/index.cjs"
     },
+    "./layout/server": {
+      "types": "./dist/layout/server/index.d.ts",
+      "import": "./dist/layout/server/index.js",
+      "require": "./dist/layout/server/index.cjs"
+    },
     "./primitives": {
       "types": "./dist/primitives/index.d.ts",
       "import": "./dist/primitives/index.js",

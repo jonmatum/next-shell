@@ -24,6 +24,7 @@ export default defineConfig({
     index: 'src/index.ts',
     'core/index': 'src/core/index.ts',
     'layout/index': 'src/layout/index.ts',
+    'layout/server/index': 'src/layout/server/index.ts',
     'primitives/index': 'src/primitives/index.ts',
     'providers/index': 'src/providers/index.ts',
     'providers/server/index': 'src/providers/server/index.ts',
