@@ -58,12 +58,14 @@ export interface CommandAction {
  * Context + registry
  * ──────────────────────────────────────────────────────────────────────── */
 
+type ActionGetter = () => ReadonlyArray<CommandAction>;
+
 interface CommandBarContextValue {
   readonly open: boolean;
   readonly setOpen: (open: boolean) => void;
   readonly toggle: () => void;
   readonly actions: ReadonlyArray<CommandAction>;
-  readonly register: (actions: ReadonlyArray<CommandAction>) => () => void;
+  readonly register: (getActions: ActionGetter) => () => void;
 }
 
 const CommandBarContext = React.createContext<CommandBarContextValue | null>(null);
@@ -91,15 +93,16 @@ export function useCommandBar(): {
 
 /**
  * Register a batch of actions for as long as the calling component is
- * mounted. Actions are re-registered whenever the array's reference
- * changes — wrap in `React.useMemo` with a stable dependency list if you
- * need to avoid thrashing.
+ * mounted. The action list is read via a ref so it stays current on every
+ * re-render without re-registering — the effect runs once per mount.
  */
 export function useCommandBarActions(actions: ReadonlyArray<CommandAction>): void {
   const { register } = useCommandBarContext();
+  const actionsRef = React.useRef(actions);
+  actionsRef.current = actions;
   React.useEffect(() => {
-    return register(actions);
-  }, [register, actions]);
+    return register(() => actionsRef.current);
+  }, [register]);
 }
 
 /* ────────────────────────────────────────────────────────────────────────
@@ -145,16 +148,23 @@ export function CommandBarProvider({
   );
 
   const toggle = React.useCallback(() => setOpen(!open), [open, setOpen]);
+  // Stable toggle for the keyboard listener — avoids re-registering the
+  // window event listener on every open/close cycle.
+  const toggleRef = React.useRef(toggle);
+  React.useLayoutEffect(() => {
+    toggleRef.current = toggle;
+  });
 
-  // Registry: Map<bucketId, Action[]>. Each call to `register` occupies
-  // one bucket keyed by an auto-incrementing id; return value unregisters.
-  const bucketsRef = React.useRef(new Map<number, ReadonlyArray<CommandAction>>());
+  // Registry: Map<bucketId, ActionGetter>. Storing getters (not snapshots)
+  // means the flattened list always reflects the caller's latest ref value
+  // without re-registering on every render.
+  const bucketsRef = React.useRef(new Map<number, ActionGetter>());
   const nextBucketId = React.useRef(0);
   const [actionsVersion, setActionsVersion] = React.useState(0);
 
-  const register = React.useCallback((actions: ReadonlyArray<CommandAction>) => {
+  const register = React.useCallback((getActions: ActionGetter) => {
     const id = nextBucketId.current++;
-    bucketsRef.current.set(id, actions);
+    bucketsRef.current.set(id, getActions);
     setActionsVersion((v) => v + 1);
     return () => {
       bucketsRef.current.delete(id);
@@ -165,8 +175,8 @@ export function CommandBarProvider({
   const actions = React.useMemo<ReadonlyArray<CommandAction>>(() => {
     const flat: CommandAction[] = [];
     const seen = new Set<string>();
-    for (const bucket of bucketsRef.current.values()) {
-      for (const action of bucket) {
+    for (const getActions of bucketsRef.current.values()) {
+      for (const action of getActions()) {
         if (!seen.has(action.id)) {
           seen.add(action.id);
           flat.push(action);
@@ -178,18 +188,19 @@ export function CommandBarProvider({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [actionsVersion]);
 
-  // Keyboard shortcut.
+  // Keyboard shortcut — depends only on `shortcut` so the listener is
+  // registered once and never re-added on open/close cycles.
   React.useEffect(() => {
     if (shortcut === null) return undefined;
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key.toLowerCase() === shortcut.toLowerCase() && (event.metaKey || event.ctrlKey)) {
         event.preventDefault();
-        toggle();
+        toggleRef.current();
       }
     };
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
-  }, [shortcut, toggle]);
+  }, [shortcut]);
 
   const value = React.useMemo<CommandBarContextValue>(
     () => ({ open, setOpen, toggle, actions, register }),
