@@ -23,6 +23,8 @@ export { PageHeader } from './page-header.js';
 export type { PageHeaderProps } from './page-header.js';
 export { EmptyState, ErrorState, LoadingState } from './status-states.js';
 export type { EmptyStateProps, ErrorStateProps, LoadingStateProps } from './status-states.js';
+export { TopBar } from './topbar.js';
+export type { TopBarProps } from './topbar.js';
 
 export type { SidebarState } from './sidebar-state-cookie.js';
 export {
