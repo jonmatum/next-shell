@@ -17,6 +17,23 @@
 export { AppShell } from './app-shell.js';
 export type { AppShellProps } from './app-shell.js';
 
+// Navigation system — config-driven sidebar, breadcrumbs, and command-bar actions.
+export { buildNav } from './nav-config.js';
+export type {
+  NavConfig,
+  NavItem,
+  NavMatcher,
+  ResolvedNavItem,
+  BuildNavResult,
+  BuildNavOptions,
+} from './nav-config.js';
+export { SidebarNav } from './sidebar-nav.js';
+export type { SidebarNavProps } from './sidebar-nav.js';
+export { Breadcrumbs } from './breadcrumbs.js';
+export type { BreadcrumbsProps } from './breadcrumbs.js';
+export { CommandBarActions } from './command-bar-actions.js';
+export type { CommandBarActionsProps } from './command-bar-actions.js';
+
 // Stateless content surfaces — also re-exported from `/layout/server`
 // for RSC consumers. Duplicated on both subpaths so the ergonomics are
 // straightforward regardless of the consumer's render context.
