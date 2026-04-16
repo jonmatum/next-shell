@@ -36,11 +36,12 @@ export interface ThemeToggleProps extends Omit<
  * Icon button that cycles light → dark → system → light.
  *
  * Styling uses only semantic tokens (`text-foreground`, `bg-accent`,
- * `ring-ring`, etc.). No primitives from Phase 3 are required, so this can
- * ship immediately alongside the theme provider.
+ * `ring-ring`, etc.). Has zero dependency on Phase 3 primitives so it can
+ * be used anywhere without pulling DropdownMenu into the bundle.
  *
- * The dropdown variant (light / dark / system as discrete menu items) will
- * land in Phase 3 once the DropdownMenu primitive is available.
+ * For a menu-based variant (light / dark / system as discrete items), see
+ * `ThemeToggleDropdown` — added in Phase 3f once the DropdownMenu primitive
+ * became available.
  */
 export function ThemeToggle({ labels, className, onClick, ...rest }: ThemeToggleProps) {
   const { theme, resolvedTheme, setTheme } = useTheme();

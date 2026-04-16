@@ -17,3 +17,6 @@ export type { ThemeValue, ResolvedTheme, UseThemeResult } from './theme/use-them
 
 export { ThemeToggle } from './theme/theme-toggle.js';
 export type { ThemeToggleProps } from './theme/theme-toggle.js';
+
+export { ThemeToggleDropdown } from './theme/theme-toggle-dropdown.js';
+export type { ThemeToggleDropdownProps } from './theme/theme-toggle-dropdown.js';
