@@ -1,0 +1,9 @@
+{
+  "$schema": "https://docs.anthropic.com/schemas/mcp.json",
+  "mcpServers": {
+    "shadcn": {
+      "command": "npx",
+      "args": ["shadcn@latest", "mcp"]
+    }
+  }
+}

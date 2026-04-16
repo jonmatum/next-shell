@@ -6,3 +6,4 @@ out
 coverage
 pnpm-lock.yaml
 .changeset
+.claude/skills

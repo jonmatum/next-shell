@@ -16,6 +16,7 @@ export default [
       '**/coverage/**',
       '**/*.min.js',
       'pnpm-lock.yaml',
+      '.claude/skills/**',
     ],
   },
 
