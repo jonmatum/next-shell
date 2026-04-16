@@ -73,6 +73,7 @@
       "require": "./dist/tokens/index.cjs"
     },
     "./styles/tokens.css": "./dist/styles/tokens.css",
+    "./styles/preset.css": "./dist/styles/preset.css",
     "./tailwind-preset": {
       "types": "./dist/tailwind-preset/index.d.ts",
       "import": "./dist/tailwind-preset/index.js",
