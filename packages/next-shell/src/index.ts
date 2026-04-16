@@ -10,3 +10,4 @@
 
 export * from './core/index.js';
 export { packageVersion } from './core/version.js';
+export { tokenSchemaVersion } from './tokens/index.js';
