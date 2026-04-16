@@ -45,6 +45,7 @@ export {
   BreadcrumbSeparator,
 } from './breadcrumb.js';
 export { Button, buttonVariants } from './button.js';
+export { Calendar, CalendarDayButton } from './calendar.js';
 export {
   Card,
   CardAction,
@@ -125,8 +126,19 @@ export {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from './dropdown-menu.js';
+export {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+  useFormField,
+} from './form.js';
 export { HoverCard, HoverCardContent, HoverCardTrigger } from './hover-card.js';
 export { Input } from './input.js';
+export { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from './input-otp.js';
 export { Label } from './label.js';
 export {
   Pagination,
