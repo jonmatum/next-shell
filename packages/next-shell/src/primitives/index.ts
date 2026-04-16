@@ -9,6 +9,8 @@
  * primitive is a client component.
  */
 
+export { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from './accordion.js';
+export { Alert, AlertDescription, AlertTitle } from './alert.js';
 export {
   AlertDialog,
   AlertDialogAction,
@@ -23,8 +25,37 @@ export {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from './alert-dialog.js';
+export { AspectRatio } from './aspect-ratio.js';
+export {
+  Avatar,
+  AvatarBadge,
+  AvatarFallback,
+  AvatarGroup,
+  AvatarGroupCount,
+  AvatarImage,
+} from './avatar.js';
+export { Badge, badgeVariants } from './badge.js';
+export {
+  Breadcrumb,
+  BreadcrumbEllipsis,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from './breadcrumb.js';
 export { Button, buttonVariants } from './button.js';
+export {
+  Card,
+  CardAction,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from './card.js';
 export { Checkbox } from './checkbox.js';
+export { Collapsible, CollapsibleContent, CollapsibleTrigger } from './collapsible.js';
 export {
   ContextMenu,
   ContextMenuCheckboxItem,
@@ -87,6 +118,16 @@ export { HoverCard, HoverCardContent, HoverCardTrigger } from './hover-card.js';
 export { Input } from './input.js';
 export { Label } from './label.js';
 export {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from './pagination.js';
+export { Progress } from './progress.js';
+export {
   Menubar,
   MenubarCheckboxItem,
   MenubarContent,
@@ -125,6 +166,7 @@ export {
   PopoverTrigger,
 } from './popover.js';
 export { RadioGroup, RadioGroupItem } from './radio-group.js';
+export { ScrollArea, ScrollBar } from './scroll-area.js';
 export {
   Select,
   SelectContent,
@@ -151,6 +193,7 @@ export {
 export { Skeleton } from './skeleton.js';
 export { Slider } from './slider.js';
 export { Switch } from './switch.js';
+export { Tabs, TabsContent, TabsList, TabsTrigger, tabsListVariants } from './tabs.js';
 export { Textarea } from './textarea.js';
 export { Toggle, toggleVariants } from './toggle.js';
 export { ToggleGroup, ToggleGroupItem } from './toggle-group.js';
