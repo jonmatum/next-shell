@@ -20,3 +20,14 @@ if (typeof window !== 'undefined' && !window.matchMedia) {
     })),
   });
 }
+
+// jsdom doesn't implement `ResizeObserver`, which several Radix primitives
+// rely on (Slider, Popover, ScrollArea, …). Stub to a no-op so component
+// render doesn't throw `ReferenceError: ResizeObserver is not defined`.
+if (typeof globalThis.ResizeObserver === 'undefined') {
+  globalThis.ResizeObserver = class ResizeObserver {
+    observe(): void {}
+    unobserve(): void {}
+    disconnect(): void {}
+  };
+}
