@@ -36,6 +36,16 @@
   --surface: oklch(1 0 0);
   --surface-foreground: oklch(0.145 0 0);
 
+  /* Card and Popover — shadcn canonical surface tokens. Kept equal to
+     `--surface` by default so `bg-card` / `bg-popover` produce the same
+     visual layer as the base surface. Consumers can override per-theme via
+     the `brand` prop on ThemeProvider to differentiate them. */
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+
   --muted: oklch(0.97 0 0);
   --muted-foreground: oklch(0.556 0 0);
 
@@ -173,6 +183,12 @@
 
   --surface: oklch(0.205 0 0);
   --surface-foreground: oklch(0.985 0 0);
+
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
 
   --muted: oklch(0.269 0 0);
   --muted-foreground: oklch(0.708 0 0);
