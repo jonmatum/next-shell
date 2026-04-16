@@ -345,6 +345,21 @@ describe('Primitives barrel — overlay + form exports', () => {
     'toggleVariants',
     'ToggleGroup',
     'ToggleGroupItem',
+    // Form + date + OTP (3e)
+    'Calendar',
+    'CalendarDayButton',
+    'Form',
+    'FormControl',
+    'FormDescription',
+    'FormField',
+    'FormItem',
+    'FormLabel',
+    'FormMessage',
+    'useFormField',
+    'InputOTP',
+    'InputOTPGroup',
+    'InputOTPSeparator',
+    'InputOTPSlot',
     // cmdk / sonner / table (3g2)
     'Command',
     'CommandDialog',
@@ -845,6 +860,86 @@ describe('Table', () => {
     expect(container.querySelector('tbody')).toHaveAttribute('data-slot', 'table-body');
     expect(container.querySelector('caption')).toHaveAttribute('data-slot', 'table-caption');
     expect(screen.getByText('Alice').tagName).toBe('TD');
+  });
+});
+
+/* ────────────────────────────────────────────────────────────────────────
+ * Form / Calendar / InputOTP (3e).
+ * ──────────────────────────────────────────────────────────────────────── */
+
+describe('Calendar', () => {
+  it('renders the month grid with day buttons', () => {
+    const Calendar = Primitives.Calendar;
+    const { container } = render(<Calendar />);
+    // Root has the calendar data-slot
+    expect(container.querySelector('[data-slot="calendar"]')).toBeTruthy();
+    // react-day-picker + our CalendarDayButton stamps `data-day` on every
+    // day cell with the locale date string — use that as the render hook.
+    const dayCells = container.querySelectorAll('[data-day]');
+    expect(dayCells.length).toBeGreaterThan(0);
+  });
+});
+
+describe('InputOTP', () => {
+  it('renders individual slots with data-slot hooks', () => {
+    const InputOTP = Primitives.InputOTP;
+    const InputOTPGroup = Primitives.InputOTPGroup;
+    const InputOTPSlot = Primitives.InputOTPSlot;
+    const { container } = render(
+      <InputOTP maxLength={6}>
+        <InputOTPGroup>
+          <InputOTPSlot index={0} />
+          <InputOTPSlot index={1} />
+        </InputOTPGroup>
+      </InputOTP>,
+    );
+    expect(container.querySelector('[data-slot="input-otp"]')).toBeTruthy();
+    expect(container.querySelector('[data-slot="input-otp-group"]')).toBeTruthy();
+    const slots = container.querySelectorAll('[data-slot="input-otp-slot"]');
+    expect(slots.length).toBe(2);
+  });
+});
+
+describe('Form (react-hook-form)', () => {
+  it('renders a form field with label, control, description, and message', async () => {
+    const { useForm } = await import('react-hook-form');
+    const Form = Primitives.Form;
+    const FormField = Primitives.FormField;
+    const FormItem = Primitives.FormItem;
+    const FormLabel = Primitives.FormLabel;
+    const FormControl = Primitives.FormControl;
+    const FormDescription = Primitives.FormDescription;
+
+    function TestForm() {
+      const form = useForm({ defaultValues: { email: '' } });
+      return (
+        <Form {...form}>
+          <form>
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <input {...field} placeholder="you@site.com" />
+                  </FormControl>
+                  <FormDescription>We never share your email.</FormDescription>
+                </FormItem>
+              )}
+            />
+          </form>
+        </Form>
+      );
+    }
+
+    render(<TestForm />);
+    expect(screen.getByText('Email')).toHaveAttribute('data-slot', 'form-label');
+    expect(screen.getByText('We never share your email.')).toHaveAttribute(
+      'data-slot',
+      'form-description',
+    );
+    expect(screen.getByPlaceholderText('you@site.com')).toBeInTheDocument();
   });
 });
 
