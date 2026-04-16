@@ -13,6 +13,10 @@
  * instead — it has no client boundary.
  */
 
+// Root orchestrator — client component (depends on SidebarProvider + optional CommandBarProvider).
+export { AppShell } from './app-shell.js';
+export type { AppShellProps } from './app-shell.js';
+
 // Stateless content surfaces — also re-exported from `/layout/server`
 // for RSC consumers. Duplicated on both subpaths so the ergonomics are
 // straightforward regardless of the consumer's render context.
