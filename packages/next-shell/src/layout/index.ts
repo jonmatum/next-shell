@@ -27,6 +27,21 @@ export type { EmptyStateProps, ErrorStateProps, LoadingStateProps } from './stat
 export { TopBar } from './topbar.js';
 export type { TopBarProps } from './topbar.js';
 
+// Command palette (⌘K).
+export {
+  CommandBar,
+  CommandBarProvider,
+  CommandBarTrigger,
+  useCommandBar,
+  useCommandBarActions,
+} from './command-bar.js';
+export type {
+  CommandAction,
+  CommandBarProps,
+  CommandBarProviderProps,
+  CommandBarTriggerProps,
+} from './command-bar.js';
+
 // Interactive sidebar (client-only).
 export {
   Sidebar,
