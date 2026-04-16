@@ -18,6 +18,19 @@ Each vendored skill keeps its upstream `LICENSE.txt`. To update, re-copy the fol
 
 We deliberately skipped the non-frontend skills (`algorithmic-art`, `claude-api`, `docx`, `pdf`, `pptx`, `slack-gif-creator`, `xlsx`, `internal-comms`, `doc-coauthoring`, `canvas-design`, `brand-guidelines`, `mcp-builder`, `skill-creator`) — they're not relevant to this package's design-system scope.
 
+## Vendored from `shadcn-ui/ui`
+
+Source: https://github.com/shadcn-ui/ui — pinned to commit
+[`84d1d476b1d1c6a01c6eeadd95885ce109969b08`](https://github.com/shadcn-ui/ui/commit/84d1d476b1d1c6a01c6eeadd95885ce109969b08) (April 2026, current `main` HEAD at vendor time).
+
+Upstream `LICENSE.md` (MIT) is preserved inside the skill directory. To update, re-copy `skills/shadcn/` from the upstream repo and bump the commit SHA above.
+
+| Skill                       | Why we vendored it                                                             |
+| --------------------------- | ------------------------------------------------------------------------------ |
+| [`shadcn`](./shadcn)        | Official shadcn/ui skill — project-aware component add/search/compose/debug via `shadcn@latest` CLI; auto-activates on any project with a `components.json`. Pairs with the `shadcn` MCP server wired in `.mcp.json` |
+
+The skill reads `components.json` (when present) via `npx shadcn@latest info --json` and injects the project's framework, aliases, installed components, icon library, and base library into the assistant's context. Complements our locally-authored [`shadcn-next-shell`](./shadcn-next-shell) skill, which layers next-shell-specific conventions (semantic tokens, client/server split, motion tokens) on top of the upstream shadcn rules.
+
 ## Authored locally
 
 | Skill                                                   | Purpose                                                                |
