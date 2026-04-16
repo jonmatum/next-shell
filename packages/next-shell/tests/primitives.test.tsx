@@ -5,18 +5,47 @@ import userEvent from '@testing-library/user-event';
 
 import * as Primitives from '../src/primitives/index.js';
 import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+  Alert,
+  AlertDescription,
+  AlertTitle,
+  AspectRatio,
+  Avatar,
+  AvatarFallback,
+  Badge,
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
   Button,
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
   Checkbox,
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
   Dialog,
   DialogTrigger,
   DropdownMenu,
   DropdownMenuTrigger,
   Input,
   Label,
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
   Popover,
   PopoverTrigger,
+  Progress,
   RadioGroup,
   RadioGroupItem,
+  ScrollArea,
   Select,
   SelectTrigger,
   SelectValue,
@@ -24,6 +53,10 @@ import {
   Skeleton,
   Slider,
   Switch,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
   Textarea,
   Toggle,
   ToggleGroup,
@@ -312,6 +345,55 @@ describe('Primitives barrel — overlay + form exports', () => {
     'toggleVariants',
     'ToggleGroup',
     'ToggleGroupItem',
+    // Simple primitives (3g1)
+    'Accordion',
+    'AccordionContent',
+    'AccordionItem',
+    'AccordionTrigger',
+    'Alert',
+    'AlertDescription',
+    'AlertTitle',
+    'AspectRatio',
+    'Avatar',
+    'AvatarBadge',
+    'AvatarFallback',
+    'AvatarGroup',
+    'AvatarGroupCount',
+    'AvatarImage',
+    'Badge',
+    'badgeVariants',
+    'Breadcrumb',
+    'BreadcrumbEllipsis',
+    'BreadcrumbItem',
+    'BreadcrumbLink',
+    'BreadcrumbList',
+    'BreadcrumbPage',
+    'BreadcrumbSeparator',
+    'Card',
+    'CardAction',
+    'CardContent',
+    'CardDescription',
+    'CardFooter',
+    'CardHeader',
+    'CardTitle',
+    'Collapsible',
+    'CollapsibleContent',
+    'CollapsibleTrigger',
+    'Pagination',
+    'PaginationContent',
+    'PaginationEllipsis',
+    'PaginationItem',
+    'PaginationLink',
+    'PaginationNext',
+    'PaginationPrevious',
+    'Progress',
+    'ScrollArea',
+    'ScrollBar',
+    'Tabs',
+    'TabsContent',
+    'TabsList',
+    'TabsTrigger',
+    'tabsListVariants',
   ] as const;
 
   it.each(expected)('exports %s as a callable', (name) => {
@@ -481,5 +563,202 @@ describe('ToggleGroup', () => {
     await user.click(right);
     expect(left).toHaveAttribute('data-state', 'off');
     expect(right).toHaveAttribute('data-state', 'on');
+  });
+});
+
+/* ────────────────────────────────────────────────────────────────────────
+ * Simple primitives (3g1): Accordion, Alert, AspectRatio, Avatar, Badge,
+ * Breadcrumb, Card, Collapsible, Pagination, Progress, ScrollArea, Tabs.
+ *
+ * These render their full trees inline (no Radix portals), so we can do
+ * render + interaction tests directly in JSDOM.
+ * ──────────────────────────────────────────────────────────────────────── */
+
+describe('Accordion', () => {
+  it('renders closed items and opens the clicked one', async () => {
+    const user = userEvent.setup();
+    render(
+      <Accordion type="single" collapsible>
+        <AccordionItem value="one">
+          <AccordionTrigger>One</AccordionTrigger>
+          <AccordionContent>First panel</AccordionContent>
+        </AccordionItem>
+      </Accordion>,
+    );
+    const trigger = screen.getByRole('button', { name: 'One' });
+    expect(trigger).toHaveAttribute('data-state', 'closed');
+    await user.click(trigger);
+    expect(trigger).toHaveAttribute('data-state', 'open');
+  });
+});
+
+describe('Alert', () => {
+  it('renders with role=alert and data-slot', () => {
+    render(
+      <Alert>
+        <AlertTitle>Heads up!</AlertTitle>
+        <AlertDescription>Something happened.</AlertDescription>
+      </Alert>,
+    );
+    const alert = screen.getByRole('alert');
+    expect(alert).toHaveAttribute('data-slot', 'alert');
+    expect(screen.getByText('Heads up!')).toHaveAttribute('data-slot', 'alert-title');
+    expect(screen.getByText('Something happened.')).toHaveAttribute(
+      'data-slot',
+      'alert-description',
+    );
+  });
+});
+
+describe('AspectRatio', () => {
+  it('renders a ratio wrapper with data-slot', () => {
+    render(
+      <AspectRatio ratio={16 / 9} data-testid="ar">
+        <div>content</div>
+      </AspectRatio>,
+    );
+    expect(screen.getByTestId('ar')).toHaveAttribute('data-slot', 'aspect-ratio');
+  });
+});
+
+describe('Avatar', () => {
+  it('renders a fallback when no image is set', () => {
+    render(
+      <Avatar>
+        <AvatarFallback>JM</AvatarFallback>
+      </Avatar>,
+    );
+    const fallback = screen.getByText('JM');
+    expect(fallback).toHaveAttribute('data-slot', 'avatar-fallback');
+  });
+});
+
+describe('Badge', () => {
+  it('renders with data-slot and variant class', () => {
+    render(<Badge variant="destructive">New</Badge>);
+    const badge = screen.getByText('New');
+    expect(badge).toHaveAttribute('data-slot', 'badge');
+    expect(badge.className).toMatch(/bg-destructive/);
+    expect(badge.className).toMatch(/text-destructive-foreground/);
+    expect(badge.className).not.toMatch(/text-white\b/);
+  });
+});
+
+describe('Breadcrumb', () => {
+  it('renders as a navigation landmark with link children', () => {
+    render(
+      <Breadcrumb>
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink href="/home">Home</BreadcrumbLink>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>,
+    );
+    const nav = screen.getByRole('navigation');
+    expect(nav).toHaveAttribute('data-slot', 'breadcrumb');
+    expect(screen.getByRole('link', { name: 'Home' })).toHaveAttribute(
+      'data-slot',
+      'breadcrumb-link',
+    );
+  });
+});
+
+describe('Card', () => {
+  it('renders each sub-slot with its data-slot marker', () => {
+    render(
+      <Card data-testid="card">
+        <CardHeader data-testid="hdr">
+          <CardTitle>Title</CardTitle>
+          <CardDescription>Description</CardDescription>
+        </CardHeader>
+        <CardContent data-testid="body">body</CardContent>
+      </Card>,
+    );
+    expect(screen.getByTestId('card')).toHaveAttribute('data-slot', 'card');
+    expect(screen.getByTestId('hdr')).toHaveAttribute('data-slot', 'card-header');
+    expect(screen.getByText('Title')).toHaveAttribute('data-slot', 'card-title');
+    expect(screen.getByText('Description')).toHaveAttribute('data-slot', 'card-description');
+    expect(screen.getByTestId('body')).toHaveAttribute('data-slot', 'card-content');
+  });
+});
+
+describe('Collapsible', () => {
+  it('opens content on trigger click', async () => {
+    const user = userEvent.setup();
+    render(
+      <Collapsible>
+        <CollapsibleTrigger>Toggle</CollapsibleTrigger>
+        <CollapsibleContent>Secret</CollapsibleContent>
+      </Collapsible>,
+    );
+    const trigger = screen.getByRole('button', { name: 'Toggle' });
+    expect(trigger).toHaveAttribute('data-state', 'closed');
+    await user.click(trigger);
+    expect(trigger).toHaveAttribute('data-state', 'open');
+  });
+});
+
+describe('Pagination', () => {
+  it('renders as a navigation landmark with links', () => {
+    render(
+      <Pagination>
+        <PaginationContent>
+          <PaginationItem>
+            <PaginationLink href="#1" isActive>
+              1
+            </PaginationLink>
+          </PaginationItem>
+        </PaginationContent>
+      </Pagination>,
+    );
+    const nav = screen.getByRole('navigation');
+    expect(nav).toHaveAttribute('data-slot', 'pagination');
+    const active = screen.getByRole('link', { name: /1/ });
+    expect(active).toHaveAttribute('data-active', 'true');
+  });
+});
+
+describe('Progress', () => {
+  it('renders role=progressbar with data-slot and a progress-indicator child', () => {
+    const { container } = render(<Progress value={42} />);
+    const bar = screen.getByRole('progressbar');
+    expect(bar).toHaveAttribute('data-slot', 'progress');
+    const indicator = container.querySelector('[data-slot="progress-indicator"]') as HTMLElement;
+    expect(indicator).toBeTruthy();
+    // The indicator translates by -(100 - value)% to visualize progress.
+    expect(indicator.style.transform).toBe('translateX(-58%)');
+  });
+});
+
+describe('ScrollArea', () => {
+  it('renders with data-slot and a scroll-area-viewport child', () => {
+    const { container } = render(
+      <ScrollArea data-testid="sa">
+        <div style={{ width: 2000 }}>wide content</div>
+      </ScrollArea>,
+    );
+    expect(screen.getByTestId('sa')).toHaveAttribute('data-slot', 'scroll-area');
+    expect(container.querySelector('[data-slot="scroll-area-viewport"]')).toBeTruthy();
+  });
+});
+
+describe('Tabs', () => {
+  it('shows the default tab content and switches on trigger click', async () => {
+    const user = userEvent.setup();
+    render(
+      <Tabs defaultValue="a">
+        <TabsList>
+          <TabsTrigger value="a">A</TabsTrigger>
+          <TabsTrigger value="b">B</TabsTrigger>
+        </TabsList>
+        <TabsContent value="a">Panel A</TabsContent>
+        <TabsContent value="b">Panel B</TabsContent>
+      </Tabs>,
+    );
+    expect(screen.getByRole('tab', { name: 'A' })).toHaveAttribute('data-state', 'active');
+    expect(screen.getByText('Panel A')).toBeInTheDocument();
+    await user.click(screen.getByRole('tab', { name: 'B' }));
+    expect(screen.getByRole('tab', { name: 'B' })).toHaveAttribute('data-state', 'active');
   });
 });
