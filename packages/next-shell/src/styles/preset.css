@@ -18,6 +18,13 @@
 
 @import './tokens.css';
 
+/* Animation utilities — `animate-in`, `fade-in-0`, `zoom-in-95`,
+   `slide-in-from-*`, etc. Required by every shadcn/ui overlay primitive
+   (Tooltip, Dialog, Popover, DropdownMenu, Sheet, Drawer, …).
+   Source: https://github.com/Wombosvideo/tw-animate-css
+   Tailwind v4 replacement for the old `tailwindcss-animate` plugin. */
+@import 'tw-animate-css';
+
 @theme {
   /* ─── Color ──────────────────────────────────────────────────────── */
   --color-background: var(--background);
@@ -59,6 +66,8 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+
+  --color-overlay: var(--overlay);
 
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);

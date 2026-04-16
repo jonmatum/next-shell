@@ -70,6 +70,8 @@ export const colorTokens = [
   'input',
   'ring',
 
+  'overlay',
+
   'sidebar',
   'sidebar-foreground',
   'sidebar-primary',

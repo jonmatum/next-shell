@@ -74,6 +74,12 @@
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
 
+  /* Overlay — modal backdrop scrim. Kept consistently dark in both themes
+     so it reads as a dimming layer on any surface. Alpha is baked into
+     the token value, so primitives use `bg-overlay` with no opacity
+     modifier. */
+  --overlay: oklch(0 0 0 / 0.5);
+
   /* Sidebar — subtly distinct from the main surface for visual hierarchy. */
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.145 0 0);
@@ -217,6 +223,9 @@
   --border: oklch(0.269 0 0);
   --input: oklch(0.269 0 0);
   --ring: oklch(0.556 0 0);
+
+  /* Scrim stays dark in both themes. */
+  --overlay: oklch(0 0 0 / 0.5);
 
   --sidebar: oklch(0.205 0 0);
   --sidebar-foreground: oklch(0.985 0 0);

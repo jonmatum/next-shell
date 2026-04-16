@@ -3,13 +3,23 @@ import { describe, expect, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import * as Primitives from '../src/primitives/index.js';
 import {
   Button,
+  Dialog,
+  DialogTrigger,
+  DropdownMenu,
+  DropdownMenuTrigger,
   Input,
   Label,
+  Popover,
+  PopoverTrigger,
   Separator,
   Skeleton,
   Textarea,
+  Tooltip,
+  TooltipProvider,
+  TooltipTrigger,
   buttonVariants,
 } from '../src/primitives/index.js';
 
@@ -133,5 +143,199 @@ describe('Textarea', () => {
     const ta = screen.getByLabelText('bio');
     await user.type(ta, 'line one{enter}line two');
     expect(ta).toHaveValue('line one\nline two');
+  });
+});
+
+/* ────────────────────────────────────────────────────────────────────────
+ * Overlays (3c): Tooltip, Dialog, Popover, DropdownMenu, ContextMenu,
+ * HoverCard, AlertDialog, Sheet, Menubar, NavigationMenu, Drawer.
+ *
+ * Full interaction tests for Radix overlays belong in Storybook / Playwright
+ * VR (Phase 9). These tests cover:
+ *   - Export-surface completeness (every named export is defined)
+ *   - Closed-state render (trigger + data-slot) for the four canonical
+ *     overlay trigger flavors: Tooltip (wrapped in provider), Dialog,
+ *     Popover, DropdownMenu.
+ * ──────────────────────────────────────────────────────────────────────── */
+
+describe('Primitives barrel — overlay exports', () => {
+  // Enumerated so a typo or missing export fails loudly with the name.
+  const expected = [
+    // Alert dialog
+    'AlertDialog',
+    'AlertDialogAction',
+    'AlertDialogCancel',
+    'AlertDialogContent',
+    'AlertDialogDescription',
+    'AlertDialogFooter',
+    'AlertDialogHeader',
+    'AlertDialogMedia',
+    'AlertDialogOverlay',
+    'AlertDialogPortal',
+    'AlertDialogTitle',
+    'AlertDialogTrigger',
+    // Context menu
+    'ContextMenu',
+    'ContextMenuCheckboxItem',
+    'ContextMenuContent',
+    'ContextMenuGroup',
+    'ContextMenuItem',
+    'ContextMenuLabel',
+    'ContextMenuPortal',
+    'ContextMenuRadioGroup',
+    'ContextMenuRadioItem',
+    'ContextMenuSeparator',
+    'ContextMenuShortcut',
+    'ContextMenuSub',
+    'ContextMenuSubContent',
+    'ContextMenuSubTrigger',
+    'ContextMenuTrigger',
+    // Dialog
+    'Dialog',
+    'DialogClose',
+    'DialogContent',
+    'DialogDescription',
+    'DialogFooter',
+    'DialogHeader',
+    'DialogOverlay',
+    'DialogPortal',
+    'DialogTitle',
+    'DialogTrigger',
+    // Drawer
+    'Drawer',
+    'DrawerClose',
+    'DrawerContent',
+    'DrawerDescription',
+    'DrawerFooter',
+    'DrawerHeader',
+    'DrawerOverlay',
+    'DrawerPortal',
+    'DrawerTitle',
+    'DrawerTrigger',
+    // Dropdown menu
+    'DropdownMenu',
+    'DropdownMenuCheckboxItem',
+    'DropdownMenuContent',
+    'DropdownMenuGroup',
+    'DropdownMenuItem',
+    'DropdownMenuLabel',
+    'DropdownMenuPortal',
+    'DropdownMenuRadioGroup',
+    'DropdownMenuRadioItem',
+    'DropdownMenuSeparator',
+    'DropdownMenuShortcut',
+    'DropdownMenuSub',
+    'DropdownMenuSubContent',
+    'DropdownMenuSubTrigger',
+    'DropdownMenuTrigger',
+    // Hover card
+    'HoverCard',
+    'HoverCardContent',
+    'HoverCardTrigger',
+    // Menubar
+    'Menubar',
+    'MenubarCheckboxItem',
+    'MenubarContent',
+    'MenubarGroup',
+    'MenubarItem',
+    'MenubarLabel',
+    'MenubarMenu',
+    'MenubarPortal',
+    'MenubarRadioGroup',
+    'MenubarRadioItem',
+    'MenubarSeparator',
+    'MenubarShortcut',
+    'MenubarSub',
+    'MenubarSubContent',
+    'MenubarSubTrigger',
+    'MenubarTrigger',
+    // Navigation menu
+    'NavigationMenu',
+    'NavigationMenuContent',
+    'NavigationMenuIndicator',
+    'NavigationMenuItem',
+    'NavigationMenuLink',
+    'NavigationMenuList',
+    'NavigationMenuTrigger',
+    'NavigationMenuViewport',
+    'navigationMenuTriggerStyle',
+    // Popover
+    'Popover',
+    'PopoverAnchor',
+    'PopoverContent',
+    'PopoverDescription',
+    'PopoverHeader',
+    'PopoverTitle',
+    'PopoverTrigger',
+    // Sheet
+    'Sheet',
+    'SheetClose',
+    'SheetContent',
+    'SheetDescription',
+    'SheetFooter',
+    'SheetHeader',
+    'SheetTitle',
+    'SheetTrigger',
+    // Tooltip
+    'Tooltip',
+    'TooltipContent',
+    'TooltipProvider',
+    'TooltipTrigger',
+  ] as const;
+
+  it.each(expected)('exports %s as a callable', (name) => {
+    const value = (Primitives as Record<string, unknown>)[name];
+    expect(value, `Primitives.${name} should be defined`).toBeDefined();
+    expect(typeof value).toBe('function');
+  });
+});
+
+describe('Tooltip (closed render)', () => {
+  it('renders a trigger with the tooltip-trigger data-slot', () => {
+    render(
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger>Hover me</TooltipTrigger>
+        </Tooltip>
+      </TooltipProvider>,
+    );
+    const trigger = screen.getByText('Hover me');
+    expect(trigger).toHaveAttribute('data-slot', 'tooltip-trigger');
+  });
+});
+
+describe('Dialog (closed render)', () => {
+  it('renders a trigger with the dialog-trigger data-slot', () => {
+    render(
+      <Dialog>
+        <DialogTrigger>Open</DialogTrigger>
+      </Dialog>,
+    );
+    const trigger = screen.getByText('Open');
+    expect(trigger).toHaveAttribute('data-slot', 'dialog-trigger');
+  });
+});
+
+describe('Popover (closed render)', () => {
+  it('renders a trigger with the popover-trigger data-slot', () => {
+    render(
+      <Popover>
+        <PopoverTrigger>Show</PopoverTrigger>
+      </Popover>,
+    );
+    const trigger = screen.getByText('Show');
+    expect(trigger).toHaveAttribute('data-slot', 'popover-trigger');
+  });
+});
+
+describe('DropdownMenu (closed render)', () => {
+  it('renders a trigger with the dropdown-menu-trigger data-slot', () => {
+    render(
+      <DropdownMenu>
+        <DropdownMenuTrigger>Menu</DropdownMenuTrigger>
+      </DropdownMenu>,
+    );
+    const trigger = screen.getByText('Menu');
+    expect(trigger).toHaveAttribute('data-slot', 'dropdown-menu-trigger');
   });
 });
