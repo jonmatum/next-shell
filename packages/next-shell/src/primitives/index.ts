@@ -46,6 +46,22 @@ export {
 } from './breadcrumb.js';
 export { Button, buttonVariants } from './button.js';
 export { Calendar, CalendarDayButton } from './calendar.js';
+export type { CarouselApi } from './carousel.js';
+export {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from './carousel.js';
+export {
+  ChartContainer,
+  ChartLegend,
+  ChartLegendContent,
+  ChartStyle,
+  ChartTooltip,
+  ChartTooltipContent,
+} from './chart.js';
 export {
   Card,
   CardAction,
@@ -189,6 +205,7 @@ export {
   PopoverTrigger,
 } from './popover.js';
 export { RadioGroup, RadioGroupItem } from './radio-group.js';
+export { ResizableHandle, ResizablePanel, ResizablePanelGroup } from './resizable.js';
 export { ScrollArea, ScrollBar } from './scroll-area.js';
 export {
   Select,
