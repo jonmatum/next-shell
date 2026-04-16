@@ -42,6 +42,10 @@ export type {
   CommandBarTriggerProps,
 } from './command-bar.js';
 
+// AppShell root orchestrator (Phase 4f).
+export { AppShell } from './app-shell.js';
+export type { AppShellDensity, AppShellProps } from './app-shell.js';
+
 // Interactive sidebar (client-only).
 export {
   Sidebar,

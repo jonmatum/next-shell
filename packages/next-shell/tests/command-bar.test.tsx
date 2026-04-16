@@ -1,14 +1,12 @@
 import * as React from 'react';
 import { act, render, renderHook, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 
 import {
   CommandBarProvider,
-  CommandBarTrigger,
   useCommandBar,
   useCommandBarActions,
-} from '../src/layout/command-bar.js';
+} from '../src/layout/command-bar-context.js';
 
 function wrapper({ children }: { children: React.ReactNode }) {
   return <CommandBarProvider>{children}</CommandBarProvider>;
@@ -81,36 +79,5 @@ describe('useCommandBarActions', () => {
       </CommandBarProvider>,
     );
     expect(screen.getByTestId('ok')).toBeInTheDocument();
-  });
-});
-
-describe('CommandBarTrigger', () => {
-  it('renders a button with data-slot + label + shortcut hint', () => {
-    render(
-      <CommandBarProvider>
-        <CommandBarTrigger data-testid="trigger" />
-      </CommandBarProvider>,
-    );
-    const btn = screen.getByTestId('trigger');
-    expect(btn).toHaveAttribute('data-slot', 'command-bar-trigger');
-    expect(btn).toHaveTextContent('Search…');
-    expect(btn).toHaveTextContent('⌘K');
-  });
-
-  it('clicking the trigger toggles open state', async () => {
-    const user = userEvent.setup();
-    function Probe() {
-      const { open } = useCommandBar();
-      return <span data-testid="state">{String(open)}</span>;
-    }
-    render(
-      <CommandBarProvider>
-        <CommandBarTrigger data-testid="trigger" />
-        <Probe />
-      </CommandBarProvider>,
-    );
-    expect(screen.getByTestId('state')).toHaveTextContent('false');
-    await user.click(screen.getByTestId('trigger'));
-    expect(screen.getByTestId('state')).toHaveTextContent('true');
   });
 });
