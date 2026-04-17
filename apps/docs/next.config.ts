@@ -7,7 +7,6 @@ const isGitHubPages = process.env.GITHUB_PAGES === 'true';
 
 const config: NextConfig = {
   reactStrictMode: true,
-  transpilePackages: ['@jonmatum/next-shell'],
   ...(isGitHubPages && {
     output: 'export',
     basePath: '/next-shell',
