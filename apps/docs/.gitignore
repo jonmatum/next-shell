@@ -1,2 +1,3 @@
 .source/
 out/
+next-env.d.ts

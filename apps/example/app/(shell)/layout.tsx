@@ -2,7 +2,17 @@
 
 import type { ReactNode } from 'react';
 import { usePathname } from 'next/navigation';
-import { AppShell, TopBar, SidebarNav, Breadcrumbs, buildNav } from '@jonmatum/next-shell/layout';
+import {
+  AppShell,
+  TopBar,
+  Sidebar,
+  SidebarContent,
+  SidebarHeader,
+  SidebarTrigger,
+  SidebarNav,
+  Breadcrumbs,
+  buildNav,
+} from '@jonmatum/next-shell/layout';
 import { ThemeToggleDropdown } from '@jonmatum/next-shell/providers';
 import { useUser } from '@jonmatum/next-shell/auth';
 import { LayoutDashboard, Settings, Shield, Database, Bell } from 'lucide-react';
@@ -22,7 +32,17 @@ function ShellSidebar({ pathname }: { pathname: string }) {
     pathname,
     permissions: user?.roles ?? [],
   });
-  return <SidebarNav items={items} label="Menu" />;
+  return (
+    <Sidebar>
+      <SidebarHeader className="flex flex-row items-center gap-2 px-2 py-3">
+        <SidebarTrigger className="ml-0.5" />
+        <span className="text-sidebar-foreground truncate text-sm font-semibold">next-shell</span>
+      </SidebarHeader>
+      <SidebarContent>
+        <SidebarNav items={items} label="Menu" />
+      </SidebarContent>
+    </Sidebar>
+  );
 }
 
 function ShellTopBar({ pathname }: { pathname: string }) {
