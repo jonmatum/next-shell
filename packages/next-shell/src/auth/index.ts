@@ -1,9 +1,32 @@
+'use client';
+
 /**
- * Auth adapter pattern — pluggable auth for any backend (Auth.js v5 adapter
- * shipped first-party).
+ * Auth subpath — client surface.
  *
- * See the Phase 7 issue for the full specification.
- * This module is scaffolded during Phase 0 and populated in Phase 7.
+ * ```tsx
+ * import { AuthProvider, useSession, SignedIn, RoleGate } from '@jonmatum/next-shell/auth';
+ * ```
+ *
+ * Plug in an adapter (nextauth, mock, or custom) via `<AuthProvider adapter={...}>`.
+ * Server helpers live at `@jonmatum/next-shell/auth/server`.
+ * The Auth.js v5 adapter lives at `@jonmatum/next-shell/auth/nextauth`.
+ * The mock adapter for tests lives at `@jonmatum/next-shell/auth/mock`.
  */
 
-export {};
+// ── Context + adapter contract ─────────────────────────────────────────────
+export { AuthProvider } from './auth-provider.js';
+export type { AuthProviderProps, AuthAdapter } from './auth-provider.js';
+
+// ── Hooks ──────────────────────────────────────────────────────────────────
+export {
+  useSession,
+  useUser,
+  useRequireAuth,
+  useHasPermission,
+  AuthRequiredError,
+} from './hooks.js';
+export type { AuthSession, AuthUser, AuthStatus, SessionResult } from './hooks.js';
+
+// ── Components ────────────────────────────────────────────────────────────
+export { SignedIn, SignedOut, RoleGate } from './components.js';
+export type { SignedInProps, SignedOutProps, RoleGateProps } from './components.js';

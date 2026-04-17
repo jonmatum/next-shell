@@ -11,6 +11,8 @@ import { existsSync } from 'node:fs';
  * the build completes.
  */
 const CLIENT_ENTRIES = [
+  'auth/index',
+  'auth/adapters/nextauth',
   'providers/index',
   'primitives/index',
   'layout/index',
@@ -34,6 +36,9 @@ export default defineConfig({
     'providers/index': 'src/providers/index.ts',
     'providers/server/index': 'src/providers/server/index.ts',
     'auth/index': 'src/auth/index.ts',
+    'auth/server/index': 'src/auth/server/index.ts',
+    'auth/adapters/nextauth': 'src/auth/adapters/nextauth.ts',
+    'auth/adapters/mock': 'src/auth/adapters/mock.ts',
     'hooks/index': 'src/hooks/index.ts',
     'tokens/index': 'src/tokens/index.ts',
     'tailwind-preset/index': 'src/tailwind-preset/index.ts',
@@ -45,7 +50,7 @@ export default defineConfig({
   splitting: false,
   treeshake: true,
   target: 'es2022',
-  external: ['react', 'react-dom', 'next', 'tailwindcss'],
+  external: ['react', 'react-dom', 'next', 'next-auth', 'next-auth/react', 'tailwindcss'],
   async onSuccess() {
     // Copy static CSS assets into dist/styles/.
     if (existsSync('src/styles')) {
