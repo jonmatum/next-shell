@@ -9,6 +9,25 @@
  * Server Component without forcing a client boundary.
  */
 
+// ── Composer ───────────────────────────────────────────────────────────────
+export { AppProviders } from './app-providers.js';
+export type { AppProvidersProps } from './app-providers.js';
+
+// ── Individual providers (opt-in composition) ──────────────────────────────
+export { QueryProvider } from './query/query-provider.js';
+export type { QueryProviderProps } from './query/query-provider.js';
+export { makeServerQueryClient } from './query/query-ssr.js';
+
+export { ToastProvider } from './toast/toast-provider.js';
+export type { ToastProviderProps } from './toast/toast-provider.js';
+
+export { ErrorBoundary } from './error/error-boundary.js';
+export type { ErrorBoundaryProps, ErrorBoundaryFallbackProps } from './error/error-boundary.js';
+
+export { I18nProvider, useI18n } from './i18n/i18n-provider.js';
+export type { I18nProviderProps, I18nAdapter } from './i18n/i18n-provider.js';
+
+// ── Theme (Phase 2) ────────────────────────────────────────────────────────
 export { ThemeProvider } from './theme/theme-provider.js';
 export type { ThemeProviderProps } from './theme/theme-provider.js';
 
