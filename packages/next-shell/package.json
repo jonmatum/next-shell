@@ -1,6 +1,6 @@
 {
   "name": "@jonmatum/next-shell",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Reusable Next.js app shell built on shadcn/ui primitives with a strict semantic-token design system.",
   "keywords": [
     "next",
