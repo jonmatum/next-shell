@@ -13,6 +13,7 @@ export default [
       '**/dist/**',
       '**/node_modules/**',
       '**/.next/**',
+      '**/.source/**',
       '**/coverage/**',
       '**/*.min.js',
       'pnpm-lock.yaml',

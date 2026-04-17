@@ -1,0 +1,13 @@
+{
+  "title": "next-shell",
+  "pages": [
+    "index",
+    "design-system",
+    "providers",
+    "layout",
+    "auth",
+    "hooks",
+    "formatters",
+    "primitives"
+  ]
+}

@@ -1,0 +1,142 @@
+---
+title: Formatters
+description: Locale-aware, pure formatting functions for dates, numbers, file sizes, and strings.
+---
+
+`@jonmatum/next-shell/formatters` exports pure functions — no React dependency, safe in Server Components, Route Handlers, and tests. All accept an optional `locale` string; compose with `useLocale()` from the hooks subpath for context-aware rendering.
+
+## Date & time
+
+### formatDate
+
+```tsx
+import { formatDate } from '@jonmatum/next-shell/formatters';
+
+formatDate(new Date()); // "4/16/2026"
+formatDate(new Date(), { dateStyle: 'long' }); // "April 16, 2026"
+formatDate(new Date(), { dateStyle: 'long', locale: 'de' }); // "16. April 2026"
+```
+
+### formatRelativeTime
+
+Picks the right unit automatically (`second` → `minute` → `hour` → `day` → `week` → `month` → `year`):
+
+```tsx
+import { formatRelativeTime } from '@jonmatum/next-shell/formatters';
+
+formatRelativeTime(subDays(new Date(), 3)); // "3 days ago"
+formatRelativeTime(addHours(new Date(), 2)); // "in 2 hours"
+formatRelativeTime(subYears(new Date(), 1)); // "last year"
+```
+
+Pass `now` for deterministic output in tests:
+
+```tsx
+formatRelativeTime(date, { now: new Date('2026-01-01') });
+```
+
+## Numbers
+
+### formatNumber
+
+```tsx
+formatNumber(1234567.89); // "1,234,567.89"
+formatNumber(1234567.89, { locale: 'de' }); // "1.234.567,89"
+formatNumber(0.001, { maximumFractionDigits: 6 }); // "0.001"
+```
+
+### formatCurrency
+
+```tsx
+formatCurrency(9.99, 'USD'); // "$9.99"
+formatCurrency(9.99, 'EUR', { locale: 'de' }); // "9,99 €"
+formatCurrency(1000, 'JPY', { locale: 'ja' }); // "¥1,000"
+```
+
+### formatPercent
+
+Input is 0–1 (not 0–100):
+
+```tsx
+formatPercent(0.75); // "75%"
+formatPercent(0.123, { maximumFractionDigits: 1 }); // "12.3%"
+```
+
+### formatFileSize
+
+```tsx
+formatFileSize(0); // "0 B"
+formatFileSize(1536); // "1.5 KB"
+formatFileSize(1_048_576); // "1.0 MB"
+formatFileSize(5_368_709_120, { decimals: 2 }); // "5.00 GB"
+```
+
+### formatDuration
+
+Input in milliseconds:
+
+```tsx
+formatDuration(0); // "0 sec"
+formatDuration(45_000); // "45 seconds"
+formatDuration(7_383_000); // "2 hours, 3 minutes"
+formatDuration(7_383_000, { parts: 1 }); // "2 hours"
+```
+
+## Strings
+
+### truncate
+
+```tsx
+truncate('Hello, world!', 8); // "Hello, …"
+truncate('Hello, world!', 10, '...'); // "Hello, ..."
+truncate('Hi', 10); // "Hi"  (unchanged)
+```
+
+### pluralize
+
+```tsx
+pluralize(1, 'item'); // "1 item"
+pluralize(3, 'item'); // "3 items"
+pluralize(2, 'goose', 'geese'); // "2 geese"
+pluralize(0, 'result'); // "0 results"
+```
+
+### toTitleCase
+
+```tsx
+toTitleCase('hello world'); // "Hello World"
+```
+
+### toKebabCase
+
+```tsx
+toKebabCase('HelloWorld'); // "hello-world"
+toKebabCase('my string'); // "my-string"
+```
+
+### slugify
+
+URL-safe, strips accents:
+
+```tsx
+slugify('Hello, World!'); // "hello-world"
+slugify('café au lait'); // "cafe-au-lait"
+slugify('React & Next.js'); // "react-nextjs"
+```
+
+## Locale-aware usage in React
+
+```tsx
+import { useLocale } from '@jonmatum/next-shell/hooks';
+import { formatDate, formatCurrency } from '@jonmatum/next-shell/formatters';
+
+function ProductCard({ price, createdAt }) {
+  const locale = useLocale();
+  return (
+    <div>
+      <span>{formatCurrency(price, 'USD', { locale })}</span>
+      <time>{formatDate(createdAt, { dateStyle: 'medium', locale })}</time>
+    </div>
+  );
+}
+```

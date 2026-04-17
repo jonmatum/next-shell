@@ -1,0 +1,152 @@
+---
+title: Primitives
+description: 42 shadcn/ui primitives vendored and token-audited for next-shell.
+---
+
+`@jonmatum/next-shell/primitives` exports all 42 shadcn/ui primitives, vendored from [`shadcn-ui/ui@84d1d476`](https://github.com/shadcn-ui/ui/commit/84d1d476b1d1c6a01c6eeadd95885ce109969b08) and audited to use only semantic tokens.
+
+All imports are named and tree-shakeable:
+
+```tsx
+import { Button, Dialog, DialogContent, DialogTitle } from '@jonmatum/next-shell/primitives';
+```
+
+## Available primitives
+
+Accordion · Alert · AlertDialog · AspectRatio · Avatar · Badge · Breadcrumb · Button · Calendar · Card · Carousel · Chart · Checkbox · Collapsible · Command · ContextMenu · Dialog · Drawer · DropdownMenu · Form · HoverCard · Input · InputOTP · Label · Menubar · NavigationMenu · Pagination · Popover · Progress · RadioGroup · Resizable · ScrollArea · Select · Separator · Sheet · Skeleton · Slider · Switch · Table · Tabs · Textarea · Toaster (Sonner) · Toggle · ToggleGroup · Tooltip
+
+## Button
+
+```tsx
+import { Button } from '@jonmatum/next-shell/primitives';
+
+<Button>Default</Button>
+<Button variant="outline">Outline</Button>
+<Button variant="destructive">Delete</Button>
+<Button variant="ghost">Ghost</Button>
+<Button variant="link">Link</Button>
+
+<Button size="sm">Small</Button>
+<Button size="lg">Large</Button>
+<Button size="icon"><PlusIcon /></Button>
+
+<Button disabled>Disabled</Button>
+<Button asChild><a href="/new">Link button</a></Button>
+```
+
+Variants: `default` · `outline` · `secondary` · `ghost` · `link` · `destructive`
+
+Sizes: `default` · `sm` · `lg` · `icon`
+
+## Dialog
+
+```tsx
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@jonmatum/next-shell/primitives';
+
+<Dialog>
+  <DialogTrigger asChild>
+    <Button>Open dialog</Button>
+  </DialogTrigger>
+  <DialogContent>
+    <DialogHeader>
+      <DialogTitle>Are you sure?</DialogTitle>
+      <DialogDescription>This action cannot be undone.</DialogDescription>
+    </DialogHeader>
+    <div className="flex justify-end gap-2">
+      <Button variant="outline">Cancel</Button>
+      <Button variant="destructive">Delete</Button>
+    </div>
+  </DialogContent>
+</Dialog>;
+```
+
+## Card
+
+```tsx
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+} from '@jonmatum/next-shell/primitives';
+
+<Card>
+  <CardHeader>
+    <CardTitle>Revenue</CardTitle>
+    <CardDescription>Last 30 days</CardDescription>
+  </CardHeader>
+  <CardContent>
+    <p className="text-3xl font-bold">$45,231.89</p>
+  </CardContent>
+  <CardFooter className="text-muted-foreground text-sm">+20.1% from last month</CardFooter>
+</Card>;
+```
+
+## Form
+
+Works with `react-hook-form` via the `Form` primitive:
+
+```tsx
+import { useForm } from 'react-hook-form';
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormMessage,
+} from '@jonmatum/next-shell/primitives';
+import { Input } from '@jonmatum/next-shell/primitives';
+
+function LoginForm() {
+  const form = useForm<{ email: string }>();
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)}>
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input type="email" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit">Submit</Button>
+      </form>
+    </Form>
+  );
+}
+```
+
+## Not vendored (recipes)
+
+These are common patterns intentionally left as consumer-side compositions:
+
+- **DatePicker** — `Popover` + `Calendar` + `Button`
+- **DataTable** — `Table` + `@tanstack/react-table`
+- **Typography** — utility class patterns (`text-3xl font-bold`, `text-muted-foreground`, etc.)
+- **Combobox** — `Popover` + `Command`
+
+## Custom styling
+
+Every primitive ships with `data-slot` attributes for targeted CSS overrides:
+
+```css
+[data-slot='button'] {
+  letter-spacing: 0.05em;
+}
+```
