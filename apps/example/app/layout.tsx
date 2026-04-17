@@ -1,8 +1,6 @@
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
-import { AppProviders } from '@jonmatum/next-shell/providers';
-import { AuthProvider } from '@jonmatum/next-shell/auth';
-import { createMockAuthAdapter } from '@jonmatum/next-shell/auth/mock';
+import { Providers } from './providers';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -10,17 +8,11 @@ export const metadata: Metadata = {
   description: 'Living reference implementation for @jonmatum/next-shell',
 };
 
-const authAdapter = createMockAuthAdapter({
-  user: { id: '1', name: 'Demo User', email: 'demo@example.com', roles: ['admin'] },
-});
-
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
-        <AppProviders themeProps={{ defaultTheme: 'system', enableSystem: true }}>
-          <AuthProvider adapter={authAdapter}>{children}</AuthProvider>
-        </AppProviders>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
