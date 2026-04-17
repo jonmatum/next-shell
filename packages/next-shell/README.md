@@ -23,10 +23,13 @@ Runtime deps (pulled in automatically): `radix-ui`, `class-variance-authority`, 
 ```css
 /* app/globals.css */
 @import 'tailwindcss';
+@source "node_modules/@jonmatum/next-shell/dist/**/*.{js,cjs}";
 @import '@jonmatum/next-shell/styles/preset.css';
 ```
 
-The preset pulls in `tokens.css` + `tw-animate-css` and wires every semantic token to the Tailwind `@theme` scale. Utilities like `bg-background`, `text-foreground`, `border-border`, `ring-ring`, `animate-in`, and `duration-fast` are now live.
+The `@source` line tells Tailwind v4 to scan the library's bundled output for class names — required because Tailwind only generates CSS for classes it finds in scanned files, and library code in `node_modules` is not scanned by default.
+
+The preset pulls in `tokens.css` + `tw-animate-css` (inlined, no extra dep needed) and wires every semantic token to the Tailwind `@theme` scale. Utilities like `bg-background`, `text-foreground`, `border-border`, `ring-ring`, `animate-in`, and `duration-fast` are now live.
 
 ### 2. Mount the theme provider (client)
 

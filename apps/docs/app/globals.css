@@ -1,3 +1,4 @@
 @import 'fumadocs-ui/style.css';
 @import 'tailwindcss';
+@source "../../node_modules/@jonmatum/next-shell/dist/**/*.{js,cjs}";
 @import '@jonmatum/next-shell/styles/preset.css';
