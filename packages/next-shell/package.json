@@ -92,6 +92,11 @@
       "import": "./dist/hooks/index.js",
       "require": "./dist/hooks/index.cjs"
     },
+    "./formatters": {
+      "types": "./dist/formatters/index.d.ts",
+      "import": "./dist/formatters/index.js",
+      "require": "./dist/formatters/index.cjs"
+    },
     "./tokens": {
       "types": "./dist/tokens/index.d.ts",
       "import": "./dist/tokens/index.js",

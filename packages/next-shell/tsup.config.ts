@@ -40,6 +40,7 @@ export default defineConfig({
     'auth/adapters/nextauth': 'src/auth/adapters/nextauth.ts',
     'auth/adapters/mock': 'src/auth/adapters/mock.ts',
     'hooks/index': 'src/hooks/index.ts',
+    'formatters/index': 'src/formatters/index.ts',
     'tokens/index': 'src/tokens/index.ts',
     'tailwind-preset/index': 'src/tailwind-preset/index.ts',
   },
