@@ -2,26 +2,29 @@
 
 Monorepo for [`@jonmatum/next-shell`](./packages/next-shell) — a reusable Next.js app shell built on **shadcn/ui** primitives with a strict **semantic-token** design system.
 
-> **Status:** Phases 0–3 landed on `main`; Phase 4 (app-shell layout) is in progress. Track phase-by-phase progress in [Epic #13](https://github.com/jonmatum/next-shell/issues/13).
+> **Status:** Phases 0–7 landed on `main`. Track phase-by-phase progress in [Epic #13](https://github.com/jonmatum/next-shell/issues/13).
 
 ## What's in the box today
 
-| Phase | Surface                                                                                                                                                                                | Status                               |
-| ----: | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------ |
-|     0 | Monorepo scaffold + CI + publishing skeleton                                                                                                                                           | ✅ Landed                            |
-|     1 | Semantic-token contract + Tailwind v4 preset + OKLCH color tokens                                                                                                                      | ✅ Landed                            |
-|     2 | `ThemeProvider` · `useTheme` · `ThemeToggle` (cycle + dropdown) · SSR cookie helpers                                                                                                   | ✅ Landed                            |
-|     3 | **42 shadcn/ui primitives** vendored from [`shadcn-ui/ui@84d1d476`](https://github.com/shadcn-ui/ui/commit/84d1d476b1d1c6a01c6eeadd95885ce109969b08), each token-audited               | ✅ Landed                            |
-|     4 | Layout primitives: `ContentContainer`, `PageHeader`, `Footer`, `EmptyState`/`ErrorState`/`LoadingState` · SSR sidebar-state cookies · AppShell / Sidebar / TopBar / CommandBar pending | 🟡 In progress                       |
-|     5 | Auth adapters                                                                                                                                                                          | ⏳ Queued                            |
-|     6 | Providers composer                                                                                                                                                                     | ⏳ Queued                            |
-|     7 | Cross-cutting hooks                                                                                                                                                                    | ⏳ Queued                            |
-|     8 | Utilities (`cn`, formatters, guards)                                                                                                                                                   | ⏳ Queued (`cn` shipped in Phase 3a) |
-|     9 | Docs site + Storybook                                                                                                                                                                  | ⏳ Queued                            |
-|    10 | Publishing + changeset release workflow                                                                                                                                                | ⏳ Queued                            |
-|    11 | Integration back into Smart Pad Rules                                                                                                                                                  | ⏳ Queued                            |
+| Phase | Surface                                                                                                                                                                  | Status                               |
+| ----: | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------ |
+|     0 | Monorepo scaffold + CI + publishing skeleton                                                                                                                             | ✅ Landed                            |
+|     1 | Semantic-token contract + Tailwind v4 preset + OKLCH color tokens                                                                                                        | ✅ Landed                            |
+|     2 | `ThemeProvider` · `useTheme` · `ThemeToggle` (cycle + dropdown) · SSR cookie helpers                                                                                     | ✅ Landed                            |
+|     3 | **42 shadcn/ui primitives** vendored from [`shadcn-ui/ui@84d1d476`](https://github.com/shadcn-ui/ui/commit/84d1d476b1d1c6a01c6eeadd95885ce109969b08), each token-audited | ✅ Landed                            |
+|     4 | `AppShell` · `Sidebar` (4 variants, mobile drawer) · `TopBar` · `CommandBar` (⌘K) · `ContentContainer` · `PageHeader` · `Footer` · status states · SSR sidebar cookie    | ✅ Landed                            |
+|     5 | Navigation system — `buildNav`, `SidebarNav`, `Breadcrumbs`, `CommandBarActions`; permission-gated nav via `requires`                                                    | ✅ Landed                            |
+|     6 | Providers composer — `AppProviders`, `QueryProvider` (TanStack Query v5), `ToastProvider` (Sonner), `ErrorBoundary`, `I18nProvider`                                      | ✅ Landed                            |
+|     7 | Auth adapter pattern — `AuthProvider`, `useSession`, `useUser`, `useHasPermission`, `useRequireAuth`, `SignedIn`, `SignedOut`, `RoleGate`, `requireSession` (server)     | ✅ Landed                            |
+|     8 | Hooks grab-bag (`useDebounce`, `useMedia`, …)                                                                                                                            | ⏳ Queued                            |
+|     9 | Utilities (`cn`, formatters, guards)                                                                                                                                     | ⏳ Queued (`cn` shipped in Phase 3a) |
+|    10 | Docs site + Storybook                                                                                                                                                    | ⏳ Queued                            |
+|    11 | Publishing + changeset release workflow                                                                                                                                  | ⏳ Queued                            |
+|    12 | Integration back into Smart Pad Rules                                                                                                                                    | ⏳ Queued                            |
 
-**42 primitives shipping today** (#20–#27): Accordion, Alert, AlertDialog, AspectRatio, Avatar, Badge, Breadcrumb, Button, Calendar, Card, Carousel, Chart, Checkbox, Collapsible, Command, ContextMenu, Dialog, Drawer, DropdownMenu, Form, HoverCard, Input, InputOTP, Label, Menubar, NavigationMenu, Pagination, Popover, Progress, RadioGroup, Resizable, ScrollArea, Select, Separator, Sheet, Skeleton, Slider, Switch, Table, Tabs, Textarea, Toaster (Sonner), Toggle, ToggleGroup, Tooltip. **328+ unit tests** cover render + interaction + export-surface completeness.
+**42 primitives** (Phase 3): Accordion, Alert, AlertDialog, AspectRatio, Avatar, Badge, Breadcrumb, Button, Calendar, Card, Carousel, Chart, Checkbox, Collapsible, Command, ContextMenu, Dialog, Drawer, DropdownMenu, Form, HoverCard, Input, InputOTP, Label, Menubar, NavigationMenu, Pagination, Popover, Progress, RadioGroup, Resizable, ScrollArea, Select, Separator, Sheet, Skeleton, Slider, Switch, Table, Tabs, Textarea, Toaster (Sonner), Toggle, ToggleGroup, Tooltip.
+
+**441 unit tests** across 19 test files cover render, interaction, SSR helpers, provider composition, auth adapter contracts, and export-surface completeness.
 
 Deliberately **not** vendored (composed patterns documented as consumer-side recipes): DatePicker (Popover + Calendar + Button), DataTable (Table + `@tanstack/react-table`), Typography (styling-guide h1/h2/p patterns).
 
@@ -55,7 +58,7 @@ nvm use              # Node version from .nvmrc
 pnpm install
 pnpm lint            # eslint --max-warnings=0
 pnpm typecheck
-pnpm test            # vitest run (328 tests)
+pnpm test            # vitest run (441 tests)
 pnpm build           # tsup + tailwind preset + DTS
 ```
 
