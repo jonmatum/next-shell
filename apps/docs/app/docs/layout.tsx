@@ -7,6 +7,7 @@ export default function Layout({ children }: { children: ReactNode }) {
     <DocsLayout
       tree={source.pageTree}
       githubUrl="https://github.com/jonmatum/next-shell"
+      disableThemeSwitch
       nav={{
         title: (
           <span className="gradient-text" style={{ fontFamily: 'var(--font-terminal), monospace' }}>

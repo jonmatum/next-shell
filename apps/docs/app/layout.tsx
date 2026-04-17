@@ -8,7 +8,10 @@ import './globals.css';
 const inter = Inter({ variable: '--font-sans', subsets: ['latin'] });
 const jetbrains = JetBrains_Mono({ variable: '--font-mono', subsets: ['latin'] });
 const bigblue = localFont({
-  src: '../public/fonts/BigBlueTerminal.woff2',
+  src: [
+    { path: '../public/fonts/BigBlueTerminal.woff2', weight: '400', style: 'normal' },
+    { path: '../public/fonts/BigBlueTerminal.ttf', weight: '400', style: 'normal' },
+  ],
   variable: '--font-terminal',
   display: 'swap',
 });
