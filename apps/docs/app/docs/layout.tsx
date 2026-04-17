@@ -8,7 +8,11 @@ export default function Layout({ children }: { children: ReactNode }) {
       tree={source.pageTree}
       githubUrl="https://github.com/jonmatum/next-shell"
       nav={{
-        title: <span className="font-semibold">next-shell</span>,
+        title: (
+          <span className="gradient-text" style={{ fontFamily: 'var(--font-terminal), monospace' }}>
+            next-shell
+          </span>
+        ),
       }}
     >
       {children}

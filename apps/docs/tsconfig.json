@@ -10,9 +10,14 @@
     "paths": {
       "@/*": ["./*"]
     },
-    "plugins": [{ "name": "next" }],
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
     "declaration": false,
-    "declarationMap": false
+    "declarationMap": false,
+    "incremental": true
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules", ".source"]

@@ -1,4 +1,121 @@
 @import 'fumadocs-ui/style.css';
 @import 'tailwindcss';
-@source "../../node_modules/@jonmatum/next-shell/dist/**/*.{js,cjs}";
+@source "../../../packages/next-shell/src/**/*.{ts,tsx}";
 @import '@jonmatum/next-shell/styles/preset.css';
+
+/*
+ * jonmatum.dev dark theme — override fumadocs defaults
+ * Colors: deep navy background, blue/cyan accents, glass morphism
+ */
+
+:root {
+  /* fumadocs HSL overrides — mapped from jonmatum.dev hex palette */
+  --fd-background: 215 31% 6%; /* #0b0f14 */
+  --fd-foreground: 216 12% 91%; /* #e5e7eb */
+  --fd-muted: 215 33% 17%; /* #1e293b */
+  --fd-muted-foreground: 216 12% 84%; /* #c9cdd4 — readable on dark muted */
+  --fd-popover: 215 30% 14%; /* rgba(26,34,48) */
+  --fd-popover-foreground: 216 12% 91%;
+  --fd-card: 215 30% 14%;
+  --fd-card-foreground: 216 12% 91%;
+  --fd-border: 215 27% 20%; /* #263042 */
+  --fd-primary: 217 91% 60%; /* #3b82f6 */
+  --fd-primary-foreground: 222 47% 2%;
+  --fd-secondary: 215 33% 17%;
+  --fd-secondary-foreground: 0 0% 100%;
+  --fd-accent: 217 91% 68%; /* #60a5fa tinted */
+  --fd-accent-foreground: 216 12% 91%; /* #e5e7eb — readable on accent bg */
+  --fd-ring: 217 91% 60%;
+}
+
+.dark {
+  --fd-background: 215 31% 6%;
+  --fd-foreground: 216 12% 91%;
+  --fd-muted: 215 33% 17%;
+  --fd-muted-foreground: 216 12% 84%; /* #c9cdd4 — WCAG AA on dark muted */
+  --fd-popover: 215 30% 14%;
+  --fd-popover-foreground: 216 12% 91%;
+  --fd-card: 215 30% 14%;
+  --fd-card-foreground: 216 12% 91%;
+  --fd-border: 215 27% 20%;
+  --fd-primary: 217 91% 60%;
+  --fd-primary-foreground: 222 47% 2%;
+  --fd-secondary: 215 33% 17%;
+  --fd-secondary-foreground: 0 0% 100%;
+  --fd-accent: 217 91% 68%;
+  --fd-accent-foreground: 216 12% 91%;
+  --fd-ring: 217 91% 60%;
+}
+
+@layer base {
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background:
+      radial-gradient(circle at top left, rgba(59, 130, 246, 0.18), transparent 28%),
+      radial-gradient(circle at top right, rgba(34, 211, 238, 0.12), transparent 24%),
+      linear-gradient(180deg, #0b0f14 0%, #0f141d 100%);
+  }
+  html {
+    color-scheme: dark;
+  }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0b0f14;
+}
+::-webkit-scrollbar-thumb {
+  background: #263042;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3b82f6;
+}
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #263042 #0b0f14;
+}
+
+/* Glass morphism utility */
+.glass {
+  border: 1px solid hsl(215 27% 20%);
+  background: rgba(26, 34, 48, 0.72);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow:
+    0 0 0 1px rgba(59, 130, 246, 0.15),
+    0 18px 60px rgba(11, 15, 20, 0.45),
+    0 0 30px rgba(34, 211, 238, 0.12);
+}
+
+/* Gradient text utility */
+.gradient-text {
+  background: linear-gradient(135deg, #60a5fa, #67e8f9);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Focus ring */
+*:focus-visible {
+  outline: 2px solid #60a5fa;
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
