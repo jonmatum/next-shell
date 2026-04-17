@@ -2,7 +2,7 @@
 
 Monorepo for [`@jonmatum/next-shell`](./packages/next-shell) — a reusable Next.js app shell built on **shadcn/ui** primitives with a strict **semantic-token** design system.
 
-> **Status:** Phases 0–8 landed on `main`. Phase 9 (docs site) in progress. Track phase-by-phase progress in [Epic #13](https://github.com/jonmatum/next-shell/issues/13).
+> **Status:** Phases 0–9 landed on `main`. Phase 10 (release pipeline) in progress. Track phase-by-phase progress in [Epic #13](https://github.com/jonmatum/next-shell/issues/13).
 
 ## What's in the box today
 
@@ -17,8 +17,8 @@ Monorepo for [`@jonmatum/next-shell`](./packages/next-shell) — a reusable Next
 |     6 | Providers composer — `AppProviders`, `QueryProvider` (TanStack Query v5), `ToastProvider` (Sonner), `ErrorBoundary`, `I18nProvider`                                          | ✅ Landed  |
 |     7 | Auth adapter pattern — `AuthProvider`, `useSession`, `useUser`, `useHasPermission`, `useRequireAuth`, `SignedIn`, `SignedOut`, `RoleGate`, `requireSession` (server)         | ✅ Landed  |
 |     8 | Hooks + formatters — `useDisclosure`, `useLocalStorage`, `useDebounced*`, `useHotkey`, `useBreakpoint`, `useCopyToClipboard` + `formatDate`, `formatCurrency`, `truncate`, … | ✅ Landed  |
-|     9 | Docs site (fumadocs v14) — 8 content pages covering all phases; Storybook deferred                                                                                           | 🚧 PR open |
-|    10 | Publishing + changeset release workflow                                                                                                                                      | ⏳ Queued  |
+|     9 | Docs site (fumadocs v14) — 8 content pages covering all phases; Storybook deferred                                                                                           | ✅ Landed  |
+|    10 | Publishing + changeset release workflow — `changesets/action`, npm provenance, `release.yml`                                                                                 | 🚧 PR open |
 |    11 | Integration back into Smart Pad Rules                                                                                                                                        | ⏳ Queued  |
 
 **42 primitives** (Phase 3): Accordion, Alert, AlertDialog, AspectRatio, Avatar, Badge, Breadcrumb, Button, Calendar, Card, Carousel, Chart, Checkbox, Collapsible, Command, ContextMenu, Dialog, Drawer, DropdownMenu, Form, HoverCard, Input, InputOTP, Label, Menubar, NavigationMenu, Pagination, Popover, Progress, RadioGroup, Resizable, ScrollArea, Select, Separator, Sheet, Skeleton, Slider, Switch, Table, Tabs, Textarea, Toaster (Sonner), Toggle, ToggleGroup, Tooltip.
