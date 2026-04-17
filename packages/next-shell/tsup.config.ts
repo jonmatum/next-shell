@@ -52,6 +52,9 @@ export default defineConfig({
   splitting: false,
   treeshake: true,
   target: 'es2022',
+  esbuildOptions(options) {
+    options.jsx = 'automatic';
+  },
   external: ['react', 'react-dom', 'next', 'next-auth', 'next-auth/react', 'tailwindcss'],
   async onSuccess() {
     // Copy static CSS assets into dist/styles/.
