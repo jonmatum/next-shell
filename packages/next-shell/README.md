@@ -2,7 +2,7 @@
 
 Reusable Next.js app shell built on **shadcn/ui** primitives with a strict **semantic-token** design system.
 
-> **Status:** Phases 0–7 landed on `main` (tokens, theming, 42 primitives, full layout shell, nav system, providers, auth adapters). Follow the rollout in [Epic #13](https://github.com/jonmatum/next-shell/issues/13).
+> **Status:** Phases 0–8 landed on `main` (tokens, theming, 42 primitives, full layout shell, nav system, providers, auth adapters, hooks + formatters). Follow the rollout in [Epic #13](https://github.com/jonmatum/next-shell/issues/13).
 
 ## Install
 
@@ -89,24 +89,25 @@ Every primitive ships with `data-slot` attributes for custom-styling hooks, `ari
 
 ## Subpath entry points
 
-| Import                                   | Surface                                                                                                            | Status     |
-| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------ | ---------- |
-| `@jonmatum/next-shell`                   | Root barrel — `cn`, `packageVersion`, `tokenSchemaVersion`                                                         | ✅         |
-| `@jonmatum/next-shell/core`              | `cn`, `packageVersion`                                                                                             | ✅         |
-| `@jonmatum/next-shell/primitives`        | 42 shadcn/ui primitives (client)                                                                                   | ✅         |
-| `@jonmatum/next-shell/providers`         | `AppProviders`, `ThemeProvider`, `QueryProvider`, `ToastProvider`, `ErrorBoundary`, `I18nProvider` (client)        | ✅         |
-| `@jonmatum/next-shell/providers/server`  | SSR theme cookie helpers (server-safe)                                                                             | ✅         |
-| `@jonmatum/next-shell/layout`            | `AppShell`, `Sidebar`, `TopBar`, `CommandBar`, `ContentContainer`, `PageHeader`, `Footer`, nav + status helpers    | ✅         |
-| `@jonmatum/next-shell/layout/server`     | SSR sidebar-state cookie helpers (server-safe)                                                                     | ✅         |
-| `@jonmatum/next-shell/auth`              | `AuthProvider`, `useSession`, `useUser`, `useHasPermission`, `useRequireAuth`, `SignedIn`, `SignedOut`, `RoleGate` | ✅         |
-| `@jonmatum/next-shell/auth/server`       | `requireSession` — throws `AuthRequiredError` (401) for Route Handlers (server-safe)                               | ✅         |
-| `@jonmatum/next-shell/auth/nextauth`     | `createNextAuthAdapter` — Auth.js v5 wrapper (optional peer: `next-auth >= 5`)                                     | ✅         |
-| `@jonmatum/next-shell/auth/mock`         | `createMockAuthAdapter` — zero-dep adapter for tests and Storybook                                                 | ✅         |
-| `@jonmatum/next-shell/tokens`            | TS view of the semantic-token contract — literal unions, `cssVar`, brand overrides                                 | ✅         |
-| `@jonmatum/next-shell/tailwind-preset`   | Tailwind v4 preset (maps tokens → `@theme` keys)                                                                   | ✅         |
-| `@jonmatum/next-shell/styles/tokens.css` | Token CSS (custom properties for `:root` + `[data-theme="dark"]`)                                                  | ✅         |
-| `@jonmatum/next-shell/styles/preset.css` | Combined preset (tokens + `tw-animate-css` + Tailwind `@theme` mappings)                                           | ✅         |
-| `@jonmatum/next-shell/hooks`             | Cross-cutting hooks (`useDebounce`, `useMedia`, …)                                                                 | ⏳ Phase 8 |
+| Import                                   | Surface                                                                                                             | Status |
+| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ------ |
+| `@jonmatum/next-shell`                   | Root barrel — `cn`, `packageVersion`, `tokenSchemaVersion`                                                          | ✅     |
+| `@jonmatum/next-shell/core`              | `cn`, `packageVersion`                                                                                              | ✅     |
+| `@jonmatum/next-shell/primitives`        | 42 shadcn/ui primitives (client)                                                                                    | ✅     |
+| `@jonmatum/next-shell/providers`         | `AppProviders`, `ThemeProvider`, `QueryProvider`, `ToastProvider`, `ErrorBoundary`, `I18nProvider` (client)         | ✅     |
+| `@jonmatum/next-shell/providers/server`  | SSR theme cookie helpers (server-safe)                                                                              | ✅     |
+| `@jonmatum/next-shell/layout`            | `AppShell`, `Sidebar`, `TopBar`, `CommandBar`, `ContentContainer`, `PageHeader`, `Footer`, nav + status helpers     | ✅     |
+| `@jonmatum/next-shell/layout/server`     | SSR sidebar-state cookie helpers (server-safe)                                                                      | ✅     |
+| `@jonmatum/next-shell/auth`              | `AuthProvider`, `useSession`, `useUser`, `useHasPermission`, `useRequireAuth`, `SignedIn`, `SignedOut`, `RoleGate`  | ✅     |
+| `@jonmatum/next-shell/auth/server`       | `requireSession` — throws `AuthRequiredError` (401) for Route Handlers (server-safe)                                | ✅     |
+| `@jonmatum/next-shell/auth/nextauth`     | `createNextAuthAdapter` — Auth.js v5 wrapper (optional peer: `next-auth >= 5`)                                      | ✅     |
+| `@jonmatum/next-shell/auth/mock`         | `createMockAuthAdapter` — zero-dep adapter for tests and Storybook                                                  | ✅     |
+| `@jonmatum/next-shell/tokens`            | TS view of the semantic-token contract — literal unions, `cssVar`, brand overrides                                  | ✅     |
+| `@jonmatum/next-shell/tailwind-preset`   | Tailwind v4 preset (maps tokens → `@theme` keys)                                                                    | ✅     |
+| `@jonmatum/next-shell/styles/tokens.css` | Token CSS (custom properties for `:root` + `[data-theme="dark"]`)                                                   | ✅     |
+| `@jonmatum/next-shell/styles/preset.css` | Combined preset (tokens + `tw-animate-css` + Tailwind `@theme` mappings)                                            | ✅     |
+| `@jonmatum/next-shell/hooks`             | `useDisclosure`, `useLocalStorage`, `useBreakpoint`, `useHotkey`, `useDebouncedValue`, `useMounted`, `useLocale`, … | ✅     |
+| `@jonmatum/next-shell/formatters`        | `formatDate`, `formatRelativeTime`, `formatCurrency`, `formatFileSize`, `truncate`, `slugify`, …                    | ✅     |
 
 Subpath imports tree-shake cleanly — importing only `@jonmatum/next-shell/primitives` does not pull in providers, and vice versa.
 
