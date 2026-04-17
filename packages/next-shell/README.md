@@ -2,7 +2,7 @@
 
 Reusable Next.js app shell built on **shadcn/ui** primitives with a strict **semantic-token** design system.
 
-> **Status:** Phases 0–10 landed on `main` (tokens, theming, 42 primitives, full layout shell, nav system, providers, auth adapters, hooks + formatters, docs site, release pipeline). Phase 11 (example app) in progress. Follow the rollout in [Epic #13](https://github.com/jonmatum/next-shell/issues/13).
+> **Status:** All 11 phases complete. Published via Changesets. 508 tests, docs site, and a working example app all on `main`.
 
 ## Install
 
