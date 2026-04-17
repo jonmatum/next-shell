@@ -1,6 +1,7 @@
 import { defineConfig } from 'tsup';
 import { cp, readFile, writeFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
+import path from 'node:path';
 
 /**
  * Entry paths whose bundled output must be client-only (RSC `'use client'`
@@ -51,11 +52,29 @@ export default defineConfig({
   splitting: false,
   treeshake: true,
   target: 'es2022',
+  esbuildOptions(options) {
+    options.jsx = 'automatic';
+  },
   external: ['react', 'react-dom', 'next', 'next-auth', 'next-auth/react', 'tailwindcss'],
   async onSuccess() {
     // Copy static CSS assets into dist/styles/.
     if (existsSync('src/styles')) {
       await cp('src/styles', 'dist/styles', { recursive: true });
+    }
+
+    // Inline tw-animate-css into dist/styles/preset.css so the distributed
+    // file has no external CSS @import dependencies. Consuming apps don't need
+    // tw-animate-css in their own node_modules for CSS processing to work.
+    const presetPath = 'dist/styles/preset.css';
+    if (existsSync(presetPath)) {
+      const twAnimatePath = path.join(
+        process.cwd(),
+        'node_modules/tw-animate-css/dist/tw-animate.css',
+      );
+      const twAnimateContent = await readFile(twAnimatePath, 'utf8');
+      const preset = await readFile(presetPath, 'utf8');
+      const inlined = preset.replace("@import 'tw-animate-css';", twAnimateContent);
+      await writeFile(presetPath, inlined, 'utf8');
     }
 
     // Re-apply `'use client'` to bundled client entries so Next.js RSC

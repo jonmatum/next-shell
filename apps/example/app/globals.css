@@ -1,4 +1,2 @@
-@import '@jonmatum/next-shell/styles/tokens.css';
-@import '@jonmatum/next-shell/styles/preset.css';
-
 @import 'tailwindcss';
+@import '@jonmatum/next-shell/styles/preset.css';
