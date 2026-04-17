@@ -33,71 +33,85 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
+      "source": "./src/index.ts",
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
     "./core": {
+      "source": "./src/core/index.ts",
       "types": "./dist/core/index.d.ts",
       "import": "./dist/core/index.js",
       "require": "./dist/core/index.cjs"
     },
     "./layout": {
+      "source": "./src/layout/index.ts",
       "types": "./dist/layout/index.d.ts",
       "import": "./dist/layout/index.js",
       "require": "./dist/layout/index.cjs"
     },
     "./layout/server": {
+      "source": "./src/layout/server/index.ts",
       "types": "./dist/layout/server/index.d.ts",
       "import": "./dist/layout/server/index.js",
       "require": "./dist/layout/server/index.cjs"
     },
     "./primitives": {
+      "source": "./src/primitives/index.ts",
       "types": "./dist/primitives/index.d.ts",
       "import": "./dist/primitives/index.js",
       "require": "./dist/primitives/index.cjs"
     },
     "./providers": {
+      "source": "./src/providers/index.ts",
       "types": "./dist/providers/index.d.ts",
       "import": "./dist/providers/index.js",
       "require": "./dist/providers/index.cjs"
     },
     "./providers/server": {
+      "source": "./src/providers/server/index.ts",
       "types": "./dist/providers/server/index.d.ts",
       "import": "./dist/providers/server/index.js",
       "require": "./dist/providers/server/index.cjs"
     },
     "./auth": {
+      "source": "./src/auth/index.ts",
       "types": "./dist/auth/index.d.ts",
       "import": "./dist/auth/index.js",
       "require": "./dist/auth/index.cjs"
     },
     "./auth/server": {
+      "source": "./src/auth/server/index.ts",
       "types": "./dist/auth/server/index.d.ts",
       "import": "./dist/auth/server/index.js",
       "require": "./dist/auth/server/index.cjs"
     },
     "./auth/nextauth": {
+      "source": "./src/auth/adapters/nextauth.ts",
       "types": "./dist/auth/adapters/nextauth.d.ts",
       "import": "./dist/auth/adapters/nextauth.js",
       "require": "./dist/auth/adapters/nextauth.cjs"
     },
     "./auth/mock": {
+      "source": "./src/auth/adapters/mock.ts",
       "types": "./dist/auth/adapters/mock.d.ts",
       "import": "./dist/auth/adapters/mock.js",
       "require": "./dist/auth/adapters/mock.cjs"
     },
     "./hooks": {
+      "source": "./src/hooks/index.ts",
       "types": "./dist/hooks/index.d.ts",
       "import": "./dist/hooks/index.js",
       "require": "./dist/hooks/index.cjs"
     },
     "./formatters": {
+      "source": "./src/formatters/index.ts",
       "types": "./dist/formatters/index.d.ts",
       "import": "./dist/formatters/index.js",
       "require": "./dist/formatters/index.cjs"
     },
     "./tokens": {
+      "source": "./src/tokens/index.ts",
       "types": "./dist/tokens/index.d.ts",
       "import": "./dist/tokens/index.js",
       "require": "./dist/tokens/index.cjs"
@@ -105,6 +119,7 @@
     "./styles/tokens.css": "./dist/styles/tokens.css",
     "./styles/preset.css": "./dist/styles/preset.css",
     "./tailwind-preset": {
+      "source": "./src/tailwind-preset/index.ts",
       "types": "./dist/tailwind-preset/index.d.ts",
       "import": "./dist/tailwind-preset/index.js",
       "require": "./dist/tailwind-preset/index.cjs"
