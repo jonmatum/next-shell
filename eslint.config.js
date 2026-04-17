@@ -13,6 +13,7 @@ export default [
       '**/dist/**',
       '**/node_modules/**',
       '**/.next/**',
+      '**/out/**',
       '**/.source/**',
       '**/coverage/**',
       '**/*.min.js',
