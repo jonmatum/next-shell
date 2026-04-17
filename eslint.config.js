@@ -16,6 +16,7 @@ export default [
       '**/.source/**',
       '**/coverage/**',
       '**/*.min.js',
+      '**/next-env.d.ts',
       'pnpm-lock.yaml',
       '.claude/skills/**',
     ],
