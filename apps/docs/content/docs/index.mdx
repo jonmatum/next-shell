@@ -1,0 +1,92 @@
+---
+title: Getting Started
+description: Set up @jonmatum/next-shell in your Next.js 15 application.
+---
+
+`@jonmatum/next-shell` is a reusable Next.js app shell built on **shadcn/ui** primitives with a strict **semantic-token** design system. It ships a complete set of layout components, auth adapters, providers, hooks, and formatters — all tree-shakeable via subpath imports.
+
+## Prerequisites
+
+- Node.js 20+
+- Next.js 15 (App Router)
+- React 19
+- pnpm (recommended) or npm/yarn
+
+## Installation
+
+```bash
+pnpm add @jonmatum/next-shell
+# Required peers
+pnpm add next@^15 react@^19 react-dom@^19
+# Recommended
+pnpm add tailwindcss@^4
+```
+
+## 1 — Load the preset
+
+The Tailwind preset wires every semantic token into Tailwind's `@theme` scale and includes `tw-animate-css` animation utilities:
+
+```css title="app/globals.css"
+@import 'tailwindcss';
+@import '@jonmatum/next-shell/styles/preset.css';
+```
+
+Now utilities like `bg-background`, `text-foreground`, `border-border`, `animate-in`, and `duration-normal` are available everywhere.
+
+## 2 — Wrap with AppProviders
+
+`AppProviders` composes the full provider stack in the correct order. Each layer is individually opt-out:
+
+```tsx title="app/providers.tsx"
+'use client';
+
+import { AppProviders } from '@jonmatum/next-shell/providers';
+
+export function Providers({ children }: { children: React.ReactNode }) {
+  return (
+    <AppProviders themeProps={{ defaultTheme: 'system', enableSystem: true }}>
+      {children}
+    </AppProviders>
+  );
+}
+```
+
+```tsx title="app/layout.tsx"
+import { Providers } from './providers';
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en" suppressHydrationWarning>
+      <body>
+        <Providers>{children}</Providers>
+      </body>
+    </html>
+  );
+}
+```
+
+## 3 — Use the AppShell
+
+```tsx title="app/(app)/layout.tsx"
+import { AppShell } from '@jonmatum/next-shell/layout';
+import { MySidebar } from '@/components/my-sidebar';
+import { MyTopBar } from '@/components/my-top-bar';
+
+export default function AppLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <AppShell sidebar={<MySidebar />} topBar={<MyTopBar />} commandBar>
+      {children}
+    </AppShell>
+  );
+}
+```
+
+## Next steps
+
+- [Design system](/docs/design-system) — token catalog, theming, brand overrides
+- [Providers](/docs/providers) — QueryProvider, ToastProvider, ErrorBoundary, I18nProvider
+- [Layout](/docs/layout) — AppShell, Sidebar, TopBar, CommandBar
+- [Auth](/docs/auth) — AuthProvider, useSession, guards
+- [Hooks](/docs/hooks) — useDisclosure, useLocalStorage, useHotkey, …
+- [Formatters](/docs/formatters) — formatDate, formatCurrency, truncate, …
+- [Primitives](/docs/primitives) — 42 shadcn/ui primitives

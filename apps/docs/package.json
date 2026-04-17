@@ -1,0 +1,26 @@
+{
+  "name": "@jonmatum/next-shell-docs",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "dev": "next dev --turbo",
+    "start": "next start",
+    "typecheck": "fumadocs-mdx && tsc --noEmit"
+  },
+  "dependencies": {
+    "@jonmatum/next-shell": "workspace:*",
+    "fumadocs-core": "^14.5.6",
+    "fumadocs-mdx": "^11.6.6",
+    "fumadocs-ui": "^14.5.6",
+    "next": "^15.1.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.1",
+    "@types/react": "^19.0.1",
+    "@types/react-dom": "^19.0.1",
+    "typescript": "^5.6.3"
+  }
+}

@@ -1,0 +1,168 @@
+---
+title: Providers
+description: AppProviders and the individual provider layers — theme, data, toasts, errors, and i18n.
+---
+
+`@jonmatum/next-shell/providers` exports a single `AppProviders` composer that nests all standard providers in the correct order, plus individual providers for opt-in composition.
+
+## AppProviders
+
+The one-import solution for the full provider stack:
+
+```
+ThemeProvider
+  QueryProvider (TanStack Query v5)
+    ToastProvider (Sonner)
+      ErrorBoundary
+        TooltipProvider (Radix)
+          I18nProvider
+            {children}
+```
+
+Each layer can be disabled by passing `false`:
+
+```tsx
+import { AppProviders } from '@jonmatum/next-shell/providers';
+
+<AppProviders
+  themeProps={{ defaultTheme: 'dark' }}
+  queryProps={{ client: serverQueryClient }}
+  toastProps={{ position: 'top-center' }}
+  i18nProps={false}
+>
+  {children}
+</AppProviders>;
+```
+
+## ThemeProvider
+
+Wraps [next-themes](https://github.com/pacocoursey/next-themes). All props are forwarded.
+
+```tsx
+import { ThemeProvider, ThemeToggle } from '@jonmatum/next-shell/providers';
+
+<ThemeProvider defaultTheme="system" enableSystem disableTransitionOnChange>
+  <ThemeToggle />
+</ThemeProvider>;
+```
+
+Use `useTheme()` to read and set the current theme:
+
+```tsx
+import { useTheme } from '@jonmatum/next-shell/providers';
+
+function MyComponent() {
+  const { theme, setTheme, resolvedTheme } = useTheme();
+  return <button onClick={() => setTheme('dark')}>Go dark</button>;
+}
+```
+
+## QueryProvider
+
+TanStack Query v5 with sane defaults (`staleTime: 60s`, `retry: 1`, `refetchOnWindowFocus: false`).
+
+```tsx
+import { QueryProvider } from '@jonmatum/next-shell/providers';
+
+<QueryProvider>{children}</QueryProvider>;
+```
+
+### SSR prefetching
+
+```tsx
+// app/page.tsx (Server Component)
+import { makeServerQueryClient } from '@jonmatum/next-shell/providers';
+import { HydrationBoundary, dehydrate } from '@tanstack/react-query';
+
+export default async function Page() {
+  const queryClient = makeServerQueryClient();
+  await queryClient.prefetchQuery({ queryKey: ['posts'], queryFn: fetchPosts });
+
+  return (
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <PostList />
+    </HydrationBoundary>
+  );
+}
+```
+
+## ToastProvider
+
+Wraps [Sonner](https://sonner.emilkowal.ski/). Import `toast` from `sonner` directly in your code.
+
+```tsx
+import { toast } from 'sonner';
+
+toast.success('Saved!');
+toast.error('Something went wrong', { description: 'Try again later.' });
+```
+
+Override position, theme, or any Sonner prop via `toastProps`:
+
+```tsx
+<AppProviders toastProps={{ position: 'top-right', richColors: true }}>
+```
+
+## ErrorBoundary
+
+Class-based boundary with a default "Something went wrong / Try again" fallback. Accepts a custom `fallback` render prop:
+
+```tsx
+import { ErrorBoundary } from '@jonmatum/next-shell/providers';
+
+<ErrorBoundary
+  fallback={({ error, reset }) => (
+    <div>
+      <p>{error.message}</p>
+      <button onClick={reset}>Retry</button>
+    </div>
+  )}
+  onError={(error, info) => captureException(error, info)}
+>
+  <MyComponent />
+</ErrorBoundary>;
+```
+
+## I18nProvider
+
+Adapter-based i18n — plug in any library:
+
+```tsx
+import { I18nProvider } from '@jonmatum/next-shell/providers';
+import { useTranslations } from 'next-intl';
+
+function Root({ children }: { children: React.ReactNode }) {
+  const t = useTranslations();
+  return <I18nProvider adapter={{ t }}>{children}</I18nProvider>;
+}
+```
+
+In components, `useI18n()` returns the adapter or `null` when no provider is mounted — always guard the call:
+
+```tsx
+import { useI18n } from '@jonmatum/next-shell/providers';
+
+function MyComponent() {
+  const i18n = useI18n();
+  return <span>{i18n?.t('hello') ?? 'Hello'}</span>;
+}
+```
+
+## SSR cookie helpers
+
+Read the theme before React renders to eliminate the light-flash:
+
+```tsx
+// app/layout.tsx (Server Component)
+import { cookies } from 'next/headers';
+import { getThemeFromCookies } from '@jonmatum/next-shell/providers/server';
+
+export default async function RootLayout({ children }) {
+  const theme = getThemeFromCookies(await cookies()) ?? 'system';
+  return (
+    <html lang="en" data-theme={theme} suppressHydrationWarning>
+      <body>{children}</body>
+    </html>
+  );
+}
+```

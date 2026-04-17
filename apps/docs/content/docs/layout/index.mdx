@@ -1,0 +1,190 @@
+---
+title: Layout
+description: AppShell, Sidebar, TopBar, CommandBar, and content surface components.
+---
+
+`@jonmatum/next-shell/layout` provides the complete app-shell system — a composable set of layout primitives for building admin dashboards, SaaS apps, and internal tools.
+
+## AppShell
+
+The root orchestrator. Conditionally wraps children in `SidebarProvider` and `CommandBarProvider`:
+
+```tsx
+import { AppShell } from '@jonmatum/next-shell/layout';
+import { MySidebar } from './my-sidebar';
+
+export default function AppLayout({ children }) {
+  return (
+    <AppShell
+      sidebar={<MySidebar />}
+      topBar={<MyTopBar />}
+      footer={<MyFooter />}
+      commandBar // enables ⌘K
+      initialSidebarState="open"
+    >
+      {children}
+    </AppShell>
+  );
+}
+```
+
+When `sidebar` is omitted, the shell renders a simple flex column without a sidebar panel.
+
+## Sidebar
+
+Four variants via the `variant` prop:
+
+| Variant             | Description                     |
+| ------------------- | ------------------------------- |
+| `sidebar` (default) | Standard rail with hover-expand |
+| `floating`          | Floating panel with shadow      |
+| `inset`             | Inset within the content area   |
+| `icon`              | Icon-only, collapsed            |
+
+On mobile the sidebar renders as a drawer. State is cookie-persisted so SSR and client agree.
+
+```tsx
+import {
+  Sidebar,
+  SidebarHeader,
+  SidebarContent,
+  SidebarFooter,
+  SidebarTrigger,
+} from '@jonmatum/next-shell/layout';
+
+export function MySidebar() {
+  return (
+    <Sidebar variant="sidebar" collapsible="icon">
+      <SidebarHeader>
+        <span className="font-bold">My App</span>
+        <SidebarTrigger />
+      </SidebarHeader>
+      <SidebarContent>{/* SidebarNav goes here */}</SidebarContent>
+      <SidebarFooter>{/* User menu */}</SidebarFooter>
+    </Sidebar>
+  );
+}
+```
+
+## Navigation system
+
+Build permission-aware navigation from a config object:
+
+```tsx
+import { buildNav, SidebarNav } from '@jonmatum/next-shell/layout';
+
+const config = {
+  items: [
+    { label: 'Dashboard', href: '/', icon: HomeIcon },
+    {
+      label: 'Settings',
+      href: '/settings',
+      icon: SettingsIcon,
+      requires: 'admin', // only shown to admin users
+    },
+  ],
+};
+
+function MySidebarContent() {
+  const pathname = usePathname();
+  const { items } = buildNav({ config, pathname, permissions: ['admin'] });
+  return <SidebarNav items={items} />;
+}
+```
+
+`buildNav` also returns a `breadcrumbs` array and active item marker:
+
+```tsx
+import { Breadcrumbs } from '@jonmatum/next-shell/layout';
+
+<Breadcrumbs config={config} pathname={pathname} permissions={permissions} />;
+```
+
+## CommandBar (⌘K)
+
+A keyboard-driven action palette. Register actions from any component:
+
+```tsx
+import { useCommandBarActions } from '@jonmatum/next-shell/layout';
+
+function MyComponent() {
+  useCommandBarActions([
+    {
+      id: 'new-post',
+      label: 'New post',
+      group: 'Content',
+      shortcut: 'n',
+      onSelect: () => router.push('/posts/new'),
+    },
+  ]);
+}
+```
+
+### Wire nav actions automatically
+
+```tsx
+import { CommandBarActions } from '@jonmatum/next-shell/layout';
+
+<CommandBarActions
+  config={navConfig}
+  pathname={pathname}
+  permissions={permissions}
+  onNavigate={router.push}
+/>;
+```
+
+## Content surfaces
+
+```tsx
+import {
+  ContentContainer,
+  PageHeader,
+  Footer,
+  EmptyState,
+  ErrorState,
+  LoadingState,
+} from '@jonmatum/next-shell/layout';
+
+export default function Page() {
+  return (
+    <ContentContainer>
+      <PageHeader
+        title="Users"
+        description="Manage your team members."
+        actions={<Button>Invite</Button>}
+      />
+
+      {isLoading ? (
+        <LoadingState />
+      ) : error ? (
+        <ErrorState error={error} />
+      ) : users.length === 0 ? (
+        <EmptyState title="No users yet" />
+      ) : (
+        <UserTable users={users} />
+      )}
+
+      <Footer />
+    </ContentContainer>
+  );
+}
+```
+
+## SSR sidebar state
+
+Eliminate layout shift by reading the sidebar cookie in a Server Component:
+
+```tsx
+// app/(app)/layout.tsx
+import { cookies } from 'next/headers';
+import { getSidebarStateFromCookies } from '@jonmatum/next-shell/layout/server';
+
+export default async function AppLayout({ children }) {
+  const sidebarState = getSidebarStateFromCookies(await cookies());
+  return (
+    <AppShell initialSidebarState={sidebarState} sidebar={<MySidebar />}>
+      {children}
+    </AppShell>
+  );
+}
+```

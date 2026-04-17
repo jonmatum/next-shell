@@ -1,0 +1,177 @@
+---
+title: Hooks
+description: Cross-cutting React hooks — state, storage, media, keyboard, and more.
+---
+
+All hooks live at `@jonmatum/next-shell/hooks`. They are client-only (`'use client'` is set on the subpath) and SSR-safe.
+
+## State
+
+### useDisclosure
+
+Open / close / toggle primitive for dialogs, drawers, and popovers:
+
+```tsx
+import { useDisclosure } from '@jonmatum/next-shell/hooks';
+
+function MyDialog() {
+  const { isOpen, open, close, onOpenChange } = useDisclosure();
+  return (
+    <Dialog open={isOpen} onOpenChange={onOpenChange}>
+      <Button onClick={open}>Open</Button>
+      <DialogContent>
+        <DialogTitle>Hello</DialogTitle>
+        <Button onClick={close}>Close</Button>
+      </DialogContent>
+    </Dialog>
+  );
+}
+```
+
+### useControllableState
+
+Radix-style controlled / uncontrolled state — use when building components that accept both `value` and `defaultValue`:
+
+```tsx
+import { useControllableState } from '@jonmatum/next-shell/hooks';
+
+function Select({ value, defaultValue, onValueChange }) {
+  const [selected, setSelected] = useControllableState({
+    prop: value,
+    defaultProp: defaultValue,
+    onChange: onValueChange,
+  });
+  // ...
+}
+```
+
+## Storage
+
+### useLocalStorage / useSessionStorage
+
+JSON-serialised, SSR-safe, with a functional updater and `removeValue`:
+
+```tsx
+import { useLocalStorage } from '@jonmatum/next-shell/hooks';
+
+const [theme, setTheme, removeTheme] = useLocalStorage('theme', 'system');
+setTheme('dark');
+setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
+removeTheme();
+```
+
+## Debouncing
+
+### useDebouncedValue
+
+```tsx
+import { useDebouncedValue } from '@jonmatum/next-shell/hooks';
+
+const [search, setSearch] = useState('');
+const debouncedSearch = useDebouncedValue(search, 300);
+
+useEffect(() => {
+  fetchResults(debouncedSearch);
+}, [debouncedSearch]);
+```
+
+### useDebouncedCallback
+
+```tsx
+import { useDebouncedCallback } from '@jonmatum/next-shell/hooks';
+
+const save = useDebouncedCallback(async (value: string) => {
+  await api.save(value);
+}, 500);
+```
+
+## Device / media
+
+### useMediaQuery
+
+```tsx
+import { useMediaQuery } from '@jonmatum/next-shell/hooks';
+
+const isDark = useMediaQuery('(prefers-color-scheme: dark)');
+const isTouch = useMediaQuery('(pointer: coarse)');
+```
+
+### useBreakpoint
+
+Tailwind v4 default breakpoints — returns booleans and the current largest active breakpoint:
+
+```tsx
+import { useBreakpoint } from '@jonmatum/next-shell/hooks';
+
+const { isMd, isLg, current } = useBreakpoint();
+// current: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | null
+```
+
+## Keyboard
+
+### useHotkey
+
+```tsx
+import { useHotkey } from '@jonmatum/next-shell/hooks';
+
+useHotkey('k', openCommandBar, { meta: true }); // ⌘K
+useHotkey('Escape', closeModal, { enabled: isOpen }); // conditional
+useHotkey('s', save, { ctrl: true, meta: true }); // Ctrl+S / ⌘S
+```
+
+## Lifecycle
+
+### useMounted
+
+Returns `true` after the first render — use to avoid SSR/client mismatch in conditional rendering:
+
+```tsx
+import { useMounted } from '@jonmatum/next-shell/hooks';
+
+function ClientOnly({ children }) {
+  const mounted = useMounted();
+  if (!mounted) return null;
+  return <>{children}</>;
+}
+```
+
+### useIsomorphicLayoutEffect
+
+`useLayoutEffect` on the client, `useEffect` on the server:
+
+```tsx
+import { useIsomorphicLayoutEffect } from '@jonmatum/next-shell/hooks';
+
+useIsomorphicLayoutEffect(() => {
+  // runs before paint on client, after render on server
+}, [dep]);
+```
+
+## Clipboard
+
+### useCopyToClipboard
+
+```tsx
+import { useCopyToClipboard } from '@jonmatum/next-shell/hooks';
+
+function CopyButton({ text }) {
+  const { isCopied, copy } = useCopyToClipboard(2000);
+  return <button onClick={() => copy(text)}>{isCopied ? 'Copied!' : 'Copy'}</button>;
+}
+```
+
+## i18n
+
+### useLocale
+
+Returns the active locale string. Reads from `I18nAdapter.locale` if exposed, falls back to `navigator.language`:
+
+```tsx
+import { useLocale } from '@jonmatum/next-shell/hooks';
+import { formatCurrency } from '@jonmatum/next-shell/formatters';
+
+function Price({ amount }) {
+  const locale = useLocale();
+  return <span>{formatCurrency(amount, 'USD', { locale })}</span>;
+}
+```
