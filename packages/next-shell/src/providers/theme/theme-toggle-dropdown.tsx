@@ -72,6 +72,7 @@ export function ThemeToggleDropdown({
           aria-label={label}
           data-theme-value={current}
           data-resolved-theme={resolved}
+          suppressHydrationWarning
           {...rest}
         >
           <TriggerIcon aria-hidden className="size-4" />

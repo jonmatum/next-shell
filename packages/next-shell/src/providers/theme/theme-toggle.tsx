@@ -58,6 +58,7 @@ export function ThemeToggle({ labels, className, onClick, ...rest }: ThemeToggle
       title={label}
       data-theme-value={current}
       data-resolved-theme={resolved}
+      suppressHydrationWarning
       onClick={(event) => {
         setTheme(target);
         onClick?.(event);

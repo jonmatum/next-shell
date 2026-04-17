@@ -28,8 +28,11 @@ The Tailwind preset wires every semantic token into Tailwind's `@theme` scale an
 
 ```css title="app/globals.css"
 @import 'tailwindcss';
+@source "node_modules/@jonmatum/next-shell/dist/**/*.{js,cjs}";
 @import '@jonmatum/next-shell/styles/preset.css';
 ```
+
+The `@source` line is required — Tailwind v4 only generates CSS for classes it finds in scanned files, and `node_modules` is skipped by default. This tells Tailwind to scan the library's bundled output so all component classes are included.
 
 Now utilities like `bg-background`, `text-foreground`, `border-border`, `animate-in`, and `duration-normal` are available everywhere.
 

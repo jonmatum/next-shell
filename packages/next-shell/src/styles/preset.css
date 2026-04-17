@@ -18,10 +18,6 @@
 
 @import './tokens.css';
 
-/* Tell Tailwind v4 to scan this package's bundled output for used class names
-   so tree-shaking doesn't strip utilities that only appear in library code. */
-@source "../**/*.{js,cjs}";
-
 /* Animation utilities — `animate-in`, `fade-in-0`, `zoom-in-95`,
    `slide-in-from-*`, etc. Required by every shadcn/ui overlay primitive
    (Tooltip, Dialog, Popover, DropdownMenu, Sheet, Drawer, …).
