@@ -128,10 +128,14 @@
     "next-auth": ">=5.0.0-beta.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "tailwindcss": "^4.0.0"
+    "tailwindcss": "^4.0.0",
+    "tw-animate-css": "^1.0.0"
   },
   "peerDependenciesMeta": {
     "tailwindcss": {
+      "optional": true
+    },
+    "tw-animate-css": {
       "optional": true
     },
     "next-auth": {
