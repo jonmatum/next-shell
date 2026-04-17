@@ -2,24 +2,24 @@
 
 Monorepo for [`@jonmatum/next-shell`](./packages/next-shell) — a reusable Next.js app shell built on **shadcn/ui** primitives with a strict **semantic-token** design system.
 
-> **Status:** Phases 0–10 landed on `main`. Phase 11 (example consumer app) in progress. Track phase-by-phase progress in [Epic #13](https://github.com/jonmatum/next-shell/issues/13).
+> **Status:** All 11 phases complete — extraction finished. 508 tests, full docs site, release pipeline, and a working example app all on `main`.
 
 ## What's in the box today
 
-| Phase | Surface                                                                                                                                                                      | Status     |
-| ----: | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- |
-|     0 | Monorepo scaffold + CI + publishing skeleton                                                                                                                                 | ✅ Landed  |
-|     1 | Semantic-token contract + Tailwind v4 preset + OKLCH color tokens                                                                                                            | ✅ Landed  |
-|     2 | `ThemeProvider` · `useTheme` · `ThemeToggle` (cycle + dropdown) · SSR cookie helpers                                                                                         | ✅ Landed  |
-|     3 | **42 shadcn/ui primitives** vendored from [`shadcn-ui/ui@84d1d476`](https://github.com/shadcn-ui/ui/commit/84d1d476b1d1c6a01c6eeadd95885ce109969b08), each token-audited     | ✅ Landed  |
-|     4 | `AppShell` · `Sidebar` (4 variants, mobile drawer) · `TopBar` · `CommandBar` (⌘K) · `ContentContainer` · `PageHeader` · `Footer` · status states · SSR sidebar cookie        | ✅ Landed  |
-|     5 | Navigation system — `buildNav`, `SidebarNav`, `Breadcrumbs`, `CommandBarActions`; permission-gated nav via `requires`                                                        | ✅ Landed  |
-|     6 | Providers composer — `AppProviders`, `QueryProvider` (TanStack Query v5), `ToastProvider` (Sonner), `ErrorBoundary`, `I18nProvider`                                          | ✅ Landed  |
-|     7 | Auth adapter pattern — `AuthProvider`, `useSession`, `useUser`, `useHasPermission`, `useRequireAuth`, `SignedIn`, `SignedOut`, `RoleGate`, `requireSession` (server)         | ✅ Landed  |
-|     8 | Hooks + formatters — `useDisclosure`, `useLocalStorage`, `useDebounced*`, `useHotkey`, `useBreakpoint`, `useCopyToClipboard` + `formatDate`, `formatCurrency`, `truncate`, … | ✅ Landed  |
-|     9 | Docs site (fumadocs v14) — 8 content pages covering all phases; Storybook deferred                                                                                           | ✅ Landed  |
-|    10 | Publishing + changeset release workflow — `changesets/action`, npm provenance, `release.yml`                                                                                 | ✅ Landed  |
-|    11 | Example consumer app — dashboard, data table, auth guards, settings form, toast demos                                                                                        | 🚧 PR open |
+| Phase | Surface                                                                                                                                                                      | Status    |
+| ----: | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- |
+|     0 | Monorepo scaffold + CI + publishing skeleton                                                                                                                                 | ✅ Landed |
+|     1 | Semantic-token contract + Tailwind v4 preset + OKLCH color tokens                                                                                                            | ✅ Landed |
+|     2 | `ThemeProvider` · `useTheme` · `ThemeToggle` (cycle + dropdown) · SSR cookie helpers                                                                                         | ✅ Landed |
+|     3 | **42 shadcn/ui primitives** vendored from [`shadcn-ui/ui@84d1d476`](https://github.com/shadcn-ui/ui/commit/84d1d476b1d1c6a01c6eeadd95885ce109969b08), each token-audited     | ✅ Landed |
+|     4 | `AppShell` · `Sidebar` (4 variants, mobile drawer) · `TopBar` · `CommandBar` (⌘K) · `ContentContainer` · `PageHeader` · `Footer` · status states · SSR sidebar cookie        | ✅ Landed |
+|     5 | Navigation system — `buildNav`, `SidebarNav`, `Breadcrumbs`, `CommandBarActions`; permission-gated nav via `requires`                                                        | ✅ Landed |
+|     6 | Providers composer — `AppProviders`, `QueryProvider` (TanStack Query v5), `ToastProvider` (Sonner), `ErrorBoundary`, `I18nProvider`                                          | ✅ Landed |
+|     7 | Auth adapter pattern — `AuthProvider`, `useSession`, `useUser`, `useHasPermission`, `useRequireAuth`, `SignedIn`, `SignedOut`, `RoleGate`, `requireSession` (server)         | ✅ Landed |
+|     8 | Hooks + formatters — `useDisclosure`, `useLocalStorage`, `useDebounced*`, `useHotkey`, `useBreakpoint`, `useCopyToClipboard` + `formatDate`, `formatCurrency`, `truncate`, … | ✅ Landed |
+|     9 | Docs site (fumadocs v14) — 8 content pages covering all phases; Storybook deferred                                                                                           | ✅ Landed |
+|    10 | Publishing + changeset release workflow — `changesets/action`, npm provenance, `release.yml`                                                                                 | ✅ Landed |
+|    11 | Example consumer app — dashboard, data table, auth guards, settings form, toast demos                                                                                        | ✅ Landed |
 
 **42 primitives** (Phase 3): Accordion, Alert, AlertDialog, AspectRatio, Avatar, Badge, Breadcrumb, Button, Calendar, Card, Carousel, Chart, Checkbox, Collapsible, Command, ContextMenu, Dialog, Drawer, DropdownMenu, Form, HoverCard, Input, InputOTP, Label, Menubar, NavigationMenu, Pagination, Popover, Progress, RadioGroup, Resizable, ScrollArea, Select, Separator, Sheet, Skeleton, Slider, Switch, Table, Tabs, Textarea, Toaster (Sonner), Toggle, ToggleGroup, Tooltip.
 
