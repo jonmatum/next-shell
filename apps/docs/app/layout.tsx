@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import type { Viewport } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Inter, JetBrains_Mono } from 'next/font/google';
 import localFont from 'next/font/local';
 import { RootProvider } from 'fumadocs-ui/provider';
@@ -22,7 +22,7 @@ export const viewport: Viewport = {
   colorScheme: 'dark',
 };
 
-export const metadata = {
+export const metadata: Metadata = {
   title: {
     template: '%s | next-shell',
     default: 'next-shell',
@@ -39,7 +39,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       suppressHydrationWarning
     >
       <body>
-        <RootProvider theme={{ forcedTheme: 'dark', enableSystem: false }}>{children}</RootProvider>
+        <RootProvider theme={{ enabled: false }}>{children}</RootProvider>
       </body>
     </html>
   );
