@@ -45,6 +45,16 @@ export { PageHeader } from './page-header.js';
 export type { PageHeaderProps } from './page-header.js';
 export { EmptyState, ErrorState, LoadingState } from './status-states.js';
 export type { EmptyStateProps, ErrorStateProps, LoadingStateProps } from './status-states.js';
+export {
+  ErrorPage,
+  BadRequest,
+  Unauthorized,
+  Forbidden,
+  NotFound,
+  InternalServerError,
+  ServiceUnavailable,
+} from './error-pages.js';
+export type { ErrorPageProps, HttpErrorPageProps } from './error-pages.js';
 export { TopBar } from './topbar.js';
 export type { TopBarProps } from './topbar.js';
 

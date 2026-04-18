@@ -62,6 +62,11 @@ export default defineConfig({
       await cp('src/styles', 'dist/styles', { recursive: true });
     }
 
+    // Copy vendored font assets into dist/fonts/.
+    if (existsSync('src/fonts')) {
+      await cp('src/fonts', 'dist/fonts', { recursive: true });
+    }
+
     // Inline tw-animate-css into dist/styles/preset.css so the distributed
     // file has no external CSS @import dependencies. Consuming apps don't need
     // tw-animate-css in their own node_modules for CSS processing to work.

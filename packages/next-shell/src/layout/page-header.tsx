@@ -43,7 +43,7 @@ function PageHeader({
     <header
       data-slot="page-header"
       className={cn(
-        'border-border flex flex-col gap-4 border-b pb-4 sm:flex-row sm:items-end sm:justify-between sm:gap-6',
+        'border-border flex flex-col gap-4 border-b pb-4 sm:flex-row sm:items-start sm:justify-between sm:gap-6',
         className,
       )}
       {...props}

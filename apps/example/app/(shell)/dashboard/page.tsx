@@ -50,23 +50,29 @@ export default function DashboardPage() {
       />
 
       {/* Stats Grid */}
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {stats.map((stat) => (
-          <Card key={stat.label}>
+          <Card key={stat.label} className="relative overflow-hidden">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium">{stat.label}</CardTitle>
-              <stat.icon className="text-muted-foreground size-4" />
+              <CardTitle className="text-muted-foreground text-xs font-medium uppercase tracking-wider">
+                {stat.label}
+              </CardTitle>
+              <div className="bg-primary/10 text-primary flex size-7 items-center justify-center rounded-md">
+                <stat.icon className="size-3.5" />
+              </div>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{stat.value}</div>
-              <p className="text-muted-foreground text-xs">{stat.change} from last month</p>
+              <div className="text-foreground text-3xl font-bold tracking-tight">{stat.value}</div>
+              <p className="text-muted-foreground mt-1 text-xs">
+                <span className="text-primary font-medium">{stat.change}</span> from last month
+              </p>
             </CardContent>
           </Card>
         ))}
       </div>
 
       {/* Status State Demo */}
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="grid gap-6 md:grid-cols-2">
         <Card>
           <CardHeader>
             <CardTitle className="text-sm">Loading State</CardTitle>

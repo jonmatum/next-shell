@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 import {
   AppShell,
   TopBar,
+  Footer,
   Sidebar,
   SidebarContent,
   SidebarHeader,
@@ -13,8 +14,8 @@ import {
   Breadcrumbs,
   buildNav,
 } from '@jonmatum/next-shell/layout';
-import { ThemeToggleDropdown } from '@jonmatum/next-shell/providers';
 import { useUser } from '@jonmatum/next-shell/auth';
+import { Button } from '@jonmatum/next-shell/primitives';
 import { LayoutDashboard, Settings, Shield, Database, Bell } from 'lucide-react';
 import type { NavConfig } from '@jonmatum/next-shell/layout';
 
@@ -34,12 +35,17 @@ function ShellSidebar({ pathname }: { pathname: string }) {
   });
   return (
     <Sidebar>
-      <SidebarHeader className="flex flex-row items-center gap-2 px-2 py-3">
-        <SidebarTrigger className="ml-0.5" />
-        <span className="text-sidebar-foreground truncate text-sm font-semibold">next-shell</span>
+      <SidebarHeader className="border-sidebar-border flex flex-row items-center gap-3 border-b px-3 py-3">
+        <SidebarTrigger />
+        <span
+          className="truncate text-sm font-semibold tracking-tight"
+          style={{ fontFamily: '"BigBlue Terminal", monospace' }}
+        >
+          next-shell
+        </span>
       </SidebarHeader>
       <SidebarContent>
-        <SidebarNav items={items} label="Menu" />
+        <SidebarNav items={items} />
       </SidebarContent>
     </Sidebar>
   );
@@ -51,12 +57,13 @@ function ShellTopBar({ pathname }: { pathname: string }) {
     <TopBar
       left={<Breadcrumbs config={NAV_CONFIG} pathname={pathname} />}
       right={
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
           <span className="text-muted-foreground hidden text-sm sm:block">
             {user?.name ?? 'Demo User'}
           </span>
-          <ThemeToggleDropdown />
-          <Bell className="text-muted-foreground size-4 cursor-pointer" />
+          <Button variant="ghost" size="icon" className="size-7" aria-label="Notifications">
+            <Bell className="size-4" />
+          </Button>
         </div>
       }
     />
@@ -70,11 +77,7 @@ export default function ShellLayout({ children }: { children: ReactNode }) {
       commandBar
       sidebar={<ShellSidebar pathname={pathname} />}
       topBar={<ShellTopBar pathname={pathname} />}
-      footer={
-        <footer className="border-border text-muted-foreground border-t px-6 py-3 text-xs">
-          next-shell example app
-        </footer>
-      }
+      footer={<Footer>next-shell example app</Footer>}
     >
       {children}
     </AppShell>

@@ -118,6 +118,7 @@
     },
     "./styles/tokens.css": "./dist/styles/tokens.css",
     "./styles/preset.css": "./dist/styles/preset.css",
+    "./fonts/BigBlueTerminal.woff2": "./dist/fonts/BigBlueTerminal.woff2",
     "./tailwind-preset": {
       "source": "./src/tailwind-preset/index.ts",
       "types": "./dist/tailwind-preset/index.d.ts",
