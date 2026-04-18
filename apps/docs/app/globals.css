@@ -1,6 +1,5 @@
 @import 'fumadocs-ui/style.css';
 @import 'tailwindcss';
-@source "../../../packages/next-shell/src/**/*.{ts,tsx}";
 @import '@jonmatum/next-shell/styles/preset.css';
 
 /*
