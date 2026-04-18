@@ -1,3 +1,102 @@
 @import 'tailwindcss';
-@source "../../../packages/next-shell/src/**/*.{ts,tsx}";
+@source '../../../packages/next-shell/src/**/*.{ts,tsx}';
 @import '@jonmatum/next-shell/styles/preset.css';
+
+/* ─────────────────────────────────────────────────────────────────────────
+ * Example app — dark-only brand treatment (jonmatum.dev aesthetic)
+ *
+ * The library tokens stay untouched. This file only layers glass-morphism
+ * on top of the shell chrome via data-slot selectors.
+ * ───────────────────────────────────────────────────────────────────────── */
+
+/* Force dark */
+html {
+  color-scheme: dark;
+}
+
+/* ── Background canvas ─────────────────────────────────────────────────── */
+
+body {
+  background:
+    radial-gradient(circle at 15% 12%, rgba(59, 130, 246, 0.26) 0%, transparent 32%),
+    radial-gradient(circle at 85% 8%, rgba(34, 211, 238, 0.18) 0%, transparent 28%),
+    radial-gradient(circle at 50% 88%, rgba(99, 102, 241, 0.12) 0%, transparent 44%), #0b0f14;
+}
+
+/* ── Shell chrome — glass morphism ─────────────────────────────────────── */
+
+[data-slot='sidebar-wrapper'] {
+  background: transparent !important;
+}
+
+[data-slot='sidebar-inner'] {
+  background: rgba(11, 15, 20, 0.82) !important;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-right: 1px solid rgba(59, 130, 246, 0.12);
+}
+
+header[data-slot='topbar'] {
+  background: rgba(11, 15, 20, 0.7) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom-color: rgba(59, 130, 246, 0.12);
+}
+
+[data-slot='sidebar-inset'] {
+  background: transparent !important;
+}
+
+/* ── Cards ─────────────────────────────────────────────────────────────── */
+
+[data-slot='card'] {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-color: rgba(38, 48, 66, 1);
+  box-shadow:
+    0 0 0 1px rgba(59, 130, 246, 0.15),
+    0 18px 60px rgba(11, 15, 20, 0.45),
+    0 0 30px rgba(34, 211, 238, 0.12);
+}
+
+/* ── Error page card ───────────────────────────────────────────────────── */
+
+[data-slot='error-page-card'] {
+  background: rgba(26, 34, 48, 0.72);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-color: rgba(38, 48, 66, 1);
+  box-shadow:
+    0 0 0 1px rgba(59, 130, 246, 0.15),
+    0 18px 60px rgba(11, 15, 20, 0.45),
+    0 0 30px rgba(34, 211, 238, 0.12);
+}
+
+/* ── Active nav accent ─────────────────────────────────────────────────── */
+
+[data-slot='sidebar-menu-button'][data-active='true'] {
+  background: rgba(59, 130, 246, 0.18);
+  color: oklch(0.85 0.12 258);
+  border: 1px solid rgba(59, 130, 246, 0.28);
+}
+
+/* ── Scrollbar ─────────────────────────────────────────────────────────── */
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(59, 130, 246, 0.28);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(59, 130, 246, 0.55);
+}
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(59, 130, 246, 0.28) transparent;
+}

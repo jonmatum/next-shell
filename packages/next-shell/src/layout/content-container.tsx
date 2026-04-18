@@ -11,20 +11,23 @@ import { cn } from '@/core/cn';
  * Until then these tiers use Tailwind's fixed spacing scale, which
  * resolves through our semantic-token preset anyway.
  */
-const contentContainerVariants = cva('mx-auto w-full px-4 sm:px-6 lg:px-8', {
-  variants: {
-    size: {
-      sm: 'max-w-3xl',
-      md: 'max-w-5xl',
-      lg: 'max-w-7xl',
-      xl: 'max-w-[96rem]',
-      full: 'max-w-none',
+const contentContainerVariants = cva(
+  'mx-auto flex w-full flex-col gap-6 px-4 py-6 sm:px-6 sm:py-8 lg:px-8',
+  {
+    variants: {
+      size: {
+        sm: 'max-w-3xl',
+        md: 'max-w-5xl',
+        lg: 'max-w-7xl',
+        xl: 'max-w-[96rem]',
+        full: 'max-w-none',
+      },
+    },
+    defaultVariants: {
+      size: 'lg',
     },
   },
-  defaultVariants: {
-    size: 'lg',
-  },
-});
+);
 
 export interface ContentContainerProps
   extends React.ComponentProps<'div'>, VariantProps<typeof contentContainerVariants> {
