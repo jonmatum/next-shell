@@ -1,3 +1,96 @@
 @import 'tailwindcss';
-@source "../../../packages/next-shell/src/**/*.{ts,tsx}";
+@source '../../../packages/next-shell/src/**/*.{ts,tsx}';
 @import '@jonmatum/next-shell/styles/preset.css';
+
+/* ─────────────────────────────────────────────────────────────────────────
+ * jonmatum brand visual treatment — matches jonmatum.dev / jonmatum.com
+ *
+ * Dark:  deep navy #0b0f14 with blue + cyan radial glows, glass morphism
+ *        surfaces with backdrop-blur and subtle blue border glow.
+ * Light: clean white with a barely-perceptible blue ambient gradient.
+ * ───────────────────────────────────────────────────────────────────────── */
+
+/* ── 1. Background canvas ──────────────────────────────────────────────── */
+
+/* Dark: gradient lives on <html> so it's always the base layer.
+   --background is set transparent so every bg-background element
+   becomes see-through, letting the gradient show through. */
+html[data-theme='dark'] {
+  background:
+    radial-gradient(circle at 15% 12%, rgba(59, 130, 246, 0.26) 0%, transparent 32%),
+    radial-gradient(circle at 85% 8%, rgba(34, 211, 238, 0.18) 0%, transparent 28%),
+    radial-gradient(circle at 50% 88%, rgba(99, 102, 241, 0.12) 0%, transparent 44%), #0b0f14;
+  --background: transparent;
+}
+
+/* Light: subtle blue ambient only — no opaque override needed */
+html[data-theme='light'] {
+  background:
+    radial-gradient(circle at 10% 0%, rgba(59, 130, 246, 0.07) 0%, transparent 35%),
+    radial-gradient(circle at 90% 5%, rgba(99, 102, 241, 0.05) 0%, transparent 30%),
+    oklch(0.99 0.004 258);
+  --background: transparent;
+}
+
+/* ── 2. Glass morphism surfaces — dark only ────────────────────────────── */
+
+[data-theme='dark'] [data-slot='card'] {
+  background: rgba(13, 18, 28, 0.7);
+  border-color: rgba(59, 130, 246, 0.16);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow:
+    0 0 0 1px rgba(59, 130, 246, 0.08),
+    0 8px 32px rgba(11, 15, 20, 0.5),
+    0 0 20px rgba(34, 211, 238, 0.05);
+}
+
+/* Sidebar rail — glass with slight blue tint */
+[data-theme='dark'] [data-slot='sidebar-inner'] {
+  background: rgba(11, 15, 20, 0.82);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-right: 1px solid rgba(59, 130, 246, 0.12);
+}
+
+/* Sidebar wrapper must be transparent so the body gradient shows through */
+[data-theme='dark'] [data-slot='sidebar-wrapper'] {
+  background: transparent;
+}
+
+/* Top bar — thin glass strip */
+[data-theme='dark'] header[data-slot='topbar'] {
+  background: rgba(11, 15, 20, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom-color: rgba(59, 130, 246, 0.12);
+}
+
+/* ── 3. Active nav item brand accent ───────────────────────────────────── */
+
+[data-theme='dark'] [data-slot='sidebar-menu-button'][data-active='true'] {
+  background: rgba(59, 130, 246, 0.18);
+  color: oklch(0.85 0.12 258);
+  border: 1px solid rgba(59, 130, 246, 0.28);
+}
+
+/* ── 4. Scrollbar ──────────────────────────────────────────────────────── */
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(59, 130, 246, 0.28);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(59, 130, 246, 0.55);
+}
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(59, 130, 246, 0.28) transparent;
+}
