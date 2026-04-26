@@ -207,6 +207,138 @@ const RECIPES = [
   },
 ];
 
+const SCAFFOLDS: Record<string, { description: string; code: string }> = {
+  page: {
+    description: 'A standard page with PageHeader and ContentContainer',
+    code: `'use client';
+
+import { PageHeader, ContentContainer } from '@jonmatum/next-shell/layout';
+import { Button } from '@jonmatum/next-shell/primitives';
+
+export default function MyPage() {
+  return (
+    <>
+      <PageHeader
+        title="Page Title"
+        description="Brief description of this page"
+        actions={<Button>Action</Button>}
+      />
+      <ContentContainer size="lg" className="py-6 space-y-6">
+        {/* Page content here */}
+      </ContentContainer>
+    </>
+  );
+}`,
+  },
+  'shell-layout': {
+    description: 'App shell layout with sidebar, topbar, footer, and command bar',
+    code: `'use client';
+
+import { usePathname } from 'next/navigation';
+import {
+  AppShell, TopBar, Footer, Sidebar, SidebarContent, SidebarHeader,
+  SidebarFooter, SidebarNav, SidebarTrigger, Breadcrumbs,
+  CommandBarActions, buildNav,
+} from '@jonmatum/next-shell/layout';
+import type { NavConfig } from '@jonmatum/next-shell/layout';
+import { ThemeToggleDropdown } from '@jonmatum/next-shell/providers';
+import { HomeIcon, SettingsIcon } from 'lucide-react';
+
+const NAV: NavConfig = [
+  { id: 'home', label: 'Home', href: '/', icon: <HomeIcon />, matcher: 'exact' },
+  { id: 'settings', label: 'Settings', href: '/settings', icon: <SettingsIcon /> },
+];
+
+export default function ShellLayout({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
+  const { items } = buildNav({ config: NAV, pathname });
+
+  return (
+    <AppShell
+      commandBar
+      sidebar={
+        <Sidebar>
+          <SidebarHeader><span className="text-lg font-bold">My App</span></SidebarHeader>
+          <SidebarContent><SidebarNav items={items} /></SidebarContent>
+          <SidebarFooter><span className="text-xs text-muted-foreground">v1.0</span></SidebarFooter>
+        </Sidebar>
+      }
+      topBar={
+        <TopBar
+          left={<><SidebarTrigger /><Breadcrumbs config={NAV} pathname={pathname} /></>}
+          right={<ThemeToggleDropdown />}
+        />
+      }
+      footer={<Footer>Built with next-shell</Footer>}
+    >
+      <CommandBarActions config={NAV} pathname={pathname} />
+      {children}
+    </AppShell>
+  );
+}`,
+  },
+  providers: {
+    description: 'Root providers with theme + mock auth',
+    code: `'use client';
+
+import { AppProviders } from '@jonmatum/next-shell/providers';
+import { AuthProvider } from '@jonmatum/next-shell/auth';
+import { createMockAuthAdapter } from '@jonmatum/next-shell/auth/mock';
+
+const mockAuth = createMockAuthAdapter({
+  user: { id: '1', name: 'Demo User', email: 'demo@example.com', roles: ['admin'] },
+});
+
+export function Providers({ children }: { children: React.ReactNode }) {
+  return (
+    <AppProviders themeProps={{ defaultTheme: 'system', enableSystem: true }}>
+      <AuthProvider adapter={mockAuth}>{children}</AuthProvider>
+    </AppProviders>
+  );
+}`,
+  },
+  'globals-css': {
+    description: 'globals.css with Tailwind v4 + next-shell preset',
+    code: `@import 'tailwindcss';
+@source "node_modules/@jonmatum/next-shell/dist/**/*.{js,cjs}";
+@import '@jonmatum/next-shell/styles/preset.css';`,
+  },
+  'error-pages': {
+    description: 'Error boundary + not-found pages',
+    code: `// app/not-found.tsx (Server Component)
+import { NotFound } from '@jonmatum/next-shell/layout/server';
+export default function NotFoundPage() { return <NotFound />; }
+
+// app/error.tsx (Client Component)
+'use client';
+import { ErrorPage } from '@jonmatum/next-shell/layout';
+import { Button } from '@jonmatum/next-shell/primitives';
+export default function ErrorBoundary({ error, reset }: { error: Error; reset: () => void }) {
+  return (
+    <ErrorPage
+      status="500"
+      title="Something went wrong"
+      description={error.message}
+      actions={<Button onClick={reset}>Try again</Button>}
+    />
+  );
+}`,
+  },
+  hooks: {
+    description: 'Common hooks usage patterns',
+    code: `import {
+  useDisclosure,      // { isOpen, open, close, toggle, onOpenChange }
+  useLocalStorage,    // [value, setValue] — persists across sessions
+  useCopyToClipboard, // { copy, isCopied }
+  useHotkey,          // useHotkey('k', callback, { meta: true })
+  useBreakpoint,      // { current, isMobile, isDesktop }
+  useDebouncedValue,  // debounced version of a value
+  useMediaQuery,      // boolean — matches a CSS media query
+  useIsMobile,        // boolean — max-width: 767px
+} from '@jonmatum/next-shell/hooks';`,
+  },
+};
+
 server.setRequestHandler(ListToolsRequestSchema, async () => ({
   tools: [
     {
@@ -238,6 +370,27 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
     {
       name: 'list_components',
       description: 'List all available components with their subpaths',
+      inputSchema: { type: 'object', properties: {} },
+    },
+    {
+      name: 'scaffold',
+      description:
+        'Get boilerplate code for common patterns (page, shell-layout, providers, globals-css, error-pages, hooks)',
+      inputSchema: {
+        type: 'object',
+        properties: {
+          template: {
+            type: 'string',
+            description:
+              'Template name: page, shell-layout, providers, globals-css, error-pages, hooks',
+          },
+        },
+        required: ['template'],
+      },
+    },
+    {
+      name: 'list_scaffolds',
+      description: 'List all available scaffold templates',
       inputSchema: { type: 'object', properties: {} },
     },
   ],
@@ -311,6 +464,37 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
                 subpath: c.subpath,
                 description: c.description,
               })),
+              null,
+              2,
+            ),
+          },
+        ],
+      };
+
+    case 'scaffold': {
+      const template = (args as Record<string, string>).template;
+      const scaffold = SCAFFOLDS[template];
+      if (!scaffold) {
+        const available = Object.keys(SCAFFOLDS).join(', ');
+        return {
+          content: [
+            { type: 'text', text: `Template "${template}" not found. Available: ${available}` },
+          ],
+          isError: true,
+        };
+      }
+      return {
+        content: [{ type: 'text', text: `// ${scaffold.description}\n\n${scaffold.code}` }],
+      };
+    }
+
+    case 'list_scaffolds':
+      return {
+        content: [
+          {
+            type: 'text',
+            text: JSON.stringify(
+              Object.entries(SCAFFOLDS).map(([name, s]) => ({ name, description: s.description })),
               null,
               2,
             ),
