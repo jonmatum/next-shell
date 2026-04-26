@@ -48,29 +48,29 @@
    * the light mode to the navy dark theme (brand hue 258 °). Primary is the
    * same brand blue used across jonmatum.dev / jonmatum.com.
    * ───────────────────────────────────────────────────────────────────── */
-  --background: oklch(0.985 0.002 258);
-  --foreground: oklch(0.22 0.012 263);
+  --background: oklch(0.975 0.004 265);
+  --foreground: oklch(0.205 0.015 265);
 
-  --surface: oklch(0.995 0.001 258);
-  --surface-foreground: oklch(0.22 0.012 263);
+  --surface: oklch(0.99 0.002 265);
+  --surface-foreground: oklch(0.205 0.015 265);
 
-  --card: oklch(0.995 0.001 258);
-  --card-foreground: oklch(0.22 0.012 263);
+  --card: oklch(0.993 0.002 265);
+  --card-foreground: oklch(0.205 0.015 265);
 
-  --popover: oklch(0.995 0.001 258);
-  --popover-foreground: oklch(0.22 0.012 263);
+  --popover: oklch(0.993 0.002 265);
+  --popover-foreground: oklch(0.205 0.015 265);
 
-  --muted: oklch(0.96 0.005 258);
-  --muted-foreground: oklch(0.535 0.01 258);
+  --muted: oklch(0.955 0.006 265);
+  --muted-foreground: oklch(0.46 0.015 265);
 
-  --accent: oklch(0.955 0.008 258);
-  --accent-foreground: oklch(0.22 0.012 263);
+  --accent: oklch(0.94 0.012 258);
+  --accent-foreground: oklch(0.205 0.015 265);
 
-  --primary: oklch(0.55 0.18 258);
+  --primary: oklch(0.52 0.2 258);
   --primary-foreground: oklch(0.985 0 0);
 
-  --secondary: oklch(0.955 0.005 258);
-  --secondary-foreground: oklch(0.25 0.012 263);
+  --secondary: oklch(0.95 0.006 265);
+  --secondary-foreground: oklch(0.24 0.015 265);
 
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.985 0 0);
@@ -79,14 +79,14 @@
   --success-foreground: oklch(0.985 0 0);
 
   --warning: oklch(0.78 0.17 85);
-  --warning-foreground: oklch(0.22 0.012 263);
+  --warning-foreground: oklch(0.205 0.015 265);
 
   --info: oklch(0.539 0.13 230);
   --info-foreground: oklch(0.985 0 0);
 
-  --border: oklch(0.93 0.005 258);
-  --input: oklch(0.93 0.005 258);
-  --ring: oklch(0.55 0.18 258);
+  --border: oklch(0.915 0.004 265);
+  --input: oklch(0.9 0.006 265);
+  --ring: oklch(0.52 0.2 258);
 
   /* Overlay — modal backdrop scrim. Kept consistently dark in both themes
      so it reads as a dimming layer on any surface. Alpha is baked into
@@ -96,14 +96,14 @@
 
   /* Sidebar — blue-tinted surface reinforces brand hue; primary wired to the
      brand blue so active nav items use the same accent as dark mode. */
-  --sidebar: oklch(0.975 0.005 258);
-  --sidebar-foreground: oklch(0.22 0.012 263);
-  --sidebar-primary: oklch(0.55 0.18 258);
+  --sidebar: oklch(0.96 0.008 265);
+  --sidebar-foreground: oklch(0.205 0.015 265);
+  --sidebar-primary: oklch(0.52 0.2 258);
   --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.95 0.008 258);
-  --sidebar-accent-foreground: oklch(0.22 0.012 263);
-  --sidebar-border: oklch(0.93 0.005 258);
-  --sidebar-ring: oklch(0.55 0.18 258);
+  --sidebar-accent: oklch(0.935 0.012 258);
+  --sidebar-accent-foreground: oklch(0.205 0.015 265);
+  --sidebar-border: oklch(0.9 0.006 265);
+  --sidebar-ring: oklch(0.52 0.2 258);
 
   /* Chart colors — 5 perceptually distinct hues for categorical data. */
   --chart-1: oklch(0.646 0.222 41.116);
@@ -177,21 +177,21 @@
    * 5. Elevation — shadows tuned for a white surface. Dark theme overrides
    *    these with higher opacity so they remain visible on dark surfaces.
    * ───────────────────────────────────────────────────────────────────── */
-  --shadow-xs: 0 1px 2px 0 oklch(0 0 0 / 0.05);
-  --shadow-sm: 0 1px 3px 0 oklch(0 0 0 / 0.1), 0 1px 2px -1px oklch(0 0 0 / 0.1);
-  --shadow-md: 0 4px 6px -1px oklch(0 0 0 / 0.1), 0 2px 4px -2px oklch(0 0 0 / 0.1);
-  --shadow-lg: 0 10px 15px -3px oklch(0 0 0 / 0.1), 0 4px 6px -4px oklch(0 0 0 / 0.1);
-  --shadow-xl: 0 20px 25px -5px oklch(0 0 0 / 0.1), 0 8px 10px -6px oklch(0 0 0 / 0.1);
-  --shadow-2xl: 0 25px 50px -12px oklch(0 0 0 / 0.25);
+  --shadow-xs: 0 1px 2px 0 oklch(0 0 0 / 0.06);
+  --shadow-sm: 0 1px 3px 0 oklch(0 0 0 / 0.08), 0 1px 2px -1px oklch(0 0 0 / 0.12);
+  --shadow-md: 0 4px 8px -2px oklch(0 0 0 / 0.1), 0 2px 4px -2px oklch(0 0 0 / 0.08);
+  --shadow-lg: 0 12px 20px -4px oklch(0 0 0 / 0.12), 0 4px 8px -4px oklch(0 0 0 / 0.08);
+  --shadow-xl: 0 20px 28px -6px oklch(0 0 0 / 0.14), 0 10px 14px -6px oklch(0 0 0 / 0.08);
+  --shadow-2xl: 0 25px 50px -12px oklch(0 0 0 / 0.3);
 
   /* ─────────────────────────────────────────────────────────────────────
    * 6. Density — used by components for padding / gap. Consumer apps can
    *    switch density by overriding these on any container.
    * ───────────────────────────────────────────────────────────────────── */
-  --density-pad-x: 1rem;
-  --density-pad-y: 0.5rem;
-  --density-gap: 0.5rem;
-  --density-row-height: 2.5rem;
+  --density-pad-x: 1.25rem;
+  --density-pad-y: 0.625rem;
+  --density-gap: 0.625rem;
+  --density-row-height: 2.75rem;
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
@@ -201,30 +201,29 @@
 [data-theme='dark'] {
   /* Background matches the #0b0f14 navy-black brand color from jonmatum.dev.
      All layered surfaces step up in lightness to stay visually distinct. */
-  --background: oklch(0.09 0.018 263);
-  --foreground: oklch(0.94 0.006 258);
+  --background: oklch(0.095 0.015 265);
+  --foreground: oklch(0.93 0.006 265);
 
-  --surface: oklch(0.14 0.015 263);
-  --surface-foreground: oklch(0.94 0.006 258);
+  --surface: oklch(0.145 0.014 265);
+  --surface-foreground: oklch(0.93 0.006 265);
 
-  --card: oklch(0.14 0.02 253);
-  --card-foreground: oklch(0.94 0.006 258);
+  --card: oklch(0.155 0.016 262);
+  --card-foreground: oklch(0.93 0.006 265);
 
-  --popover: oklch(0.14 0.02 253);
-  --popover-foreground: oklch(0.94 0.006 258);
+  --popover: oklch(0.155 0.016 262);
+  --popover-foreground: oklch(0.93 0.006 265);
 
-  --muted: oklch(0.2 0.018 253);
-  --muted-foreground: oklch(0.65 0.01 258);
+  --muted: oklch(0.2 0.015 262);
+  --muted-foreground: oklch(0.62 0.01 265);
 
-  --accent: oklch(0.2 0.02 258);
-  --accent-foreground: oklch(0.94 0.006 258);
+  --accent: oklch(0.22 0.022 258);
+  --accent-foreground: oklch(0.93 0.006 265);
 
-  /* Primary: #3b82f6 from jonmatum.dev brand blue. */
   --primary: oklch(0.558 0.19 258);
   --primary-foreground: oklch(0.985 0 0);
 
-  --secondary: oklch(0.2 0.018 253);
-  --secondary-foreground: oklch(0.94 0.006 258);
+  --secondary: oklch(0.2 0.015 262);
+  --secondary-foreground: oklch(0.93 0.006 265);
 
   --destructive: oklch(0.576 0.191 22.216);
   --destructive-foreground: oklch(0.985 0 0);
@@ -233,25 +232,25 @@
   --success-foreground: oklch(0.985 0 0);
 
   --warning: oklch(0.82 0.16 85);
-  --warning-foreground: oklch(0.12 0.015 263);
+  --warning-foreground: oklch(0.12 0.015 265);
 
   --info: oklch(0.542 0.12 230);
   --info-foreground: oklch(0.985 0 0);
 
-  --border: oklch(0.24 0.022 253);
-  --input: oklch(0.27 0.022 253);
+  --border: oklch(0.22 0.016 262);
+  --input: oklch(0.26 0.018 262);
   --ring: oklch(0.558 0.19 258);
 
   /* Scrim stays dark in both themes. */
   --overlay: oklch(0 0 0 / 0.6);
 
-  --sidebar: oklch(0.12 0.018 263);
-  --sidebar-foreground: oklch(0.94 0.006 258);
+  --sidebar: oklch(0.075 0.012 265);
+  --sidebar-foreground: oklch(0.93 0.006 265);
   --sidebar-primary: oklch(0.558 0.19 258);
   --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.2 0.02 258);
-  --sidebar-accent-foreground: oklch(0.94 0.006 258);
-  --sidebar-border: oklch(0.24 0.022 253);
+  --sidebar-accent: oklch(0.18 0.02 258);
+  --sidebar-accent-foreground: oklch(0.93 0.006 265);
+  --sidebar-border: oklch(0.2 0.014 262);
   --sidebar-ring: oklch(0.558 0.19 258);
 
   /* Chart palette: brand blue → cyan → soft blue → soft cyan → success green
