@@ -322,6 +322,50 @@ const brand: BrandOverrides = {
 
 Brand overrides cascade via CSS custom properties — zero JS re-render on theme switch.
 
+### Preset palettes
+
+Five ready-made palettes ship as importable CSS files — swap one line in `globals.css` to re-skin the entire app:
+
+| Preset  | Import                                            |
+| ------- | ------------------------------------------------- |
+| Neutral | `@jonmatum/next-shell/styles/presets/neutral.css` |
+| Green   | `@jonmatum/next-shell/styles/presets/green.css`   |
+| Orange  | `@jonmatum/next-shell/styles/presets/orange.css`  |
+| Red     | `@jonmatum/next-shell/styles/presets/red.css`     |
+| Violet  | `@jonmatum/next-shell/styles/presets/violet.css`  |
+
+```css
+/* app/globals.css */
+@import 'tailwindcss';
+@source "node_modules/@jonmatum/next-shell/dist/**/*.{js,cjs}";
+@import '@jonmatum/next-shell/styles/preset.css';
+@import '@jonmatum/next-shell/styles/presets/green.css';
+```
+
+### Theme generator
+
+Generate a fully custom token palette from any brand hex color:
+
+```bash
+npx next-shell-theme --color '#10b981'
+npx next-shell-theme --color '#10b981' --name my-brand --format css
+```
+
+The CLI outputs a CSS file (and/or JSON) with light + dark token values derived from the input color using OKLCH color math.
+
+## Starter template
+
+Scaffold a new app with the shell pre-wired:
+
+```bash
+npx degit jonmatum/next-shell/templates/starter my-app
+cd my-app
+pnpm install
+pnpm dev
+```
+
+The starter includes ThemeProvider, preset CSS, a minimal sidebar layout, and example pages.
+
 ## Contributing
 
 See the root [`CONTRIBUTING.md`](../../CONTRIBUTING.md) for day-to-day workflow, and the repo-local skills under [`.claude/skills/`](../../.claude/skills/) if you're iterating with Claude Code.
