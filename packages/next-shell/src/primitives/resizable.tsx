@@ -10,6 +10,7 @@ import { cn } from '@/core/cn';
 // shadcn upstream source uses the namespace-member style expected by
 // their internal wrapper; we access the real export names directly.
 
+/** Accessible resizable panel group container. @see https://ui.shadcn.com/docs/components/resizable */
 function ResizablePanelGroup({ className, ...props }: ResizablePrimitive.PanelGroupProps) {
   return (
     <ResizablePrimitive.PanelGroup
@@ -20,10 +21,12 @@ function ResizablePanelGroup({ className, ...props }: ResizablePrimitive.PanelGr
   );
 }
 
+/** Accessible resizable panel component. @see https://ui.shadcn.com/docs/components/resizable */
 function ResizablePanel({ ...props }: ResizablePrimitive.PanelProps) {
   return <ResizablePrimitive.Panel data-slot="resizable-panel" {...props} />;
 }
 
+/** Accessible resizable panel drag handle. @see https://ui.shadcn.com/docs/components/resizable */
 function ResizableHandle({
   withHandle,
   className,

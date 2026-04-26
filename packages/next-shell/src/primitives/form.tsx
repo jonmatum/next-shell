@@ -16,6 +16,7 @@ import {
 import { cn } from '@/core/cn';
 import { Label } from '@/primitives/label';
 
+/** Accessible form provider component wrapping react-hook-form. @see https://ui.shadcn.com/docs/components/form */
 const Form = FormProvider;
 
 type FormFieldContextValue<
@@ -27,6 +28,7 @@ type FormFieldContextValue<
 
 const FormFieldContext = React.createContext<FormFieldContextValue>({} as FormFieldContextValue);
 
+/** Accessible form field controller wrapping react-hook-form. @see https://ui.shadcn.com/docs/components/form */
 const FormField = <
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
@@ -40,6 +42,7 @@ const FormField = <
   );
 };
 
+/** Hook to access form field state within a FormField. @see https://ui.shadcn.com/docs/components/form */
 const useFormField = () => {
   const fieldContext = React.useContext(FormFieldContext);
   const itemContext = React.useContext(FormItemContext);
@@ -69,6 +72,7 @@ type FormItemContextValue = {
 
 const FormItemContext = React.createContext<FormItemContextValue>({} as FormItemContextValue);
 
+/** Accessible form item container. @see https://ui.shadcn.com/docs/components/form */
 function FormItem({ className, ...props }: React.ComponentProps<'div'>) {
   const id = React.useId();
 
@@ -79,6 +83,7 @@ function FormItem({ className, ...props }: React.ComponentProps<'div'>) {
   );
 }
 
+/** Accessible form label linked to its field. @see https://ui.shadcn.com/docs/components/form */
 function FormLabel({ className, ...props }: React.ComponentProps<typeof LabelPrimitive.Root>) {
   const { error, formItemId } = useFormField();
 
@@ -93,6 +98,7 @@ function FormLabel({ className, ...props }: React.ComponentProps<typeof LabelPri
   );
 }
 
+/** Accessible form control slot with ARIA bindings. @see https://ui.shadcn.com/docs/components/form */
 function FormControl({ ...props }: React.ComponentProps<typeof Slot.Root>) {
   const { error, formItemId, formDescriptionId, formMessageId } = useFormField();
 
@@ -107,6 +113,7 @@ function FormControl({ ...props }: React.ComponentProps<typeof Slot.Root>) {
   );
 }
 
+/** Accessible form field description text. @see https://ui.shadcn.com/docs/components/form */
 function FormDescription({ className, ...props }: React.ComponentProps<'p'>) {
   const { formDescriptionId } = useFormField();
 
@@ -120,6 +127,7 @@ function FormDescription({ className, ...props }: React.ComponentProps<'p'>) {
   );
 }
 
+/** Accessible form field validation message. @see https://ui.shadcn.com/docs/components/form */
 function FormMessage({ className, ...props }: React.ComponentProps<'p'>) {
   const { error, formMessageId } = useFormField();
   const body = error ? String(error?.message ?? '') : props.children;

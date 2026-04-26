@@ -25,6 +25,7 @@ const badgeVariants = cva(
   },
 );
 
+/** Accessible badge component for status indicators and labels. @see https://ui.shadcn.com/docs/components/badge */
 function Badge({
   className,
   variant = 'default',

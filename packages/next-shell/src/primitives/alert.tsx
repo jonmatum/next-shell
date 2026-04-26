@@ -19,6 +19,7 @@ const alertVariants = cva(
   },
 );
 
+/** Accessible alert component for displaying important messages. @see https://ui.shadcn.com/docs/components/alert */
 function Alert({
   className,
   variant,
@@ -34,6 +35,7 @@ function Alert({
   );
 }
 
+/** Accessible alert title component. @see https://ui.shadcn.com/docs/components/alert */
 function AlertTitle({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
@@ -44,6 +46,7 @@ function AlertTitle({ className, ...props }: React.ComponentProps<'div'>) {
   );
 }
 
+/** Accessible alert description component. @see https://ui.shadcn.com/docs/components/alert */
 function AlertDescription({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div

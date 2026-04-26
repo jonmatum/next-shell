@@ -6,6 +6,7 @@ import { RadioGroup as RadioGroupPrimitive } from 'radix-ui';
 
 import { cn } from '@/core/cn';
 
+/** Accessible radio group component built on Radix UI. @see https://ui.shadcn.com/docs/components/radio-group */
 function RadioGroup({
   className,
   ...props
@@ -19,6 +20,7 @@ function RadioGroup({
   );
 }
 
+/** Accessible radio group item built on Radix UI. @see https://ui.shadcn.com/docs/components/radio-group */
 function RadioGroupItem({
   className,
   ...props

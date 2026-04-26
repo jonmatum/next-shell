@@ -5,6 +5,7 @@ import { Label as LabelPrimitive } from 'radix-ui';
 
 import { cn } from '@/core/cn';
 
+/** Accessible label component built on Radix UI. @see https://ui.shadcn.com/docs/components/label */
 function Label({ className, ...props }: React.ComponentProps<typeof LabelPrimitive.Root>) {
   return (
     <LabelPrimitive.Root

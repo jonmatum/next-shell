@@ -6,6 +6,7 @@ import { Menubar as MenubarPrimitive } from 'radix-ui';
 
 import { cn } from '@/core/cn';
 
+/** Accessible menubar component built on Radix UI. @see https://ui.shadcn.com/docs/components/menubar */
 function Menubar({ className, ...props }: React.ComponentProps<typeof MenubarPrimitive.Root>) {
   return (
     <MenubarPrimitive.Root
@@ -19,22 +20,27 @@ function Menubar({ className, ...props }: React.ComponentProps<typeof MenubarPri
   );
 }
 
+/** Accessible menubar menu container built on Radix UI. @see https://ui.shadcn.com/docs/components/menubar */
 function MenubarMenu({ ...props }: React.ComponentProps<typeof MenubarPrimitive.Menu>) {
   return <MenubarPrimitive.Menu data-slot="menubar-menu" {...props} />;
 }
 
+/** Accessible menubar group built on Radix UI. @see https://ui.shadcn.com/docs/components/menubar */
 function MenubarGroup({ ...props }: React.ComponentProps<typeof MenubarPrimitive.Group>) {
   return <MenubarPrimitive.Group data-slot="menubar-group" {...props} />;
 }
 
+/** Accessible menubar portal built on Radix UI. @see https://ui.shadcn.com/docs/components/menubar */
 function MenubarPortal({ ...props }: React.ComponentProps<typeof MenubarPrimitive.Portal>) {
   return <MenubarPrimitive.Portal data-slot="menubar-portal" {...props} />;
 }
 
+/** Accessible menubar radio group built on Radix UI. @see https://ui.shadcn.com/docs/components/menubar */
 function MenubarRadioGroup({ ...props }: React.ComponentProps<typeof MenubarPrimitive.RadioGroup>) {
   return <MenubarPrimitive.RadioGroup data-slot="menubar-radio-group" {...props} />;
 }
 
+/** Accessible menubar trigger built on Radix UI. @see https://ui.shadcn.com/docs/components/menubar */
 function MenubarTrigger({
   className,
   ...props
@@ -51,6 +57,7 @@ function MenubarTrigger({
   );
 }
 
+/** Accessible menubar content built on Radix UI. @see https://ui.shadcn.com/docs/components/menubar */
 function MenubarContent({
   className,
   align = 'start',
@@ -75,6 +82,7 @@ function MenubarContent({
   );
 }
 
+/** Accessible menubar item built on Radix UI. @see https://ui.shadcn.com/docs/components/menubar */
 function MenubarItem({
   className,
   inset,
@@ -98,6 +106,7 @@ function MenubarItem({
   );
 }
 
+/** Accessible menubar checkbox item built on Radix UI. @see https://ui.shadcn.com/docs/components/menubar */
 function MenubarCheckboxItem({
   className,
   children,
@@ -124,6 +133,7 @@ function MenubarCheckboxItem({
   );
 }
 
+/** Accessible menubar radio item built on Radix UI. @see https://ui.shadcn.com/docs/components/menubar */
 function MenubarRadioItem({
   className,
   children,
@@ -148,6 +158,7 @@ function MenubarRadioItem({
   );
 }
 
+/** Accessible menubar label built on Radix UI. @see https://ui.shadcn.com/docs/components/menubar */
 function MenubarLabel({
   className,
   inset,
@@ -165,6 +176,7 @@ function MenubarLabel({
   );
 }
 
+/** Accessible menubar separator built on Radix UI. @see https://ui.shadcn.com/docs/components/menubar */
 function MenubarSeparator({
   className,
   ...props
@@ -178,6 +190,7 @@ function MenubarSeparator({
   );
 }
 
+/** Accessible menubar shortcut display. @see https://ui.shadcn.com/docs/components/menubar */
 function MenubarShortcut({ className, ...props }: React.ComponentProps<'span'>) {
   return (
     <span
@@ -188,10 +201,12 @@ function MenubarShortcut({ className, ...props }: React.ComponentProps<'span'>) 
   );
 }
 
+/** Accessible menubar sub-menu built on Radix UI. @see https://ui.shadcn.com/docs/components/menubar */
 function MenubarSub({ ...props }: React.ComponentProps<typeof MenubarPrimitive.Sub>) {
   return <MenubarPrimitive.Sub data-slot="menubar-sub" {...props} />;
 }
 
+/** Accessible menubar sub-menu trigger built on Radix UI. @see https://ui.shadcn.com/docs/components/menubar */
 function MenubarSubTrigger({
   className,
   inset,
@@ -216,6 +231,7 @@ function MenubarSubTrigger({
   );
 }
 
+/** Accessible menubar sub-menu content built on Radix UI. @see https://ui.shadcn.com/docs/components/menubar */
 function MenubarSubContent({
   className,
   ...props

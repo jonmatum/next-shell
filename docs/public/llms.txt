@@ -1,0 +1,249 @@
+# @jonmatum/next-shell
+
+> Reusable Next.js app shell built on shadcn/ui primitives with a strict semantic-token design system.
+
+- Repo: https://github.com/jonmatum/next-shell
+- Package: https://www.npmjs.com/package/@jonmatum/next-shell
+- License: MIT
+- Stack: Next.js 15, React 19, TypeScript, Tailwind CSS v4, Radix UI
+
+## Install
+
+```
+pnpm add @jonmatum/next-shell
+# Peers: next@^15 react@^19 react-dom@^19 tailwindcss@^4 (optional)
+```
+
+## Subpath exports
+
+Import only what you need. Each subpath tree-shakes independently.
+
+| Import path | Description |
+|---|---|
+| `@jonmatum/next-shell` | Root barrel: `cn`, `packageVersion`, `tokenSchemaVersion` |
+| `@jonmatum/next-shell/core` | Core utilities: `cn` (clsx + tailwind-merge), `packageVersion` |
+| `@jonmatum/next-shell/primitives` | 42 shadcn/ui primitives (client components) |
+| `@jonmatum/next-shell/providers` | `ThemeProvider`, `ThemeToggle`, `ThemeToggleDropdown`, `useTheme` (client) |
+| `@jonmatum/next-shell/providers/server` | SSR theme cookie helpers: `getThemeFromCookies`, `buildThemeCookieHeader`, `isThemeValue` (server-safe) |
+| `@jonmatum/next-shell/layout` | App shell layout: `AppShell`, `Sidebar*`, `TopBar`, `CommandBar*`, `ContentContainer`, `PageHeader`, `Footer`, status states (client) |
+| `@jonmatum/next-shell/layout/server` | SSR sidebar-state cookie helpers + stateless content surfaces (server-safe) |
+| `@jonmatum/next-shell/tokens` | TypeScript view of the semantic-token contract: literal unions, `cssVar`, `BrandOverrides`, `buildRootOverrides`, `brandOverridesCss` |
+| `@jonmatum/next-shell/tailwind-preset` | Tailwind v4 preset mapping tokens to `@theme` keys |
+| `@jonmatum/next-shell/styles/tokens.css` | CSS custom properties for `:root` + `[data-theme="dark"]` |
+| `@jonmatum/next-shell/styles/preset.css` | Combined preset: tokens + tw-animate-css + Tailwind `@theme` mappings |
+| `@jonmatum/next-shell/hooks` | Cross-cutting hooks: `useIsMobile` |
+| `@jonmatum/next-shell/auth` | Auth adapter interface (planned) |
+
+## Token catalog
+
+All colors use OKLCH values. No raw color literals are allowed in library code -- every color flows through semantic tokens.
+
+### Color tokens (43 tokens)
+
+Surface pairs (background + foreground):
+- `background`, `foreground` -- page-level defaults
+- `surface`, `surface-foreground` -- elevated surface
+- `card`, `card-foreground` -- card surfaces
+- `popover`, `popover-foreground` -- floating surfaces
+- `muted`, `muted-foreground` -- subdued content
+- `accent`, `accent-foreground` -- highlighted interactive elements
+- `primary`, `primary-foreground` -- primary actions
+- `secondary`, `secondary-foreground` -- secondary actions
+- `destructive`, `destructive-foreground` -- destructive actions
+- `success`, `success-foreground` -- success state
+- `warning`, `warning-foreground` -- warning state
+- `info`, `info-foreground` -- informational state
+
+Standalone:
+- `border` -- default borders
+- `input` -- form input borders
+- `ring` -- focus rings
+- `overlay` -- backdrop overlay
+
+Sidebar:
+- `sidebar`, `sidebar-foreground`, `sidebar-primary`, `sidebar-primary-foreground`, `sidebar-accent`, `sidebar-accent-foreground`, `sidebar-border`, `sidebar-ring`
+
+Charts:
+- `chart-1` through `chart-5`
+
+### Radius tokens (7)
+
+`xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `full` -- all derived from a single `--radius` base value.
+
+### Typography tokens
+
+Font families: `sans`, `mono`, `display`
+Text sizes (9-step fluid scale): `xs`, `sm`, `base`, `lg`, `xl`, `2xl`, `3xl`, `4xl`, `5xl`
+Leading: `tight`, `snug`, `normal`, `relaxed`, `loose`
+Tracking: `tight`, `normal`, `wide`, `wider`
+
+### Motion tokens
+
+Durations: `instant`, `fast`, `normal`, `slow`, `slowest`
+Easings: `standard`, `emphasized`, `decelerate`, `accelerate`
+
+### Elevation tokens (6)
+
+Shadows: `xs`, `sm`, `md`, `lg`, `xl`, `2xl` -- tuned per light/dark theme.
+
+### Density tokens (4)
+
+`pad-x`, `pad-y`, `gap`, `row-height`
+
+## Primitives (42 components)
+
+All vendored from shadcn/ui (new-york-v4 style), token-audited, and accessible via Radix UI.
+
+### Actions
+- `Button` -- primary interactive element with variants: default, destructive, outline, secondary, ghost, link; sizes: default, sm, lg, icon
+- `Toggle` -- two-state toggle button
+- `ToggleGroup` -- group of toggle buttons (single or multiple selection)
+
+### Forms
+- `Checkbox` -- boolean input with indeterminate state
+- `Input` -- text input field
+- `InputOTP` -- one-time password input (segmented)
+- `Label` -- accessible form label
+- `RadioGroup` -- single-selection radio button group
+- `Select` -- dropdown select with search
+- `Slider` -- range slider input
+- `Switch` -- on/off toggle switch
+- `Textarea` -- multi-line text input
+- `Form` -- react-hook-form integration with validation
+
+### Layout & containers
+- `Accordion` -- collapsible content sections
+- `AspectRatio` -- fixed aspect ratio container
+- `Card` (`CardHeader`, `CardTitle`, `CardDescription`, `CardContent`, `CardFooter`) -- content card
+- `Collapsible` -- simple collapsible panel
+- `Resizable` (`ResizablePanelGroup`, `ResizablePanel`, `ResizableHandle`) -- resizable split panels
+- `ScrollArea` -- custom scrollbar container
+- `Separator` -- visual divider (horizontal or vertical)
+- `Table` (`TableHeader`, `TableBody`, `TableRow`, `TableHead`, `TableCell`, `TableCaption`, `TableFooter`) -- data table
+- `Tabs` (`TabsList`, `TabsTrigger`, `TabsContent`) -- tabbed content
+
+### Feedback
+- `Alert` (`AlertTitle`, `AlertDescription`) -- static alert banner
+- `AlertDialog` -- modal confirmation dialog with required action
+- `Badge` -- small label/tag
+- `Progress` -- progress bar indicator
+- `Skeleton` -- loading placeholder
+- `Toaster` (Sonner) -- toast notification system
+
+### Overlays
+- `Dialog` (`DialogTrigger`, `DialogContent`, `DialogHeader`, `DialogTitle`, `DialogDescription`, `DialogFooter`, `DialogClose`) -- modal dialog
+- `Drawer` -- mobile-friendly bottom drawer (vaul)
+- `Sheet` (`SheetTrigger`, `SheetContent`, `SheetHeader`, `SheetTitle`, `SheetDescription`, `SheetFooter`, `SheetClose`) -- slide-out panel
+- `Popover` -- floating content anchored to a trigger
+- `HoverCard` -- content shown on hover
+- `Tooltip` -- brief text tooltip
+
+### Navigation
+- `Breadcrumb` (`BreadcrumbList`, `BreadcrumbItem`, `BreadcrumbLink`, `BreadcrumbSeparator`, `BreadcrumbEllipsis`, `BreadcrumbPage`) -- breadcrumb trail
+- `Command` (`CommandInput`, `CommandList`, `CommandEmpty`, `CommandGroup`, `CommandItem`, `CommandSeparator`) -- cmdk-based command palette
+- `ContextMenu` -- right-click context menu
+- `DropdownMenu` -- dropdown menu from a trigger
+- `Menubar` -- horizontal menu bar
+- `NavigationMenu` -- site-level navigation with mega-menu support
+- `Pagination` -- page navigation controls
+
+### Data visualization
+- `Calendar` -- date picker calendar (react-day-picker)
+- `Carousel` -- horizontal content carousel (embla)
+- `Chart` -- chart container with theme-aware colors (recharts)
+
+## Layout components
+
+The `@jonmatum/next-shell/layout` subpath provides a full app shell.
+
+### App shell orchestrator
+- `AppShell` -- root orchestrator combining sidebar, topbar, and content area
+
+### Sidebar system
+- `Sidebar`, `SidebarProvider`, `SidebarContent`, `SidebarHeader`, `SidebarFooter`, `SidebarGroup`, `SidebarGroupLabel`, `SidebarGroupAction`, `SidebarGroupContent`, `SidebarMenu`, `SidebarMenuItem`, `SidebarMenuButton`, `SidebarMenuAction`, `SidebarMenuBadge`, `SidebarMenuSkeleton`, `SidebarMenuSub`, `SidebarMenuSubButton`, `SidebarMenuSubItem`, `SidebarInput`, `SidebarInset`, `SidebarRail`, `SidebarSeparator`, `SidebarTrigger`
+- `SidebarNav` -- config-driven sidebar navigation
+- `useSidebar` -- sidebar state hook
+
+### Navigation
+- `TopBar` -- top application bar
+- `Breadcrumbs` -- route-aware breadcrumb trail
+- `CommandBar`, `CommandBarProvider`, `CommandBarTrigger`, `CommandBarActions` -- command palette (Cmd+K)
+- `useCommandBar`, `useCommandBarActions` -- command bar hooks
+- `buildNav` -- build navigation config from route definitions
+
+### Content surfaces
+- `ContentContainer` -- max-width content wrapper with padding variants
+- `PageHeader` -- page title + description + actions
+- `Footer` -- page/app footer
+
+### Status states
+- `EmptyState` -- placeholder for empty data
+- `ErrorState` -- error display with retry action
+- `LoadingState` -- loading spinner/skeleton
+
+### Server-safe (layout/server)
+- `getSidebarStateFromCookies`, `buildSidebarStateCookieHeader`, `isSidebarState` -- SSR sidebar cookie helpers
+- Plus all stateless content surfaces re-exported for Server Component use
+
+## Hooks
+
+From `@jonmatum/next-shell/hooks`:
+- `useIsMobile` -- responsive breakpoint hook for mobile detection
+
+## Theming
+
+### Quick setup (Tailwind v4)
+
+```css
+/* app/globals.css */
+@import 'tailwindcss';
+@import '@jonmatum/next-shell/styles/preset.css';
+```
+
+### Theme provider (client)
+
+```tsx
+import { ThemeProvider } from '@jonmatum/next-shell/providers';
+
+<ThemeProvider defaultTheme="system" enableSystem disableTransitionOnChange>
+  {children}
+</ThemeProvider>
+```
+
+### SSR theme (no flash of unstyled content)
+
+```tsx
+// Server Component
+import { getThemeFromCookies } from '@jonmatum/next-shell/providers/server';
+const theme = getThemeFromCookies(await cookies()) ?? 'system';
+<html data-theme={theme} suppressHydrationWarning>
+```
+
+### Brand overrides
+
+```tsx
+import type { BrandOverrides } from '@jonmatum/next-shell/tokens';
+
+const brand: BrandOverrides = {
+  light: { primary: 'oklch(0.6 0.2 258)' },
+  dark:  { primary: 'oklch(0.75 0.15 258)' },
+  radius: '0.5rem',
+  fontSans: 'Inter, sans-serif',
+};
+
+<ThemeProvider brand={brand}>{children}</ThemeProvider>
+```
+
+## Key design rules
+
+1. No raw color literals -- all colors via semantic tokens
+2. Client components have explicit `'use client'` directives
+3. Server-safe helpers live under `<subpath>/server/`
+4. Radix UI primitives are the default substrate
+5. Accessibility is non-negotiable: all primitives have accessible names, focus rings use `ring` token, Radix keyboard navigation preserved
+
+## Links
+
+- GitHub: https://github.com/jonmatum/next-shell
+- Issues: https://github.com/jonmatum/next-shell/issues
+- Extraction plan: https://github.com/jonmatum/next-shell/issues/13

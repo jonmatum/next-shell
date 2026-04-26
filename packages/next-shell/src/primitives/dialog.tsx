@@ -7,22 +7,27 @@ import { Dialog as DialogPrimitive } from 'radix-ui';
 import { cn } from '@/core/cn';
 import { Button } from '@/primitives/button';
 
+/** Accessible dialog component built on Radix UI. @see https://ui.shadcn.com/docs/components/dialog */
 function Dialog({ ...props }: React.ComponentProps<typeof DialogPrimitive.Root>) {
   return <DialogPrimitive.Root data-slot="dialog" {...props} />;
 }
 
+/** Accessible dialog trigger built on Radix UI. @see https://ui.shadcn.com/docs/components/dialog */
 function DialogTrigger({ ...props }: React.ComponentProps<typeof DialogPrimitive.Trigger>) {
   return <DialogPrimitive.Trigger data-slot="dialog-trigger" {...props} />;
 }
 
+/** Accessible dialog portal built on Radix UI. @see https://ui.shadcn.com/docs/components/dialog */
 function DialogPortal({ ...props }: React.ComponentProps<typeof DialogPrimitive.Portal>) {
   return <DialogPrimitive.Portal data-slot="dialog-portal" {...props} />;
 }
 
+/** Accessible dialog close button built on Radix UI. @see https://ui.shadcn.com/docs/components/dialog */
 function DialogClose({ ...props }: React.ComponentProps<typeof DialogPrimitive.Close>) {
   return <DialogPrimitive.Close data-slot="dialog-close" {...props} />;
 }
 
+/** Accessible dialog overlay built on Radix UI. @see https://ui.shadcn.com/docs/components/dialog */
 function DialogOverlay({
   className,
   ...props
@@ -39,6 +44,7 @@ function DialogOverlay({
   );
 }
 
+/** Accessible dialog content built on Radix UI. @see https://ui.shadcn.com/docs/components/dialog */
 function DialogContent({
   className,
   children,
@@ -73,6 +79,7 @@ function DialogContent({
   );
 }
 
+/** Accessible dialog header built on Radix UI. @see https://ui.shadcn.com/docs/components/dialog */
 function DialogHeader({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
@@ -83,6 +90,7 @@ function DialogHeader({ className, ...props }: React.ComponentProps<'div'>) {
   );
 }
 
+/** Accessible dialog footer built on Radix UI. @see https://ui.shadcn.com/docs/components/dialog */
 function DialogFooter({
   className,
   showCloseButton = false,
@@ -107,6 +115,7 @@ function DialogFooter({
   );
 }
 
+/** Accessible dialog title built on Radix UI. @see https://ui.shadcn.com/docs/components/dialog */
 function DialogTitle({ className, ...props }: React.ComponentProps<typeof DialogPrimitive.Title>) {
   return (
     <DialogPrimitive.Title
@@ -117,6 +126,7 @@ function DialogTitle({ className, ...props }: React.ComponentProps<typeof Dialog
   );
 }
 
+/** Accessible dialog description built on Radix UI. @see https://ui.shadcn.com/docs/components/dialog */
 function DialogDescription({
   className,
   ...props

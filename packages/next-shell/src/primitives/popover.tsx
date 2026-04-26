@@ -5,14 +5,17 @@ import { Popover as PopoverPrimitive } from 'radix-ui';
 
 import { cn } from '@/core/cn';
 
+/** Accessible popover component built on Radix UI. @see https://ui.shadcn.com/docs/components/popover */
 function Popover({ ...props }: React.ComponentProps<typeof PopoverPrimitive.Root>) {
   return <PopoverPrimitive.Root data-slot="popover" {...props} />;
 }
 
+/** Accessible popover trigger built on Radix UI. @see https://ui.shadcn.com/docs/components/popover */
 function PopoverTrigger({ ...props }: React.ComponentProps<typeof PopoverPrimitive.Trigger>) {
   return <PopoverPrimitive.Trigger data-slot="popover-trigger" {...props} />;
 }
 
+/** Accessible popover content built on Radix UI. @see https://ui.shadcn.com/docs/components/popover */
 function PopoverContent({
   className,
   align = 'center',
@@ -35,10 +38,12 @@ function PopoverContent({
   );
 }
 
+/** Accessible popover anchor built on Radix UI. @see https://ui.shadcn.com/docs/components/popover */
 function PopoverAnchor({ ...props }: React.ComponentProps<typeof PopoverPrimitive.Anchor>) {
   return <PopoverPrimitive.Anchor data-slot="popover-anchor" {...props} />;
 }
 
+/** Accessible popover header component. @see https://ui.shadcn.com/docs/components/popover */
 function PopoverHeader({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
@@ -49,10 +54,12 @@ function PopoverHeader({ className, ...props }: React.ComponentProps<'div'>) {
   );
 }
 
+/** Accessible popover title component. @see https://ui.shadcn.com/docs/components/popover */
 function PopoverTitle({ className, ...props }: React.ComponentProps<'h2'>) {
   return <div data-slot="popover-title" className={cn('font-medium', className)} {...props} />;
 }
 
+/** Accessible popover description component. @see https://ui.shadcn.com/docs/components/popover */
 function PopoverDescription({ className, ...props }: React.ComponentProps<'p'>) {
   return (
     <p

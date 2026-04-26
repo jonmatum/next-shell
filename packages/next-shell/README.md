@@ -1,5 +1,12 @@
 # @jonmatum/next-shell
 
+[![npm version](https://img.shields.io/npm/v/@jonmatum/next-shell)](https://www.npmjs.com/package/@jonmatum/next-shell)
+[![CI](https://img.shields.io/github/actions/workflow/status/jonmatum/next-shell/ci.yml?branch=main)](https://github.com/jonmatum/next-shell/actions/workflows/ci.yml)
+[![License](https://img.shields.io/github/license/jonmatum/next-shell)](https://github.com/jonmatum/next-shell/blob/main/LICENSE)
+[![Bundle size](https://img.shields.io/bundlephobia/minzip/@jonmatum/next-shell)](https://bundlephobia.com/package/@jonmatum/next-shell)
+
+**[Documentation](https://jonmatum.github.io/next-shell/)**
+
 Reusable Next.js app shell built on **shadcn/ui** primitives with a strict **semantic-token** design system.
 
 > **Status:** All 11 phases complete. Published via Changesets. 508 tests, docs site, and a working example app all on `main`.
@@ -89,6 +96,96 @@ export function UserCard() {
 ```
 
 Every primitive ships with `data-slot` attributes for custom-styling hooks, `aria-*` semantics preserved from Radix, and variant systems driven by `class-variance-authority`.
+
+### 5. App shell layout
+
+```tsx
+import { AppShell, TopBar, Footer } from '@jonmatum/next-shell/layout';
+import { MySidebar } from './my-sidebar';
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <AppShell
+      sidebar={<MySidebar />}
+      topBar={<TopBar left={<span>Acme Inc.</span>} right={<UserMenu />} />}
+      footer={<Footer>© 2026 Acme</Footer>}
+      commandBar
+    >
+      {children}
+    </AppShell>
+  );
+}
+```
+
+### 6. Navigation with buildNav
+
+```tsx
+import { buildNav, type NavConfig } from '@jonmatum/next-shell/layout';
+import { HomeIcon, SettingsIcon } from 'lucide-react';
+
+const nav: NavConfig = [
+  { id: 'home', label: 'Home', href: '/', icon: <HomeIcon />, matcher: 'exact' },
+  {
+    id: 'settings',
+    label: 'Settings',
+    href: '/settings',
+    icon: <SettingsIcon />,
+    requires: 'admin',
+    children: [{ id: 'profile', label: 'Profile', href: '/settings/profile' }],
+  },
+];
+
+const { items, breadcrumbs } = buildNav({
+  config: nav,
+  pathname: '/settings/profile',
+  permissions: ['admin'],
+});
+```
+
+### 7. Hooks
+
+```tsx
+'use client';
+
+import { useDisclosure } from '@jonmatum/next-shell/hooks';
+import { Dialog, DialogContent, DialogTitle } from '@jonmatum/next-shell/primitives';
+import { Button } from '@jonmatum/next-shell/primitives';
+
+export function ConfirmDialog() {
+  const { isOpen, open, onOpenChange } = useDisclosure();
+  return (
+    <>
+      <Button onClick={open}>Open</Button>
+      <Dialog open={isOpen} onOpenChange={onOpenChange}>
+        <DialogContent>
+          <DialogTitle>Confirm action</DialogTitle>
+          <p>Are you sure?</p>
+        </DialogContent>
+      </Dialog>
+    </>
+  );
+}
+```
+
+### 8. Formatters
+
+```ts
+import {
+  formatDate,
+  formatRelativeTime,
+  formatCurrency,
+  formatFileSize,
+  truncate,
+  slugify,
+} from '@jonmatum/next-shell/formatters';
+
+formatDate(new Date(), { preset: 'short' }); // "Apr 26, 2026"
+formatRelativeTime(new Date(Date.now() - 60_000)); // "1 minute ago"
+formatCurrency(1234.5, { currency: 'USD' }); // "$1,234.50"
+formatFileSize(10_485_760); // "10 MB"
+truncate('A very long string indeed', { length: 15 }); // "A very long ..."
+slugify('Hello World!'); // "hello-world"
+```
 
 ## Subpath entry points
 

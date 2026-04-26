@@ -6,20 +6,24 @@ import { AlertDialog as AlertDialogPrimitive } from 'radix-ui';
 import { cn } from '@/core/cn';
 import { Button } from '@/primitives/button';
 
+/** Accessible alert dialog component built on Radix UI. @see https://ui.shadcn.com/docs/components/alert-dialog */
 function AlertDialog({ ...props }: React.ComponentProps<typeof AlertDialogPrimitive.Root>) {
   return <AlertDialogPrimitive.Root data-slot="alert-dialog" {...props} />;
 }
 
+/** Accessible alert dialog trigger built on Radix UI. @see https://ui.shadcn.com/docs/components/alert-dialog */
 function AlertDialogTrigger({
   ...props
 }: React.ComponentProps<typeof AlertDialogPrimitive.Trigger>) {
   return <AlertDialogPrimitive.Trigger data-slot="alert-dialog-trigger" {...props} />;
 }
 
+/** Accessible alert dialog portal built on Radix UI. @see https://ui.shadcn.com/docs/components/alert-dialog */
 function AlertDialogPortal({ ...props }: React.ComponentProps<typeof AlertDialogPrimitive.Portal>) {
   return <AlertDialogPrimitive.Portal data-slot="alert-dialog-portal" {...props} />;
 }
 
+/** Accessible alert dialog overlay built on Radix UI. @see https://ui.shadcn.com/docs/components/alert-dialog */
 function AlertDialogOverlay({
   className,
   ...props
@@ -36,6 +40,7 @@ function AlertDialogOverlay({
   );
 }
 
+/** Accessible alert dialog content built on Radix UI. @see https://ui.shadcn.com/docs/components/alert-dialog */
 function AlertDialogContent({
   className,
   size = 'default',
@@ -59,6 +64,7 @@ function AlertDialogContent({
   );
 }
 
+/** Accessible alert dialog header built on Radix UI. @see https://ui.shadcn.com/docs/components/alert-dialog */
 function AlertDialogHeader({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
@@ -72,6 +78,7 @@ function AlertDialogHeader({ className, ...props }: React.ComponentProps<'div'>)
   );
 }
 
+/** Accessible alert dialog footer built on Radix UI. @see https://ui.shadcn.com/docs/components/alert-dialog */
 function AlertDialogFooter({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
@@ -85,6 +92,7 @@ function AlertDialogFooter({ className, ...props }: React.ComponentProps<'div'>)
   );
 }
 
+/** Accessible alert dialog title built on Radix UI. @see https://ui.shadcn.com/docs/components/alert-dialog */
 function AlertDialogTitle({
   className,
   ...props
@@ -101,6 +109,7 @@ function AlertDialogTitle({
   );
 }
 
+/** Accessible alert dialog description built on Radix UI. @see https://ui.shadcn.com/docs/components/alert-dialog */
 function AlertDialogDescription({
   className,
   ...props
@@ -114,6 +123,7 @@ function AlertDialogDescription({
   );
 }
 
+/** Accessible alert dialog media slot built on Radix UI. @see https://ui.shadcn.com/docs/components/alert-dialog */
 function AlertDialogMedia({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
@@ -127,6 +137,7 @@ function AlertDialogMedia({ className, ...props }: React.ComponentProps<'div'>) 
   );
 }
 
+/** Accessible alert dialog action button built on Radix UI. @see https://ui.shadcn.com/docs/components/alert-dialog */
 function AlertDialogAction({
   className,
   variant = 'default',
@@ -145,6 +156,7 @@ function AlertDialogAction({
   );
 }
 
+/** Accessible alert dialog cancel button built on Radix UI. @see https://ui.shadcn.com/docs/components/alert-dialog */
 function AlertDialogCancel({
   className,
   variant = 'outline',

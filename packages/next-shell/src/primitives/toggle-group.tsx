@@ -17,6 +17,7 @@ const ToggleGroupContext = React.createContext<
   spacing: 0,
 });
 
+/** Accessible toggle group component built on Radix UI. @see https://ui.shadcn.com/docs/components/toggle-group */
 function ToggleGroup({
   className,
   variant,
@@ -48,6 +49,7 @@ function ToggleGroup({
   );
 }
 
+/** Accessible toggle group item built on Radix UI. @see https://ui.shadcn.com/docs/components/toggle-group */
 function ToggleGroupItem({
   className,
   children,

@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import { cn } from '@/core/cn';
 
+/** Accessible skeleton loading placeholder component. @see https://ui.shadcn.com/docs/components/skeleton */
 function Skeleton({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div

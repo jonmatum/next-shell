@@ -7,6 +7,7 @@ import { DayPicker, getDefaultClassNames, type DayButton } from 'react-day-picke
 import { cn } from '@/core/cn';
 import { Button, buttonVariants } from '@/primitives/button';
 
+/** Accessible calendar date picker component. @see https://ui.shadcn.com/docs/components/calendar */
 function Calendar({
   className,
   classNames,
@@ -139,6 +140,7 @@ function Calendar({
   );
 }
 
+/** Accessible calendar day button component. @see https://ui.shadcn.com/docs/components/calendar */
 function CalendarDayButton({
   className,
   day,

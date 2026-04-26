@@ -6,6 +6,7 @@ import { MinusIcon } from 'lucide-react';
 
 import { cn } from '@/core/cn';
 
+/** Accessible one-time password input component. @see https://ui.shadcn.com/docs/components/input-otp */
 function InputOTP({
   className,
   containerClassName,
@@ -23,12 +24,14 @@ function InputOTP({
   );
 }
 
+/** Accessible OTP input group container. @see https://ui.shadcn.com/docs/components/input-otp */
 function InputOTPGroup({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div data-slot="input-otp-group" className={cn('flex items-center', className)} {...props} />
   );
 }
 
+/** Accessible OTP input slot for a single digit. @see https://ui.shadcn.com/docs/components/input-otp */
 function InputOTPSlot({
   index,
   className,
@@ -59,6 +62,7 @@ function InputOTPSlot({
   );
 }
 
+/** Accessible OTP input separator. @see https://ui.shadcn.com/docs/components/input-otp */
 function InputOTPSeparator({ ...props }: React.ComponentProps<'div'>) {
   return (
     <div data-slot="input-otp-separator" role="separator" {...props}>

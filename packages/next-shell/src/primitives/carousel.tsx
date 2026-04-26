@@ -40,6 +40,7 @@ function useCarousel() {
   return context;
 }
 
+/** Accessible carousel component built on Embla Carousel. @see https://ui.shadcn.com/docs/components/carousel */
 function Carousel({
   orientation = 'horizontal',
   opts,
@@ -129,6 +130,7 @@ function Carousel({
   );
 }
 
+/** Accessible carousel content container. @see https://ui.shadcn.com/docs/components/carousel */
 function CarouselContent({ className, ...props }: React.ComponentProps<'div'>) {
   const { carouselRef, orientation } = useCarousel();
 
@@ -142,6 +144,7 @@ function CarouselContent({ className, ...props }: React.ComponentProps<'div'>) {
   );
 }
 
+/** Accessible carousel slide item. @see https://ui.shadcn.com/docs/components/carousel */
 function CarouselItem({ className, ...props }: React.ComponentProps<'div'>) {
   const { orientation } = useCarousel();
 
@@ -160,6 +163,7 @@ function CarouselItem({ className, ...props }: React.ComponentProps<'div'>) {
   );
 }
 
+/** Accessible carousel previous slide button. @see https://ui.shadcn.com/docs/components/carousel */
 function CarouselPrevious({
   className,
   variant = 'outline',
@@ -190,6 +194,7 @@ function CarouselPrevious({
   );
 }
 
+/** Accessible carousel next slide button. @see https://ui.shadcn.com/docs/components/carousel */
 function CarouselNext({
   className,
   variant = 'outline',

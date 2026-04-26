@@ -6,10 +6,12 @@ import { Accordion as AccordionPrimitive } from 'radix-ui';
 
 import { cn } from '@/core/cn';
 
+/** Accessible accordion component built on Radix UI. @see https://ui.shadcn.com/docs/components/accordion */
 function Accordion({ ...props }: React.ComponentProps<typeof AccordionPrimitive.Root>) {
   return <AccordionPrimitive.Root data-slot="accordion" {...props} />;
 }
 
+/** Accessible accordion item component built on Radix UI. @see https://ui.shadcn.com/docs/components/accordion */
 function AccordionItem({
   className,
   ...props
@@ -23,6 +25,7 @@ function AccordionItem({
   );
 }
 
+/** Accessible accordion trigger component built on Radix UI. @see https://ui.shadcn.com/docs/components/accordion */
 function AccordionTrigger({
   className,
   children,
@@ -45,6 +48,7 @@ function AccordionTrigger({
   );
 }
 
+/** Accessible accordion content panel built on Radix UI. @see https://ui.shadcn.com/docs/components/accordion */
 function AccordionContent({
   className,
   children,

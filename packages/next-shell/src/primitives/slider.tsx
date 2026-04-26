@@ -5,6 +5,7 @@ import { Slider as SliderPrimitive } from 'radix-ui';
 
 import { cn } from '@/core/cn';
 
+/** Accessible slider component built on Radix UI. @see https://ui.shadcn.com/docs/components/slider */
 function Slider({
   className,
   defaultValue,

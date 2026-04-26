@@ -5,6 +5,7 @@ import { Progress as ProgressPrimitive } from 'radix-ui';
 
 import { cn } from '@/core/cn';
 
+/** Accessible progress bar component built on Radix UI. @see https://ui.shadcn.com/docs/components/progress */
 function Progress({
   className,
   value,
