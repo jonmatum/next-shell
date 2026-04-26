@@ -61,7 +61,7 @@
   --popover-foreground: oklch(0.22 0.012 263);
 
   --muted: oklch(0.96 0.005 258);
-  --muted-foreground: oklch(0.55 0.01 258);
+  --muted-foreground: oklch(0.535 0.01 258);
 
   --accent: oklch(0.955 0.008 258);
   --accent-foreground: oklch(0.22 0.012 263);
@@ -75,13 +75,13 @@
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.985 0 0);
 
-  --success: oklch(0.65 0.17 145);
+  --success: oklch(0.535 0.17 145);
   --success-foreground: oklch(0.985 0 0);
 
   --warning: oklch(0.78 0.17 85);
   --warning-foreground: oklch(0.22 0.012 263);
 
-  --info: oklch(0.7 0.13 230);
+  --info: oklch(0.539 0.13 230);
   --info-foreground: oklch(0.985 0 0);
 
   --border: oklch(0.93 0.005 258);
@@ -220,43 +220,43 @@
   --accent-foreground: oklch(0.94 0.006 258);
 
   /* Primary: #3b82f6 from jonmatum.dev brand blue. */
-  --primary: oklch(0.6 0.19 258);
+  --primary: oklch(0.558 0.19 258);
   --primary-foreground: oklch(0.985 0 0);
 
   --secondary: oklch(0.2 0.018 253);
   --secondary-foreground: oklch(0.94 0.006 258);
 
-  --destructive: oklch(0.704 0.191 22.216);
+  --destructive: oklch(0.576 0.191 22.216);
   --destructive-foreground: oklch(0.985 0 0);
 
-  --success: oklch(0.72 0.15 145);
+  --success: oklch(0.537 0.15 145);
   --success-foreground: oklch(0.985 0 0);
 
   --warning: oklch(0.82 0.16 85);
   --warning-foreground: oklch(0.12 0.015 263);
 
-  --info: oklch(0.78 0.12 230);
+  --info: oklch(0.542 0.12 230);
   --info-foreground: oklch(0.985 0 0);
 
   --border: oklch(0.24 0.022 253);
   --input: oklch(0.27 0.022 253);
-  --ring: oklch(0.6 0.19 258);
+  --ring: oklch(0.558 0.19 258);
 
   /* Scrim stays dark in both themes. */
   --overlay: oklch(0 0 0 / 0.6);
 
   --sidebar: oklch(0.12 0.018 263);
   --sidebar-foreground: oklch(0.94 0.006 258);
-  --sidebar-primary: oklch(0.6 0.19 258);
+  --sidebar-primary: oklch(0.558 0.19 258);
   --sidebar-primary-foreground: oklch(0.985 0 0);
   --sidebar-accent: oklch(0.2 0.02 258);
   --sidebar-accent-foreground: oklch(0.94 0.006 258);
   --sidebar-border: oklch(0.24 0.022 253);
-  --sidebar-ring: oklch(0.6 0.19 258);
+  --sidebar-ring: oklch(0.558 0.19 258);
 
   /* Chart palette: brand blue → cyan → soft blue → soft cyan → success green
      matching jonmatum.dev chart tokens: #3b82f6, #22d3ee, #60a5fa, #67e8f9, #86efac */
-  --chart-1: oklch(0.6 0.19 258);
+  --chart-1: oklch(0.558 0.19 258);
   --chart-2: oklch(0.83 0.14 201);
   --chart-3: oklch(0.67 0.15 258);
   --chart-4: oklch(0.87 0.1 198);
