@@ -11,6 +11,25 @@ All imports are named and tree-shakeable:
 import { Button, Dialog, DialogContent, DialogTitle } from '@jonmatum/next-shell/primitives';
 ```
 
+{/* prettier-ignore */}
+<Tabs items={['pnpm', 'npm', 'yarn']}>
+<Tab value="pnpm">
+```bash
+pnpm add @jonmatum/next-shell
+```
+</Tab>
+<Tab value="npm">
+```bash
+npm install @jonmatum/next-shell
+```
+</Tab>
+<Tab value="yarn">
+```bash
+yarn add @jonmatum/next-shell
+```
+</Tab>
+</Tabs>
+
 ## Available primitives
 
 Accordion · Alert · AlertDialog · AspectRatio · Avatar · Badge · Breadcrumb · Button · Calendar · Card · Carousel · Chart · Checkbox · Collapsible · Command · ContextMenu · Dialog · Drawer · DropdownMenu · Form · HoverCard · Input · InputOTP · Label · Menubar · NavigationMenu · Pagination · Popover · Progress · RadioGroup · Resizable · ScrollArea · Select · Separator · Sheet · Skeleton · Slider · Switch · Table · Tabs · Textarea · Toaster (Sonner) · Toggle · ToggleGroup · Tooltip
@@ -501,7 +520,10 @@ These are common patterns intentionally left as consumer-side compositions:
 
 ## Custom styling
 
-Every primitive ships with `data-slot` attributes for targeted CSS overrides:
+<Callout type="info">
+  All primitives ship with `data-slot` attributes, enabling targeted CSS overrides without fragile
+  class selectors. Use these for global style tweaks across your app.
+</Callout>
 
 ```css
 [data-slot='button'] {

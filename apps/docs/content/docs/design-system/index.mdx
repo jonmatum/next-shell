@@ -5,7 +5,11 @@ description: The semantic-token contract that powers every component in next-she
 
 Every color, radius, shadow, and motion value in `@jonmatum/next-shell` reaches the DOM through **semantic tokens** — CSS custom properties declared in `styles/tokens.css` and mapped to Tailwind utilities via `styles/preset.css`.
 
-The custom ESLint rule `next-shell/no-raw-colors` fails CI immediately on any regression.
+<Callout type="warn">
+  The custom ESLint rule `next-shell/no-raw-colors` fails CI immediately on any regression. Never
+  use raw color literals (hex, rgb, oklch) in component code — always reference semantic tokens
+  instead.
+</Callout>
 
 ## Semantic color tokens
 
@@ -95,7 +99,11 @@ Switch to a compact density by overriding all four tokens on a container:
 
 ## Dark mode
 
-Tokens are scoped to `[data-theme="dark"]`. next-themes writes `data-theme` on the `<html>` element — add `suppressHydrationWarning` to avoid React hydration warnings:
+Tokens are scoped to `[data-theme="dark"]`. next-themes writes `data-theme` on the `<html>` element before hydration.
+
+<Callout type="info">
+Add `suppressHydrationWarning` to your `<html>` element to avoid React hydration warnings caused by next-themes writing `data-theme` before React hydrates.
+</Callout>
 
 ```tsx
 <html lang="en" suppressHydrationWarning>

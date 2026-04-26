@@ -5,6 +5,12 @@ description: Locale-aware, pure formatting functions for dates, numbers, file si
 
 `@jonmatum/next-shell/formatters` exports pure functions — no React dependency, safe in Server Components, Route Handlers, and tests. All accept an optional `locale` string; compose with `useLocale()` from the hooks subpath for context-aware rendering.
 
+<Callout type="info">
+  Formatters are pure functions with no React dependency. They are safe to call in Server
+  Components, Route Handlers, middleware, and tests. Pass `locale` explicitly for deterministic
+  output across environments.
+</Callout>
+
 ## Date & time
 
 ### formatDate

@@ -19,6 +19,12 @@ ThemeProvider
             {children}
 ```
 
+<Callout type="info">
+  Provider ordering matters. `AppProviders` nests layers in a specific sequence so that inner
+  providers (e.g. toast, error boundary) can access outer contexts (e.g. theme, query client). If
+  you compose providers manually, preserve this order.
+</Callout>
+
 Each layer can be disabled by passing `false`:
 
 ```tsx
@@ -137,7 +143,12 @@ function Root({ children }: { children: React.ReactNode }) {
 }
 ```
 
-In components, `useI18n()` returns the adapter or `null` when no provider is mounted — always guard the call:
+<Callout type="warn">
+  `useI18n()` returns the adapter or `null` when no `I18nProvider` is mounted. Always guard the
+  return value before calling methods on it.
+</Callout>
+
+In components:
 
 ```tsx
 import { useI18n } from '@jonmatum/next-shell/providers';
