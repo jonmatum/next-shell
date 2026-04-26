@@ -4,6 +4,10 @@
     "shadcn": {
       "command": "npx",
       "args": ["shadcn@latest", "mcp"]
+    },
+    "next-shell": {
+      "command": "npx",
+      "args": ["tsx", "tools/next-shell-mcp/src/index.ts"]
     }
   }
 }
