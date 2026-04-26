@@ -19,7 +19,7 @@ import {
 } from '@jonmatum/next-shell/layout';
 import { useUser } from '@jonmatum/next-shell/auth';
 import { Button, Avatar, AvatarFallback, Separator } from '@jonmatum/next-shell/primitives';
-import { LayoutDashboard, Settings, Shield, Database, Bell, LogOut } from 'lucide-react';
+import { LayoutDashboard, Settings, Shield, Database, Bell, LogOut, BoxIcon } from 'lucide-react';
 import type { NavConfig, ResolvedNavItem } from '@jonmatum/next-shell/layout';
 
 /* ────────────────────────────────────────────────────────────────────────
@@ -28,6 +28,7 @@ import type { NavConfig, ResolvedNavItem } from '@jonmatum/next-shell/layout';
 
 const NAV_CONFIG: NavConfig = [
   { id: 'dashboard', label: 'Dashboard', href: '/dashboard', icon: <LayoutDashboard /> },
+  { id: 'components', label: 'Components', href: '/components', icon: <BoxIcon /> },
   { id: 'data', label: 'Data Table', href: '/data', icon: <Database /> },
   { id: 'admin', label: 'Admin', href: '/admin', icon: <Shield />, requires: ['admin'] },
   { id: 'settings', label: 'Settings', href: '/settings', icon: <Settings /> },
@@ -48,10 +49,7 @@ function ShellSidebar({ pathname }: { pathname: string }) {
     <Sidebar>
       <SidebarHeader className="border-sidebar-border flex flex-row items-center gap-3 border-b px-3 py-3">
         <SidebarTrigger />
-        <span
-          className="truncate text-sm font-semibold tracking-tight"
-          style={{ fontFamily: '"BigBlue Terminal", monospace' }}
-        >
+        <span className="truncate font-[family-name:var(--font-terminal)] text-sm font-semibold tracking-tight">
           next-shell
         </span>
       </SidebarHeader>

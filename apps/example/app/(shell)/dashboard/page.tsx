@@ -23,8 +23,33 @@ import {
   Avatar,
   AvatarFallback,
   Separator,
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  Input,
 } from '@jonmatum/next-shell/primitives';
 import { useUser, SignedIn } from '@jonmatum/next-shell/auth';
+
+/* Showcases the @jonmatum/next-shell/formatters subpath — locale-aware,
+   pure formatting functions built on Intl. */
+import {
+  formatCurrency,
+  formatRelativeTime,
+  formatPercent,
+  formatNumber,
+} from '@jonmatum/next-shell/formatters';
+
+/* Showcases the @jonmatum/next-shell/hooks subpath — client-side utility hooks. */
+import {
+  useCopyToClipboard,
+  useDisclosure,
+  useHotkey,
+  useLocalStorage,
+} from '@jonmatum/next-shell/hooks';
+
 import {
   TrendingUp,
   TrendingDown,
@@ -35,52 +60,62 @@ import {
   Plus,
   RefreshCw,
   ArrowUpRight,
+  Copy,
+  Check,
+  Keyboard,
+  Terminal,
+  LayoutGrid,
+  LayoutList,
 } from 'lucide-react';
 
 /* ────────────────────────────────────────────────────────────────────────
- * Data
+ * Mock data — raw values fed through library formatters at render time
  * ──────────────────────────────────────────────────────────────────────── */
 
 const stats = [
   {
     label: 'Total Revenue',
-    value: '$48,295',
-    change: '+12.5%',
+    rawValue: 48295,
+    change: 0.125,
     trend: 'up' as const,
     description: 'vs. last month',
     icon: DollarSign,
+    format: 'currency' as const,
   },
   {
     label: 'Active Users',
-    value: '2,841',
-    change: '+4.3%',
+    rawValue: 2841,
+    change: 0.043,
     trend: 'up' as const,
     description: 'vs. last month',
     icon: Users,
+    format: 'number' as const,
   },
   {
     label: 'Orders',
-    value: '1,023',
-    change: '-2.1%',
+    rawValue: 1023,
+    change: -0.021,
     trend: 'down' as const,
     description: 'vs. last month',
     icon: ShoppingCart,
+    format: 'number' as const,
   },
   {
     label: 'Conversion Rate',
-    value: '3.24%',
-    change: '+0.8%',
+    rawValue: 0.0324,
+    change: 0.008,
     trend: 'up' as const,
     description: 'vs. last month',
     icon: Activity,
+    format: 'percent' as const,
   },
 ];
 
 const revenueByChannel = [
-  { label: 'Direct Sales', value: 62, amount: '$29,943' },
-  { label: 'Affiliate', value: 21, amount: '$10,142' },
-  { label: 'Organic Search', value: 11, amount: '$5,312' },
-  { label: 'Social Media', value: 6, amount: '$2,898' },
+  { label: 'Direct Sales', value: 62, rawAmount: 29943 },
+  { label: 'Affiliate', value: 21, rawAmount: 10142 },
+  { label: 'Organic Search', value: 11, rawAmount: 5312 },
+  { label: 'Social Media', value: 6, rawAmount: 2898 },
 ];
 
 const monthlyRevenue = [
@@ -99,12 +134,67 @@ const monthlyRevenue = [
 ];
 
 const recentActivity = [
-  { user: 'Alice Chen', action: 'placed an order', amount: '$249.00', time: '2m ago' },
-  { user: 'Bob Smith', action: 'subscribed to Pro', amount: '$29/mo', time: '5m ago' },
-  { user: 'Carol Davis', action: 'left a review', amount: null, time: '12m ago' },
-  { user: 'Dan Wilson', action: 'upgraded plan', amount: '$99/mo', time: '18m ago' },
-  { user: 'Eve Martinez', action: 'placed an order', amount: '$512.00', time: '24m ago' },
+  {
+    id: 'act-alice-order',
+    user: 'Alice Chen',
+    action: 'placed an order',
+    rawAmount: 249.0,
+    timeOffset: 2 * 60 * 1000,
+  },
+  {
+    id: 'act-bob-subscribe',
+    user: 'Bob Smith',
+    action: 'subscribed to Pro',
+    rawAmount: null,
+    subscription: '$29/mo',
+    timeOffset: 5 * 60 * 1000,
+  },
+  {
+    id: 'act-carol-review',
+    user: 'Carol Davis',
+    action: 'left a review',
+    rawAmount: null,
+    timeOffset: 12 * 60 * 1000,
+  },
+  {
+    id: 'act-dan-upgrade',
+    user: 'Dan Wilson',
+    action: 'upgraded plan',
+    rawAmount: null,
+    subscription: '$99/mo',
+    timeOffset: 18 * 60 * 1000,
+  },
+  {
+    id: 'act-eve-order',
+    user: 'Eve Martinez',
+    action: 'placed an order',
+    rawAmount: 512.0,
+    timeOffset: 24 * 60 * 1000,
+  },
 ];
+
+/** Demo API key for the copy-to-clipboard hook showcase. */
+const DEMO_API_KEY = 'nxsh_live_k8f2a9Qx7mPwR3jL5nBvY6dH';
+
+/* ────────────────────────────────────────────────────────────────────────
+ * Helpers
+ * ──────────────────────────────────────────────────────────────────────── */
+
+function formatStatValue(rawValue: number, format: 'currency' | 'number' | 'percent'): string {
+  switch (format) {
+    case 'currency':
+      return formatCurrency(rawValue, 'USD');
+    case 'percent':
+      return formatPercent(rawValue, { maximumFractionDigits: 2 });
+    case 'number':
+      return formatNumber(rawValue);
+  }
+}
+
+function formatStatChange(change: number): string {
+  const sign = change >= 0 ? '+' : '';
+  return sign + formatPercent(change, { maximumFractionDigits: 1 });
+}
 
 /* ────────────────────────────────────────────────────────────────────────
  * Page
@@ -112,8 +202,18 @@ const recentActivity = [
 
 export default function DashboardPage() {
   const user = useUser();
-
   const maxRevenue = Math.max(...monthlyRevenue.map((m) => m.revenue));
+
+  /* ── Hooks demos ────────────────────────────────────────────────────── */
+  const { isCopied, copy } = useCopyToClipboard();
+  const settingsDialog = useDisclosure();
+  const [dashboardLayout, setDashboardLayout] = useLocalStorage<'grid' | 'list'>(
+    'dashboard-layout',
+    'grid',
+  );
+
+  // Ctrl+K / Cmd+K opens the settings dialog
+  useHotkey('k', () => settingsDialog.open(), { meta: true });
 
   return (
     <ContentContainer>
@@ -143,7 +243,7 @@ export default function DashboardPage() {
         }
       />
 
-      {/* Stats Grid */}
+      {/* Stats Grid — values generated through formatters */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {stats.map((stat) => (
           <Card key={stat.label} className="relative overflow-hidden">
@@ -156,7 +256,9 @@ export default function DashboardPage() {
               </div>
             </CardHeader>
             <CardContent>
-              <div className="text-foreground text-3xl font-bold tracking-tight">{stat.value}</div>
+              <div className="text-foreground text-3xl font-bold tracking-tight">
+                {formatStatValue(stat.rawValue, stat.format)}
+              </div>
               <div className="mt-1 flex items-center gap-1 text-xs">
                 {stat.trend === 'up' ? (
                   <TrendingUp className="text-primary size-3" />
@@ -170,7 +272,7 @@ export default function DashboardPage() {
                       : 'text-destructive font-medium'
                   }
                 >
-                  {stat.change}
+                  {formatStatChange(stat.change)}
                 </span>
                 <span className="text-muted-foreground">{stat.description}</span>
               </div>
@@ -181,14 +283,14 @@ export default function DashboardPage() {
 
       {/* Charts Section */}
       <div className="grid gap-4 lg:grid-cols-7">
-        {/* Revenue Overview — bar chart using Progress bars */}
+        {/* Revenue Overview — bar chart using div heights */}
         <Card className="lg:col-span-4">
           <CardHeader>
             <CardTitle className="text-base">Revenue Overview</CardTitle>
             <CardDescription>Monthly revenue for the current year</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="flex items-end gap-2" style={{ height: '200px' }}>
+            <div className="flex h-[200px] items-end gap-2">
               {monthlyRevenue.map((m) => {
                 const height = Math.round((m.revenue / maxRevenue) * 100);
                 return (
@@ -210,7 +312,7 @@ export default function DashboardPage() {
           </CardContent>
         </Card>
 
-        {/* Revenue by Channel */}
+        {/* Revenue by Channel — amounts generated through formatCurrency */}
         <Card className="lg:col-span-3">
           <CardHeader>
             <CardTitle className="text-base">Revenue by Channel</CardTitle>
@@ -222,12 +324,163 @@ export default function DashboardPage() {
                 <div key={channel.label} className="space-y-2">
                   <div className="flex items-center justify-between text-sm">
                     <span className="font-medium">{channel.label}</span>
-                    <span className="text-muted-foreground tabular-nums">{channel.amount}</span>
+                    <span className="text-muted-foreground tabular-nums">
+                      {formatCurrency(channel.rawAmount, 'USD')}
+                    </span>
                   </div>
                   <Progress value={channel.value} className="h-2" />
                 </div>
               ))}
             </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Developer Tools — hooks demo section */}
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {/* Copy to Clipboard — useCopyToClipboard */}
+        <Card>
+          <CardHeader className="pb-3">
+            <CardTitle className="flex items-center gap-2 text-sm">
+              <Terminal className="size-4" />
+              API Key
+            </CardTitle>
+            <CardDescription>
+              Copy your API key using <code className="text-xs">useCopyToClipboard</code>
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="flex items-center gap-2">
+              <Input readOnly value={DEMO_API_KEY} className="font-mono text-xs" />
+              <Button
+                variant="outline"
+                size="icon"
+                className="shrink-0"
+                onClick={() => copy(DEMO_API_KEY)}
+              >
+                {isCopied ? <Check className="text-primary size-4" /> : <Copy className="size-4" />}
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Keyboard Shortcut — useHotkey + useDisclosure */}
+        <Card>
+          <CardHeader className="pb-3">
+            <CardTitle className="flex items-center gap-2 text-sm">
+              <Keyboard className="size-4" />
+              Quick Settings
+            </CardTitle>
+            <CardDescription>
+              Press{' '}
+              <kbd className="bg-muted text-muted-foreground rounded px-1.5 py-0.5 font-mono text-xs">
+                {'⌘'}K
+              </kbd>{' '}
+              or click below &mdash; powered by <code className="text-xs">useHotkey</code> +{' '}
+              <code className="text-xs">useDisclosure</code>
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Dialog open={settingsDialog.isOpen} onOpenChange={settingsDialog.onOpenChange}>
+              <Button
+                variant="outline"
+                size="sm"
+                className="w-full justify-between"
+                onClick={settingsDialog.open}
+              >
+                Open Settings
+                <kbd className="bg-muted text-muted-foreground ml-2 rounded px-1.5 py-0.5 font-mono text-xs">
+                  {'⌘'}K
+                </kbd>
+              </Button>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Quick Settings</DialogTitle>
+                  <DialogDescription>
+                    This dialog is controlled by <code>useDisclosure</code> and opened via{' '}
+                    <code>useHotkey</code> ({'⌘'}K).
+                  </DialogDescription>
+                </DialogHeader>
+                <div className="grid gap-4 py-4">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-medium">Dashboard Layout</span>
+                    <div className="flex gap-1">
+                      <Button
+                        variant={dashboardLayout === 'grid' ? 'default' : 'outline'}
+                        size="icon"
+                        className="size-8"
+                        onClick={() => setDashboardLayout('grid')}
+                      >
+                        <LayoutGrid className="size-4" />
+                      </Button>
+                      <Button
+                        variant={dashboardLayout === 'list' ? 'default' : 'outline'}
+                        size="icon"
+                        className="size-8"
+                        onClick={() => setDashboardLayout('list')}
+                      >
+                        <LayoutList className="size-4" />
+                      </Button>
+                    </div>
+                  </div>
+                  <Separator />
+                  <p className="text-muted-foreground text-xs">
+                    Layout preference is persisted to <code>localStorage</code> via{' '}
+                    <code>useLocalStorage</code>. Current:{' '}
+                    <Badge variant="secondary" className="ml-1">
+                      {dashboardLayout}
+                    </Badge>
+                  </p>
+                </div>
+                <DialogFooter>
+                  <Button variant="outline" onClick={settingsDialog.close}>
+                    Close
+                  </Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
+          </CardContent>
+        </Card>
+
+        {/* Persisted Preference — useLocalStorage */}
+        <Card>
+          <CardHeader className="pb-3">
+            <CardTitle className="flex items-center gap-2 text-sm">
+              {dashboardLayout === 'grid' ? (
+                <LayoutGrid className="size-4" />
+              ) : (
+                <LayoutList className="size-4" />
+              )}
+              Layout Preference
+            </CardTitle>
+            <CardDescription>
+              Persisted via <code className="text-xs">useLocalStorage</code>
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="flex gap-2">
+              <Button
+                variant={dashboardLayout === 'grid' ? 'default' : 'outline'}
+                size="sm"
+                className="flex-1"
+                onClick={() => setDashboardLayout('grid')}
+              >
+                <LayoutGrid className="size-4" />
+                Grid
+              </Button>
+              <Button
+                variant={dashboardLayout === 'list' ? 'default' : 'outline'}
+                size="sm"
+                className="flex-1"
+                onClick={() => setDashboardLayout('list')}
+              >
+                <LayoutList className="size-4" />
+                List
+              </Button>
+            </div>
+            <p className="text-muted-foreground mt-2 text-xs">
+              Survives page reloads. Try switching and refreshing.
+            </p>
           </CardContent>
         </Card>
       </div>
@@ -249,7 +502,7 @@ export default function DashboardPage() {
             <CardContent>
               <div className="space-y-0">
                 {recentActivity.map((item, i) => (
-                  <div key={i}>
+                  <div key={item.id}>
                     <div className="flex items-center gap-3 py-3">
                       <Avatar className="size-8">
                         <AvatarFallback className="text-xs">
@@ -264,13 +517,19 @@ export default function DashboardPage() {
                           <span className="font-medium">{item.user}</span>{' '}
                           <span className="text-muted-foreground">{item.action}</span>
                         </p>
-                        <p className="text-muted-foreground text-xs">{item.time}</p>
+                        <p className="text-muted-foreground text-xs">
+                          {formatRelativeTime(new Date(Date.now() - item.timeOffset))}
+                        </p>
                       </div>
-                      {item.amount && (
+                      {item.rawAmount ? (
                         <Badge variant="secondary" className="tabular-nums">
-                          {item.amount}
+                          {formatCurrency(item.rawAmount, 'USD')}
                         </Badge>
-                      )}
+                      ) : item.subscription ? (
+                        <Badge variant="secondary" className="tabular-nums">
+                          {item.subscription}
+                        </Badge>
+                      ) : null}
                       <Button variant="ghost" size="icon" className="size-7">
                         <ArrowUpRight className="size-3.5" />
                       </Button>

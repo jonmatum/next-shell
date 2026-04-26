@@ -3,48 +3,57 @@
 @import '@jonmatum/next-shell/styles/preset.css';
 
 /* ─────────────────────────────────────────────────────────────────────────
- * Example app — dark-only brand treatment (jonmatum.dev aesthetic)
+ * Example app — brand treatment (jonmatum.dev aesthetic)
  *
  * The library tokens stay untouched. This file only layers glass-morphism
- * on top of the shell chrome via data-slot selectors.
+ * on top of the shell chrome via data-slot selectors. All colors reference
+ * the semantic token system — no raw color literals.
  * ───────────────────────────────────────────────────────────────────────── */
-
-/* Force dark */
-html {
-  color-scheme: dark;
-}
 
 /* ── Background canvas ─────────────────────────────────────────────────── */
 
 body {
   background:
-    radial-gradient(circle at 15% 12%, rgba(59, 130, 246, 0.26) 0%, transparent 32%),
-    radial-gradient(circle at 85% 8%, rgba(34, 211, 238, 0.18) 0%, transparent 28%),
-    radial-gradient(circle at 50% 88%, rgba(99, 102, 241, 0.12) 0%, transparent 44%), #0b0f14;
+    radial-gradient(
+      circle at 15% 12%,
+      color-mix(in oklch, var(--primary) 26%, transparent) 0%,
+      transparent 32%
+    ),
+    radial-gradient(
+      circle at 85% 8%,
+      color-mix(in oklch, var(--chart-2) 18%, transparent) 0%,
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 50% 88%,
+      color-mix(in oklch, var(--chart-3) 12%, transparent) 0%,
+      transparent 44%
+    ),
+    var(--background);
 }
 
 /* ── Shell chrome — glass morphism ─────────────────────────────────────── */
 
-[data-slot='sidebar-wrapper'] {
-  background: transparent !important;
+[data-slot='sidebar-wrapper'][data-slot='sidebar-wrapper'] {
+  background: transparent;
 }
 
-[data-slot='sidebar-inner'] {
-  background: rgba(11, 15, 20, 0.82) !important;
+[data-slot='sidebar-inner'][data-slot='sidebar-inner'] {
+  background: color-mix(in oklch, var(--sidebar) 82%, transparent);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border-right: 1px solid rgba(59, 130, 246, 0.12);
+  border-right: 1px solid color-mix(in oklch, var(--primary) 12%, transparent);
 }
 
-header[data-slot='topbar'] {
-  background: rgba(11, 15, 20, 0.7) !important;
+header[data-slot='topbar'][data-slot='topbar'] {
+  background: color-mix(in oklch, var(--background) 70%, transparent);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border-bottom-color: rgba(59, 130, 246, 0.12);
+  border-bottom-color: color-mix(in oklch, var(--primary) 12%, transparent);
 }
 
-[data-slot='sidebar-inset'] {
-  background: transparent !important;
+[data-slot='sidebar-inset'][data-slot='sidebar-inset'] {
+  background: transparent;
 }
 
 /* ── Cards ─────────────────────────────────────────────────────────────── */
@@ -52,32 +61,32 @@ header[data-slot='topbar'] {
 [data-slot='card'] {
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border-color: rgba(38, 48, 66, 1);
+  border-color: var(--border);
   box-shadow:
-    0 0 0 1px rgba(59, 130, 246, 0.15),
-    0 18px 60px rgba(11, 15, 20, 0.45),
-    0 0 30px rgba(34, 211, 238, 0.12);
+    0 0 0 1px color-mix(in oklch, var(--primary) 15%, transparent),
+    0 18px 60px color-mix(in oklch, var(--background) 45%, transparent),
+    0 0 30px color-mix(in oklch, var(--chart-2) 12%, transparent);
 }
 
 /* ── Error page card ───────────────────────────────────────────────────── */
 
 [data-slot='error-page-card'] {
-  background: rgba(26, 34, 48, 0.72);
+  background: color-mix(in oklch, var(--card) 72%, transparent);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border-color: rgba(38, 48, 66, 1);
+  border-color: var(--border);
   box-shadow:
-    0 0 0 1px rgba(59, 130, 246, 0.15),
-    0 18px 60px rgba(11, 15, 20, 0.45),
-    0 0 30px rgba(34, 211, 238, 0.12);
+    0 0 0 1px color-mix(in oklch, var(--primary) 15%, transparent),
+    0 18px 60px color-mix(in oklch, var(--background) 45%, transparent),
+    0 0 30px color-mix(in oklch, var(--chart-2) 12%, transparent);
 }
 
 /* ── Active nav accent ─────────────────────────────────────────────────── */
 
 [data-slot='sidebar-menu-button'][data-active='true'] {
-  background: rgba(59, 130, 246, 0.18);
-  color: oklch(0.85 0.12 258);
-  border: 1px solid rgba(59, 130, 246, 0.28);
+  background: color-mix(in oklch, var(--primary) 18%, transparent);
+  color: var(--chart-3);
+  border: 1px solid color-mix(in oklch, var(--primary) 28%, transparent);
 }
 
 /* ── Scrollbar ─────────────────────────────────────────────────────────── */
@@ -90,13 +99,13 @@ header[data-slot='topbar'] {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(59, 130, 246, 0.28);
+  background: color-mix(in oklch, var(--primary) 28%, transparent);
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(59, 130, 246, 0.55);
+  background: color-mix(in oklch, var(--primary) 55%, transparent);
 }
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgba(59, 130, 246, 0.28) transparent;
+  scrollbar-color: color-mix(in oklch, var(--primary) 28%, transparent) transparent;
 }
