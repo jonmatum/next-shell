@@ -1,0 +1,4 @@
+@import 'tailwindcss';
+@source '../../../packages/next-shell/src/**/*.{ts,tsx}';
+@import '@jonmatum/next-shell/styles/preset.css';
+@import '@jonmatum/next-shell/styles/presets/violet.css';
