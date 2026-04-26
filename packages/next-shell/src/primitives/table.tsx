@@ -4,6 +4,7 @@ import * as React from 'react';
 
 import { cn } from '@/core/cn';
 
+/** Accessible table component. @see https://ui.shadcn.com/docs/components/table */
 function Table({ className, ...props }: React.ComponentProps<'table'>) {
   return (
     <div data-slot="table-container" className="relative w-full overflow-x-auto">
@@ -16,10 +17,12 @@ function Table({ className, ...props }: React.ComponentProps<'table'>) {
   );
 }
 
+/** Accessible table header component. @see https://ui.shadcn.com/docs/components/table */
 function TableHeader({ className, ...props }: React.ComponentProps<'thead'>) {
   return <thead data-slot="table-header" className={cn('[&_tr]:border-b', className)} {...props} />;
 }
 
+/** Accessible table body component. @see https://ui.shadcn.com/docs/components/table */
 function TableBody({ className, ...props }: React.ComponentProps<'tbody'>) {
   return (
     <tbody
@@ -30,6 +33,7 @@ function TableBody({ className, ...props }: React.ComponentProps<'tbody'>) {
   );
 }
 
+/** Accessible table footer component. @see https://ui.shadcn.com/docs/components/table */
 function TableFooter({ className, ...props }: React.ComponentProps<'tfoot'>) {
   return (
     <tfoot
@@ -40,6 +44,7 @@ function TableFooter({ className, ...props }: React.ComponentProps<'tfoot'>) {
   );
 }
 
+/** Accessible table row component. @see https://ui.shadcn.com/docs/components/table */
 function TableRow({ className, ...props }: React.ComponentProps<'tr'>) {
   return (
     <tr
@@ -53,6 +58,7 @@ function TableRow({ className, ...props }: React.ComponentProps<'tr'>) {
   );
 }
 
+/** Accessible table head cell component. @see https://ui.shadcn.com/docs/components/table */
 function TableHead({ className, ...props }: React.ComponentProps<'th'>) {
   return (
     <th
@@ -66,6 +72,7 @@ function TableHead({ className, ...props }: React.ComponentProps<'th'>) {
   );
 }
 
+/** Accessible table data cell component. @see https://ui.shadcn.com/docs/components/table */
 function TableCell({ className, ...props }: React.ComponentProps<'td'>) {
   return (
     <td
@@ -79,6 +86,7 @@ function TableCell({ className, ...props }: React.ComponentProps<'td'>) {
   );
 }
 
+/** Accessible table caption component. @see https://ui.shadcn.com/docs/components/table */
 function TableCaption({ className, ...props }: React.ComponentProps<'caption'>) {
   return (
     <caption

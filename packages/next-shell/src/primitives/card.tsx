@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import { cn } from '@/core/cn';
 
+/** Accessible card container component. @see https://ui.shadcn.com/docs/components/card */
 function Card({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
@@ -15,6 +16,7 @@ function Card({ className, ...props }: React.ComponentProps<'div'>) {
   );
 }
 
+/** Accessible card header component. @see https://ui.shadcn.com/docs/components/card */
 function CardHeader({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
@@ -28,6 +30,7 @@ function CardHeader({ className, ...props }: React.ComponentProps<'div'>) {
   );
 }
 
+/** Accessible card title component. @see https://ui.shadcn.com/docs/components/card */
 function CardTitle({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
@@ -38,6 +41,7 @@ function CardTitle({ className, ...props }: React.ComponentProps<'div'>) {
   );
 }
 
+/** Accessible card description component. @see https://ui.shadcn.com/docs/components/card */
 function CardDescription({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
@@ -48,6 +52,7 @@ function CardDescription({ className, ...props }: React.ComponentProps<'div'>) {
   );
 }
 
+/** Accessible card action slot component. @see https://ui.shadcn.com/docs/components/card */
 function CardAction({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
@@ -58,10 +63,12 @@ function CardAction({ className, ...props }: React.ComponentProps<'div'>) {
   );
 }
 
+/** Accessible card content component. @see https://ui.shadcn.com/docs/components/card */
 function CardContent({ className, ...props }: React.ComponentProps<'div'>) {
   return <div data-slot="card-content" className={cn('px-6', className)} {...props} />;
 }
 
+/** Accessible card footer component. @see https://ui.shadcn.com/docs/components/card */
 function CardFooter({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div

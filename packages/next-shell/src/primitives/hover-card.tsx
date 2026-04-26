@@ -5,14 +5,17 @@ import { HoverCard as HoverCardPrimitive } from 'radix-ui';
 
 import { cn } from '@/core/cn';
 
+/** Accessible hover card component built on Radix UI. @see https://ui.shadcn.com/docs/components/hover-card */
 function HoverCard({ ...props }: React.ComponentProps<typeof HoverCardPrimitive.Root>) {
   return <HoverCardPrimitive.Root data-slot="hover-card" {...props} />;
 }
 
+/** Accessible hover card trigger built on Radix UI. @see https://ui.shadcn.com/docs/components/hover-card */
 function HoverCardTrigger({ ...props }: React.ComponentProps<typeof HoverCardPrimitive.Trigger>) {
   return <HoverCardPrimitive.Trigger data-slot="hover-card-trigger" {...props} />;
 }
 
+/** Accessible hover card content built on Radix UI. @see https://ui.shadcn.com/docs/components/hover-card */
 function HoverCardContent({
   className,
   align = 'center',

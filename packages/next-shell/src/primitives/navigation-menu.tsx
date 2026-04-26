@@ -5,6 +5,7 @@ import { NavigationMenu as NavigationMenuPrimitive } from 'radix-ui';
 
 import { cn } from '@/core/cn';
 
+/** Accessible navigation menu component built on Radix UI. @see https://ui.shadcn.com/docs/components/navigation-menu */
 function NavigationMenu({
   className,
   children,
@@ -29,6 +30,7 @@ function NavigationMenu({
   );
 }
 
+/** Accessible navigation menu list built on Radix UI. @see https://ui.shadcn.com/docs/components/navigation-menu */
 function NavigationMenuList({
   className,
   ...props
@@ -42,6 +44,7 @@ function NavigationMenuList({
   );
 }
 
+/** Accessible navigation menu item built on Radix UI. @see https://ui.shadcn.com/docs/components/navigation-menu */
 function NavigationMenuItem({
   className,
   ...props
@@ -59,6 +62,7 @@ const navigationMenuTriggerStyle = cva(
   'group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-[color,box-shadow] outline-none hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-1 disabled:pointer-events-none disabled:opacity-50 data-[state=open]:bg-accent/50 data-[state=open]:text-accent-foreground data-[state=open]:hover:bg-accent data-[state=open]:focus:bg-accent',
 );
 
+/** Accessible navigation menu trigger built on Radix UI. @see https://ui.shadcn.com/docs/components/navigation-menu */
 function NavigationMenuTrigger({
   className,
   children,
@@ -79,6 +83,7 @@ function NavigationMenuTrigger({
   );
 }
 
+/** Accessible navigation menu content panel built on Radix UI. @see https://ui.shadcn.com/docs/components/navigation-menu */
 function NavigationMenuContent({
   className,
   ...props
@@ -96,6 +101,7 @@ function NavigationMenuContent({
   );
 }
 
+/** Accessible navigation menu viewport built on Radix UI. @see https://ui.shadcn.com/docs/components/navigation-menu */
 function NavigationMenuViewport({
   className,
   ...props
@@ -114,6 +120,7 @@ function NavigationMenuViewport({
   );
 }
 
+/** Accessible navigation menu link built on Radix UI. @see https://ui.shadcn.com/docs/components/navigation-menu */
 function NavigationMenuLink({
   className,
   ...props
@@ -130,6 +137,7 @@ function NavigationMenuLink({
   );
 }
 
+/** Accessible navigation menu indicator built on Radix UI. @see https://ui.shadcn.com/docs/components/navigation-menu */
 function NavigationMenuIndicator({
   className,
   ...props

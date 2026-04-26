@@ -10,6 +10,7 @@ import {
 import { useTheme } from 'next-themes';
 import { Toaster as Sonner, type ToasterProps } from 'sonner';
 
+/** Accessible toast notification provider built on Sonner. @see https://ui.shadcn.com/docs/components/sonner */
 const Toaster = ({ ...props }: ToasterProps) => {
   const { theme = 'system' } = useTheme();
 

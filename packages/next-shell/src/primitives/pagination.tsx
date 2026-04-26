@@ -4,6 +4,7 @@ import { ChevronLeftIcon, ChevronRightIcon, MoreHorizontalIcon } from 'lucide-re
 import { cn } from '@/core/cn';
 import { buttonVariants, type Button } from '@/primitives/button';
 
+/** Accessible pagination navigation component. @see https://ui.shadcn.com/docs/components/pagination */
 function Pagination({ className, ...props }: React.ComponentProps<'nav'>) {
   return (
     <nav
@@ -16,6 +17,7 @@ function Pagination({ className, ...props }: React.ComponentProps<'nav'>) {
   );
 }
 
+/** Accessible pagination content list. @see https://ui.shadcn.com/docs/components/pagination */
 function PaginationContent({ className, ...props }: React.ComponentProps<'ul'>) {
   return (
     <ul
@@ -26,6 +28,7 @@ function PaginationContent({ className, ...props }: React.ComponentProps<'ul'>) 
   );
 }
 
+/** Accessible pagination item container. @see https://ui.shadcn.com/docs/components/pagination */
 function PaginationItem({ ...props }: React.ComponentProps<'li'>) {
   return <li data-slot="pagination-item" {...props} />;
 }
@@ -35,6 +38,7 @@ type PaginationLinkProps = {
 } & Pick<React.ComponentProps<typeof Button>, 'size'> &
   React.ComponentProps<'a'>;
 
+/** Accessible pagination page link. @see https://ui.shadcn.com/docs/components/pagination */
 function PaginationLink({ className, isActive, size = 'icon', ...props }: PaginationLinkProps) {
   return (
     <a
@@ -53,6 +57,7 @@ function PaginationLink({ className, isActive, size = 'icon', ...props }: Pagina
   );
 }
 
+/** Accessible pagination previous page link. @see https://ui.shadcn.com/docs/components/pagination */
 function PaginationPrevious({ className, ...props }: React.ComponentProps<typeof PaginationLink>) {
   return (
     <PaginationLink
@@ -67,6 +72,7 @@ function PaginationPrevious({ className, ...props }: React.ComponentProps<typeof
   );
 }
 
+/** Accessible pagination next page link. @see https://ui.shadcn.com/docs/components/pagination */
 function PaginationNext({ className, ...props }: React.ComponentProps<typeof PaginationLink>) {
   return (
     <PaginationLink
@@ -81,6 +87,7 @@ function PaginationNext({ className, ...props }: React.ComponentProps<typeof Pag
   );
 }
 
+/** Accessible pagination ellipsis overflow indicator. @see https://ui.shadcn.com/docs/components/pagination */
 function PaginationEllipsis({ className, ...props }: React.ComponentProps<'span'>) {
   return (
     <span

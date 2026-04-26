@@ -13,6 +13,7 @@ import {
   DialogTitle,
 } from '@/primitives/dialog';
 
+/** Accessible command palette component built on cmdk. @see https://ui.shadcn.com/docs/components/command */
 function Command({ className, ...props }: React.ComponentProps<typeof CommandPrimitive>) {
   return (
     <CommandPrimitive
@@ -26,6 +27,7 @@ function Command({ className, ...props }: React.ComponentProps<typeof CommandPri
   );
 }
 
+/** Accessible command palette dialog wrapper. @see https://ui.shadcn.com/docs/components/command */
 function CommandDialog({
   title = 'Command Palette',
   description = 'Search for a command to run...',
@@ -57,6 +59,7 @@ function CommandDialog({
   );
 }
 
+/** Accessible command palette search input. @see https://ui.shadcn.com/docs/components/command */
 function CommandInput({
   className,
   ...props
@@ -76,6 +79,7 @@ function CommandInput({
   );
 }
 
+/** Accessible command palette results list. @see https://ui.shadcn.com/docs/components/command */
 function CommandList({ className, ...props }: React.ComponentProps<typeof CommandPrimitive.List>) {
   return (
     <CommandPrimitive.List
@@ -86,6 +90,7 @@ function CommandList({ className, ...props }: React.ComponentProps<typeof Comman
   );
 }
 
+/** Accessible command palette empty state. @see https://ui.shadcn.com/docs/components/command */
 function CommandEmpty({ ...props }: React.ComponentProps<typeof CommandPrimitive.Empty>) {
   return (
     <CommandPrimitive.Empty
@@ -96,6 +101,7 @@ function CommandEmpty({ ...props }: React.ComponentProps<typeof CommandPrimitive
   );
 }
 
+/** Accessible command palette group container. @see https://ui.shadcn.com/docs/components/command */
 function CommandGroup({
   className,
   ...props
@@ -112,6 +118,7 @@ function CommandGroup({
   );
 }
 
+/** Accessible command palette separator. @see https://ui.shadcn.com/docs/components/command */
 function CommandSeparator({
   className,
   ...props
@@ -125,6 +132,7 @@ function CommandSeparator({
   );
 }
 
+/** Accessible command palette item. @see https://ui.shadcn.com/docs/components/command */
 function CommandItem({ className, ...props }: React.ComponentProps<typeof CommandPrimitive.Item>) {
   return (
     <CommandPrimitive.Item
@@ -138,6 +146,7 @@ function CommandItem({ className, ...props }: React.ComponentProps<typeof Comman
   );
 }
 
+/** Accessible command palette keyboard shortcut display. @see https://ui.shadcn.com/docs/components/command */
 function CommandShortcut({ className, ...props }: React.ComponentProps<'span'>) {
   return (
     <span

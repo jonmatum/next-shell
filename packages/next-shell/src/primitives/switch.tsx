@@ -5,6 +5,7 @@ import { Switch as SwitchPrimitive } from 'radix-ui';
 
 import { cn } from '@/core/cn';
 
+/** Accessible switch toggle component built on Radix UI. @see https://ui.shadcn.com/docs/components/switch */
 function Switch({
   className,
   size = 'default',

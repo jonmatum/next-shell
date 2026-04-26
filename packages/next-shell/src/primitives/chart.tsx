@@ -39,6 +39,7 @@ function useChart() {
   return context;
 }
 
+/** Accessible chart container component wrapping Recharts. @see https://ui.shadcn.com/docs/components/chart */
 function ChartContainer({
   id,
   className,
@@ -86,6 +87,7 @@ function ChartContainer({
   );
 }
 
+/** Injects dynamic CSS custom properties for chart color theming. @see https://ui.shadcn.com/docs/components/chart */
 const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
   const colorConfig = Object.entries(config).filter(([, config]) => config.theme ?? config.color);
 
@@ -115,8 +117,10 @@ ${colorConfig
   );
 };
 
+/** Accessible chart tooltip component wrapping Recharts. @see https://ui.shadcn.com/docs/components/chart */
 const ChartTooltip = RechartsPrimitive.Tooltip;
 
+/** Accessible chart tooltip content renderer. @see https://ui.shadcn.com/docs/components/chart */
 function ChartTooltipContent({
   active,
   payload,
@@ -256,8 +260,10 @@ function ChartTooltipContent({
   );
 }
 
+/** Accessible chart legend component wrapping Recharts. @see https://ui.shadcn.com/docs/components/chart */
 const ChartLegend = RechartsPrimitive.Legend;
 
+/** Accessible chart legend content renderer. @see https://ui.shadcn.com/docs/components/chart */
 function ChartLegendContent({
   className,
   hideIcon = false,

@@ -5,22 +5,27 @@ import { Drawer as DrawerPrimitive } from 'vaul';
 
 import { cn } from '@/core/cn';
 
+/** Accessible drawer component built on Vaul. @see https://ui.shadcn.com/docs/components/drawer */
 function Drawer({ ...props }: React.ComponentProps<typeof DrawerPrimitive.Root>) {
   return <DrawerPrimitive.Root data-slot="drawer" {...props} />;
 }
 
+/** Accessible drawer trigger built on Vaul. @see https://ui.shadcn.com/docs/components/drawer */
 function DrawerTrigger({ ...props }: React.ComponentProps<typeof DrawerPrimitive.Trigger>) {
   return <DrawerPrimitive.Trigger data-slot="drawer-trigger" {...props} />;
 }
 
+/** Accessible drawer portal built on Vaul. @see https://ui.shadcn.com/docs/components/drawer */
 function DrawerPortal({ ...props }: React.ComponentProps<typeof DrawerPrimitive.Portal>) {
   return <DrawerPrimitive.Portal data-slot="drawer-portal" {...props} />;
 }
 
+/** Accessible drawer close button built on Vaul. @see https://ui.shadcn.com/docs/components/drawer */
 function DrawerClose({ ...props }: React.ComponentProps<typeof DrawerPrimitive.Close>) {
   return <DrawerPrimitive.Close data-slot="drawer-close" {...props} />;
 }
 
+/** Accessible drawer overlay built on Vaul. @see https://ui.shadcn.com/docs/components/drawer */
 function DrawerOverlay({
   className,
   ...props
@@ -37,6 +42,7 @@ function DrawerOverlay({
   );
 }
 
+/** Accessible drawer content panel built on Vaul. @see https://ui.shadcn.com/docs/components/drawer */
 function DrawerContent({
   className,
   children,
@@ -64,6 +70,7 @@ function DrawerContent({
   );
 }
 
+/** Accessible drawer header built on Vaul. @see https://ui.shadcn.com/docs/components/drawer */
 function DrawerHeader({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
@@ -77,6 +84,7 @@ function DrawerHeader({ className, ...props }: React.ComponentProps<'div'>) {
   );
 }
 
+/** Accessible drawer footer built on Vaul. @see https://ui.shadcn.com/docs/components/drawer */
 function DrawerFooter({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
@@ -87,6 +95,7 @@ function DrawerFooter({ className, ...props }: React.ComponentProps<'div'>) {
   );
 }
 
+/** Accessible drawer title built on Vaul. @see https://ui.shadcn.com/docs/components/drawer */
 function DrawerTitle({ className, ...props }: React.ComponentProps<typeof DrawerPrimitive.Title>) {
   return (
     <DrawerPrimitive.Title
@@ -97,6 +106,7 @@ function DrawerTitle({ className, ...props }: React.ComponentProps<typeof Drawer
   );
 }
 
+/** Accessible drawer description built on Vaul. @see https://ui.shadcn.com/docs/components/drawer */
 function DrawerDescription({
   className,
   ...props

@@ -6,6 +6,7 @@ import { Tabs as TabsPrimitive } from 'radix-ui';
 
 import { cn } from '@/core/cn';
 
+/** Accessible tabs component built on Radix UI. @see https://ui.shadcn.com/docs/components/tabs */
 function Tabs({
   className,
   orientation = 'horizontal',
@@ -37,6 +38,7 @@ const tabsListVariants = cva(
   },
 );
 
+/** Accessible tabs list container built on Radix UI. @see https://ui.shadcn.com/docs/components/tabs */
 function TabsList({
   className,
   variant = 'default',
@@ -52,6 +54,7 @@ function TabsList({
   );
 }
 
+/** Accessible tabs trigger built on Radix UI. @see https://ui.shadcn.com/docs/components/tabs */
 function TabsTrigger({ className, ...props }: React.ComponentProps<typeof TabsPrimitive.Trigger>) {
   return (
     <TabsPrimitive.Trigger
@@ -68,6 +71,7 @@ function TabsTrigger({ className, ...props }: React.ComponentProps<typeof TabsPr
   );
 }
 
+/** Accessible tabs content panel built on Radix UI. @see https://ui.shadcn.com/docs/components/tabs */
 function TabsContent({ className, ...props }: React.ComponentProps<typeof TabsPrimitive.Content>) {
   return (
     <TabsPrimitive.Content

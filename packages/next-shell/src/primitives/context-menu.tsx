@@ -6,34 +6,41 @@ import { ContextMenu as ContextMenuPrimitive } from 'radix-ui';
 
 import { cn } from '@/core/cn';
 
+/** Accessible context menu component built on Radix UI. @see https://ui.shadcn.com/docs/components/context-menu */
 function ContextMenu({ ...props }: React.ComponentProps<typeof ContextMenuPrimitive.Root>) {
   return <ContextMenuPrimitive.Root data-slot="context-menu" {...props} />;
 }
 
+/** Accessible context menu trigger built on Radix UI. @see https://ui.shadcn.com/docs/components/context-menu */
 function ContextMenuTrigger({
   ...props
 }: React.ComponentProps<typeof ContextMenuPrimitive.Trigger>) {
   return <ContextMenuPrimitive.Trigger data-slot="context-menu-trigger" {...props} />;
 }
 
+/** Accessible context menu group built on Radix UI. @see https://ui.shadcn.com/docs/components/context-menu */
 function ContextMenuGroup({ ...props }: React.ComponentProps<typeof ContextMenuPrimitive.Group>) {
   return <ContextMenuPrimitive.Group data-slot="context-menu-group" {...props} />;
 }
 
+/** Accessible context menu portal built on Radix UI. @see https://ui.shadcn.com/docs/components/context-menu */
 function ContextMenuPortal({ ...props }: React.ComponentProps<typeof ContextMenuPrimitive.Portal>) {
   return <ContextMenuPrimitive.Portal data-slot="context-menu-portal" {...props} />;
 }
 
+/** Accessible context menu sub-menu built on Radix UI. @see https://ui.shadcn.com/docs/components/context-menu */
 function ContextMenuSub({ ...props }: React.ComponentProps<typeof ContextMenuPrimitive.Sub>) {
   return <ContextMenuPrimitive.Sub data-slot="context-menu-sub" {...props} />;
 }
 
+/** Accessible context menu radio group built on Radix UI. @see https://ui.shadcn.com/docs/components/context-menu */
 function ContextMenuRadioGroup({
   ...props
 }: React.ComponentProps<typeof ContextMenuPrimitive.RadioGroup>) {
   return <ContextMenuPrimitive.RadioGroup data-slot="context-menu-radio-group" {...props} />;
 }
 
+/** Accessible context menu sub-menu trigger built on Radix UI. @see https://ui.shadcn.com/docs/components/context-menu */
 function ContextMenuSubTrigger({
   className,
   inset,
@@ -58,6 +65,7 @@ function ContextMenuSubTrigger({
   );
 }
 
+/** Accessible context menu sub-menu content built on Radix UI. @see https://ui.shadcn.com/docs/components/context-menu */
 function ContextMenuSubContent({
   className,
   ...props
@@ -74,6 +82,7 @@ function ContextMenuSubContent({
   );
 }
 
+/** Accessible context menu content built on Radix UI. @see https://ui.shadcn.com/docs/components/context-menu */
 function ContextMenuContent({
   className,
   ...props
@@ -92,6 +101,7 @@ function ContextMenuContent({
   );
 }
 
+/** Accessible context menu item built on Radix UI. @see https://ui.shadcn.com/docs/components/context-menu */
 function ContextMenuItem({
   className,
   inset,
@@ -115,6 +125,7 @@ function ContextMenuItem({
   );
 }
 
+/** Accessible context menu checkbox item built on Radix UI. @see https://ui.shadcn.com/docs/components/context-menu */
 function ContextMenuCheckboxItem({
   className,
   children,
@@ -141,6 +152,7 @@ function ContextMenuCheckboxItem({
   );
 }
 
+/** Accessible context menu radio item built on Radix UI. @see https://ui.shadcn.com/docs/components/context-menu */
 function ContextMenuRadioItem({
   className,
   children,
@@ -165,6 +177,7 @@ function ContextMenuRadioItem({
   );
 }
 
+/** Accessible context menu label built on Radix UI. @see https://ui.shadcn.com/docs/components/context-menu */
 function ContextMenuLabel({
   className,
   inset,
@@ -182,6 +195,7 @@ function ContextMenuLabel({
   );
 }
 
+/** Accessible context menu separator built on Radix UI. @see https://ui.shadcn.com/docs/components/context-menu */
 function ContextMenuSeparator({
   className,
   ...props
@@ -195,6 +209,7 @@ function ContextMenuSeparator({
   );
 }
 
+/** Accessible context menu shortcut display. @see https://ui.shadcn.com/docs/components/context-menu */
 function ContextMenuShortcut({ className, ...props }: React.ComponentProps<'span'>) {
   return (
     <span

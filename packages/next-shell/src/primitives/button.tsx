@@ -36,6 +36,7 @@ const buttonVariants = cva(
   },
 );
 
+/** Accessible button component with multiple variants and sizes. @see https://ui.shadcn.com/docs/components/button */
 function Button({
   className,
   variant = 'default',

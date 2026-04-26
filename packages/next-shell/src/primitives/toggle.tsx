@@ -28,6 +28,7 @@ const toggleVariants = cva(
   },
 );
 
+/** Accessible toggle button component built on Radix UI. @see https://ui.shadcn.com/docs/components/toggle */
 function Toggle({
   className,
   variant,

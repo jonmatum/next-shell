@@ -6,6 +6,7 @@ import { Checkbox as CheckboxPrimitive } from 'radix-ui';
 
 import { cn } from '@/core/cn';
 
+/** Accessible checkbox component built on Radix UI. @see https://ui.shadcn.com/docs/components/checkbox */
 function Checkbox({ className, ...props }: React.ComponentProps<typeof CheckboxPrimitive.Root>) {
   return (
     <CheckboxPrimitive.Root

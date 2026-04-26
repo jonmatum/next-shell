@@ -250,3 +250,5 @@ export function cssVar(
 ): string {
   return `var(--${token})`;
 }
+
+export { hexToOklch } from './hex-to-oklch.js';

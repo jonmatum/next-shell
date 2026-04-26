@@ -5,6 +5,7 @@ import { ScrollArea as ScrollAreaPrimitive } from 'radix-ui';
 
 import { cn } from '@/core/cn';
 
+/** Accessible scroll area component built on Radix UI. @see https://ui.shadcn.com/docs/components/scroll-area */
 function ScrollArea({
   className,
   children,
@@ -28,6 +29,7 @@ function ScrollArea({
   );
 }
 
+/** Accessible scroll area scrollbar built on Radix UI. @see https://ui.shadcn.com/docs/components/scroll-area */
 function ScrollBar({
   className,
   orientation = 'vertical',

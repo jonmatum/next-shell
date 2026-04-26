@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import { cn } from '@/core/cn';
 
+/** Accessible textarea component. @see https://ui.shadcn.com/docs/components/textarea */
 function Textarea({ className, ...props }: React.ComponentProps<'textarea'>) {
   return (
     <textarea

@@ -5,6 +5,7 @@ import { Separator as SeparatorPrimitive } from 'radix-ui';
 
 import { cn } from '@/core/cn';
 
+/** Accessible separator component built on Radix UI. @see https://ui.shadcn.com/docs/components/separator */
 function Separator({
   className,
   orientation = 'horizontal',

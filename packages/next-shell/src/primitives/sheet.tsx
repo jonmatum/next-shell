@@ -6,14 +6,17 @@ import { Dialog as SheetPrimitive } from 'radix-ui';
 
 import { cn } from '@/core/cn';
 
+/** Accessible sheet (side panel) component built on Radix UI. @see https://ui.shadcn.com/docs/components/sheet */
 function Sheet({ ...props }: React.ComponentProps<typeof SheetPrimitive.Root>) {
   return <SheetPrimitive.Root data-slot="sheet" {...props} />;
 }
 
+/** Accessible sheet trigger built on Radix UI. @see https://ui.shadcn.com/docs/components/sheet */
 function SheetTrigger({ ...props }: React.ComponentProps<typeof SheetPrimitive.Trigger>) {
   return <SheetPrimitive.Trigger data-slot="sheet-trigger" {...props} />;
 }
 
+/** Accessible sheet close button built on Radix UI. @see https://ui.shadcn.com/docs/components/sheet */
 function SheetClose({ ...props }: React.ComponentProps<typeof SheetPrimitive.Close>) {
   return <SheetPrimitive.Close data-slot="sheet-close" {...props} />;
 }
@@ -38,6 +41,7 @@ function SheetOverlay({
   );
 }
 
+/** Accessible sheet content panel built on Radix UI. @see https://ui.shadcn.com/docs/components/sheet */
 function SheetContent({
   className,
   children,
@@ -79,6 +83,7 @@ function SheetContent({
   );
 }
 
+/** Accessible sheet header component. @see https://ui.shadcn.com/docs/components/sheet */
 function SheetHeader({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
@@ -89,6 +94,7 @@ function SheetHeader({ className, ...props }: React.ComponentProps<'div'>) {
   );
 }
 
+/** Accessible sheet footer component. @see https://ui.shadcn.com/docs/components/sheet */
 function SheetFooter({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
@@ -99,6 +105,7 @@ function SheetFooter({ className, ...props }: React.ComponentProps<'div'>) {
   );
 }
 
+/** Accessible sheet title built on Radix UI. @see https://ui.shadcn.com/docs/components/sheet */
 function SheetTitle({ className, ...props }: React.ComponentProps<typeof SheetPrimitive.Title>) {
   return (
     <SheetPrimitive.Title
@@ -109,6 +116,7 @@ function SheetTitle({ className, ...props }: React.ComponentProps<typeof SheetPr
   );
 }
 
+/** Accessible sheet description built on Radix UI. @see https://ui.shadcn.com/docs/components/sheet */
 function SheetDescription({
   className,
   ...props

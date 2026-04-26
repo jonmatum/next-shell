@@ -6,18 +6,22 @@ import { Select as SelectPrimitive } from 'radix-ui';
 
 import { cn } from '@/core/cn';
 
+/** Accessible select component built on Radix UI. @see https://ui.shadcn.com/docs/components/select */
 function Select({ ...props }: React.ComponentProps<typeof SelectPrimitive.Root>) {
   return <SelectPrimitive.Root data-slot="select" {...props} />;
 }
 
+/** Accessible select option group built on Radix UI. @see https://ui.shadcn.com/docs/components/select */
 function SelectGroup({ ...props }: React.ComponentProps<typeof SelectPrimitive.Group>) {
   return <SelectPrimitive.Group data-slot="select-group" {...props} />;
 }
 
+/** Accessible select value display built on Radix UI. @see https://ui.shadcn.com/docs/components/select */
 function SelectValue({ ...props }: React.ComponentProps<typeof SelectPrimitive.Value>) {
   return <SelectPrimitive.Value data-slot="select-value" {...props} />;
 }
 
+/** Accessible select trigger built on Radix UI. @see https://ui.shadcn.com/docs/components/select */
 function SelectTrigger({
   className,
   size = 'default',
@@ -44,6 +48,7 @@ function SelectTrigger({
   );
 }
 
+/** Accessible select content dropdown built on Radix UI. @see https://ui.shadcn.com/docs/components/select */
 function SelectContent({
   className,
   children,
@@ -81,6 +86,7 @@ function SelectContent({
   );
 }
 
+/** Accessible select label built on Radix UI. @see https://ui.shadcn.com/docs/components/select */
 function SelectLabel({ className, ...props }: React.ComponentProps<typeof SelectPrimitive.Label>) {
   return (
     <SelectPrimitive.Label
@@ -91,6 +97,7 @@ function SelectLabel({ className, ...props }: React.ComponentProps<typeof Select
   );
 }
 
+/** Accessible select option item built on Radix UI. @see https://ui.shadcn.com/docs/components/select */
 function SelectItem({
   className,
   children,
@@ -118,6 +125,7 @@ function SelectItem({
   );
 }
 
+/** Accessible select separator built on Radix UI. @see https://ui.shadcn.com/docs/components/select */
 function SelectSeparator({
   className,
   ...props
@@ -131,6 +139,7 @@ function SelectSeparator({
   );
 }
 
+/** Accessible select scroll up button built on Radix UI. @see https://ui.shadcn.com/docs/components/select */
 function SelectScrollUpButton({
   className,
   ...props
@@ -146,6 +155,7 @@ function SelectScrollUpButton({
   );
 }
 
+/** Accessible select scroll down button built on Radix UI. @see https://ui.shadcn.com/docs/components/select */
 function SelectScrollDownButton({
   className,
   ...props

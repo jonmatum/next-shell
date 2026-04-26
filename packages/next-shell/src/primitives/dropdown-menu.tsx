@@ -6,22 +6,26 @@ import { DropdownMenu as DropdownMenuPrimitive } from 'radix-ui';
 
 import { cn } from '@/core/cn';
 
+/** Accessible dropdown menu component built on Radix UI. @see https://ui.shadcn.com/docs/components/dropdown-menu */
 function DropdownMenu({ ...props }: React.ComponentProps<typeof DropdownMenuPrimitive.Root>) {
   return <DropdownMenuPrimitive.Root data-slot="dropdown-menu" {...props} />;
 }
 
+/** Accessible dropdown menu portal built on Radix UI. @see https://ui.shadcn.com/docs/components/dropdown-menu */
 function DropdownMenuPortal({
   ...props
 }: React.ComponentProps<typeof DropdownMenuPrimitive.Portal>) {
   return <DropdownMenuPrimitive.Portal data-slot="dropdown-menu-portal" {...props} />;
 }
 
+/** Accessible dropdown menu trigger built on Radix UI. @see https://ui.shadcn.com/docs/components/dropdown-menu */
 function DropdownMenuTrigger({
   ...props
 }: React.ComponentProps<typeof DropdownMenuPrimitive.Trigger>) {
   return <DropdownMenuPrimitive.Trigger data-slot="dropdown-menu-trigger" {...props} />;
 }
 
+/** Accessible dropdown menu content built on Radix UI. @see https://ui.shadcn.com/docs/components/dropdown-menu */
 function DropdownMenuContent({
   className,
   sideOffset = 4,
@@ -42,10 +46,12 @@ function DropdownMenuContent({
   );
 }
 
+/** Accessible dropdown menu group built on Radix UI. @see https://ui.shadcn.com/docs/components/dropdown-menu */
 function DropdownMenuGroup({ ...props }: React.ComponentProps<typeof DropdownMenuPrimitive.Group>) {
   return <DropdownMenuPrimitive.Group data-slot="dropdown-menu-group" {...props} />;
 }
 
+/** Accessible dropdown menu item built on Radix UI. @see https://ui.shadcn.com/docs/components/dropdown-menu */
 function DropdownMenuItem({
   className,
   inset,
@@ -69,6 +75,7 @@ function DropdownMenuItem({
   );
 }
 
+/** Accessible dropdown menu checkbox item built on Radix UI. @see https://ui.shadcn.com/docs/components/dropdown-menu */
 function DropdownMenuCheckboxItem({
   className,
   children,
@@ -95,12 +102,14 @@ function DropdownMenuCheckboxItem({
   );
 }
 
+/** Accessible dropdown menu radio group built on Radix UI. @see https://ui.shadcn.com/docs/components/dropdown-menu */
 function DropdownMenuRadioGroup({
   ...props
 }: React.ComponentProps<typeof DropdownMenuPrimitive.RadioGroup>) {
   return <DropdownMenuPrimitive.RadioGroup data-slot="dropdown-menu-radio-group" {...props} />;
 }
 
+/** Accessible dropdown menu radio item built on Radix UI. @see https://ui.shadcn.com/docs/components/dropdown-menu */
 function DropdownMenuRadioItem({
   className,
   children,
@@ -125,6 +134,7 @@ function DropdownMenuRadioItem({
   );
 }
 
+/** Accessible dropdown menu label built on Radix UI. @see https://ui.shadcn.com/docs/components/dropdown-menu */
 function DropdownMenuLabel({
   className,
   inset,
@@ -142,6 +152,7 @@ function DropdownMenuLabel({
   );
 }
 
+/** Accessible dropdown menu separator built on Radix UI. @see https://ui.shadcn.com/docs/components/dropdown-menu */
 function DropdownMenuSeparator({
   className,
   ...props
@@ -155,6 +166,7 @@ function DropdownMenuSeparator({
   );
 }
 
+/** Accessible dropdown menu shortcut display. @see https://ui.shadcn.com/docs/components/dropdown-menu */
 function DropdownMenuShortcut({ className, ...props }: React.ComponentProps<'span'>) {
   return (
     <span
@@ -165,10 +177,12 @@ function DropdownMenuShortcut({ className, ...props }: React.ComponentProps<'spa
   );
 }
 
+/** Accessible dropdown menu sub-menu built on Radix UI. @see https://ui.shadcn.com/docs/components/dropdown-menu */
 function DropdownMenuSub({ ...props }: React.ComponentProps<typeof DropdownMenuPrimitive.Sub>) {
   return <DropdownMenuPrimitive.Sub data-slot="dropdown-menu-sub" {...props} />;
 }
 
+/** Accessible dropdown menu sub-menu trigger built on Radix UI. @see https://ui.shadcn.com/docs/components/dropdown-menu */
 function DropdownMenuSubTrigger({
   className,
   inset,
@@ -193,6 +207,7 @@ function DropdownMenuSubTrigger({
   );
 }
 
+/** Accessible dropdown menu sub-menu content built on Radix UI. @see https://ui.shadcn.com/docs/components/dropdown-menu */
 function DropdownMenuSubContent({
   className,
   ...props
