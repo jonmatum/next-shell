@@ -148,21 +148,58 @@ function MyComponent() {
 }
 ```
 
-## SSR cookie helpers
+## ThemeToggle
 
-Read the theme before React renders to eliminate the light-flash:
+A cycle button that rotates through light, dark, and system themes on click. Renders a sun/moon icon reflecting the current theme.
 
 ```tsx
-// app/layout.tsx (Server Component)
-import { cookies } from 'next/headers';
-import { getThemeFromCookies } from '@jonmatum/next-shell/providers/server';
+'use client';
 
-export default async function RootLayout({ children }) {
-  const theme = getThemeFromCookies(await cookies()) ?? 'system';
+import { ThemeToggle } from '@jonmatum/next-shell/providers';
+
+export function Header() {
   return (
-    <html lang="en" data-theme={theme} suppressHydrationWarning>
-      <body>{children}</body>
-    </html>
+    <header>
+      <h1>My App</h1>
+      <ThemeToggle />
+    </header>
   );
 }
 ```
+
+## ThemeToggleDropdown
+
+A dropdown menu variant that lets users pick a specific theme from a list.
+
+```tsx
+'use client';
+
+import { ThemeToggleDropdown } from '@jonmatum/next-shell/providers';
+
+export function Settings() {
+  return (
+    <div>
+      <span>Theme:</span>
+      <ThemeToggleDropdown />
+    </div>
+  );
+}
+```
+
+## SSR cookie helpers
+
+For flash-free server rendering, use the cookie helpers from the server-safe subpath:
+
+```tsx
+// Route handler or middleware
+import { getThemeFromCookies, buildThemeCookieHeader } from '@jonmatum/next-shell/providers/server';
+
+// Read the theme from incoming cookies
+const theme = getThemeFromCookies(cookies());
+
+// Set the theme cookie in a response
+const header = buildThemeCookieHeader('dark');
+response.headers.set('Set-Cookie', header);
+```
+
+The cookie persists across sessions with a 1-year max-age and `samesite=lax`.

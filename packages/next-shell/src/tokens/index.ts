@@ -252,3 +252,13 @@ export function cssVar(
 }
 
 export { hexToOklch } from './hex-to-oklch.js';
+
+export {
+  neutralPreset,
+  greenPreset,
+  orangePreset,
+  redPreset,
+  violetPreset,
+  presetPalettes,
+  type PresetPaletteName,
+} from './presets.js';

@@ -1,0 +1,50 @@
+/*!
+ * @jonmatum/next-shell — violet color palette preset
+ *
+ * A purple/violet palette centered on hue 295. Import after the base preset:
+ *
+ *   @import "@jonmatum/next-shell/styles/preset.css";
+ *   @import "@jonmatum/next-shell/styles/presets/violet.css";
+ *
+ * Overrides: --primary, --primary-foreground, --accent, --accent-foreground,
+ * --destructive, --destructive-foreground, --ring, --chart-1…5.
+ */
+
+:root,
+[data-theme='light'] {
+  --primary: oklch(0.5 0.2 295);
+  --primary-foreground: oklch(0.985 0 0);
+
+  --accent: oklch(0.95 0.02 295);
+  --accent-foreground: oklch(0.25 0.05 295);
+
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.985 0 0);
+
+  --ring: oklch(0.5 0.2 295);
+
+  --chart-1: oklch(0.5 0.2 295);
+  --chart-2: oklch(0.6 0.17 275);
+  --chart-3: oklch(0.45 0.16 315);
+  --chart-4: oklch(0.68 0.15 260);
+  --chart-5: oklch(0.55 0.14 330);
+}
+
+[data-theme='dark'] {
+  --primary: oklch(0.65 0.2 295);
+  --primary-foreground: oklch(0.985 0 0);
+
+  --accent: oklch(0.2 0.035 295);
+  --accent-foreground: oklch(0.92 0.02 295);
+
+  --destructive: oklch(0.704 0.191 22.216);
+  --destructive-foreground: oklch(0.985 0 0);
+
+  --ring: oklch(0.65 0.2 295);
+
+  --chart-1: oklch(0.65 0.2 295);
+  --chart-2: oklch(0.72 0.16 275);
+  --chart-3: oklch(0.55 0.15 315);
+  --chart-4: oklch(0.78 0.14 260);
+  --chart-5: oklch(0.62 0.13 330);
+}

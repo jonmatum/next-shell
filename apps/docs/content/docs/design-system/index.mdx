@@ -82,3 +82,31 @@ const brand: BrandOverrides = {
 ```
 
 Overrides are applied as inline CSS custom properties — zero JS re-render on theme switch.
+
+## CSS-only brand override (no JS)
+
+If you prefer plain CSS (or don't use `ThemeProvider`), override tokens directly after the preset import:
+
+```css
+/* app/globals.css */
+@import 'tailwindcss';
+@import '@jonmatum/next-shell/styles/preset.css';
+
+/* Brand overrides — applied after the preset so they win by cascade */
+:root {
+  --primary: oklch(0.65 0.2 145);
+  --primary-foreground: oklch(0.98 0 0);
+  --accent: oklch(0.75 0.12 145);
+  --accent-foreground: oklch(0.25 0 0);
+  --radius: 0.75rem;
+}
+
+[data-theme='dark'] {
+  --primary: oklch(0.75 0.18 145);
+  --primary-foreground: oklch(0.15 0 0);
+  --accent: oklch(0.35 0.1 145);
+  --accent-foreground: oklch(0.95 0 0);
+}
+```
+
+This works for any consumer — React, Vue, plain HTML. No JavaScript needed.

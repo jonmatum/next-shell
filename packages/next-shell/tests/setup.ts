@@ -1,5 +1,11 @@
 import '@testing-library/jest-dom/vitest';
-import { vi } from 'vitest';
+import { expect, vi } from 'vitest';
+import * as vitestAxeMatchers from 'vitest-axe/matchers';
+
+// Register vitest-axe matchers (toHaveNoViolations) globally.
+// The vitest-axe/extend-expect entry point is empty in 0.1.0 + Vitest 4,
+// so we extend manually.
+expect.extend(vitestAxeMatchers);
 
 // jsdom doesn't implement `matchMedia`, which next-themes uses to watch the
 // `prefers-color-scheme` media query. Provide a minimal stub that reports
@@ -38,6 +44,15 @@ if (typeof Element !== 'undefined' && typeof Element.prototype.scrollIntoView !=
   Element.prototype.scrollIntoView = function scrollIntoView(): void {
     /* no-op in jsdom */
   };
+}
+
+// jsdom doesn't implement `HTMLCanvasElement.prototype.getContext`, which
+// axe-core uses for icon-ligature detection in its color-contrast rule.
+// Stub to a no-op that returns null (no 2D context) to suppress the error.
+if (typeof HTMLCanvasElement !== 'undefined') {
+  HTMLCanvasElement.prototype.getContext = function getContext() {
+    return null;
+  } as typeof HTMLCanvasElement.prototype.getContext;
 }
 
 // jsdom doesn't implement `IntersectionObserver`, which embla-carousel
