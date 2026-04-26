@@ -1,0 +1,50 @@
+/*!
+ * @jonmatum/next-shell — orange color palette preset
+ *
+ * An amber/orange palette centered on hue 65. Import after the base preset:
+ *
+ *   @import "@jonmatum/next-shell/styles/preset.css";
+ *   @import "@jonmatum/next-shell/styles/presets/orange.css";
+ *
+ * Overrides: --primary, --primary-foreground, --accent, --accent-foreground,
+ * --destructive, --destructive-foreground, --ring, --chart-1…5.
+ */
+
+:root,
+[data-theme='light'] {
+  --primary: oklch(0.65 0.18 55);
+  --primary-foreground: oklch(0.985 0 0);
+
+  --accent: oklch(0.95 0.025 65);
+  --accent-foreground: oklch(0.3 0.06 55);
+
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.985 0 0);
+
+  --ring: oklch(0.65 0.18 55);
+
+  --chart-1: oklch(0.65 0.18 55);
+  --chart-2: oklch(0.72 0.15 75);
+  --chart-3: oklch(0.55 0.16 40);
+  --chart-4: oklch(0.78 0.14 85);
+  --chart-5: oklch(0.6 0.13 30);
+}
+
+[data-theme='dark'] {
+  --primary: oklch(0.72 0.17 55);
+  --primary-foreground: oklch(0.16 0.025 55);
+
+  --accent: oklch(0.22 0.03 55);
+  --accent-foreground: oklch(0.92 0.02 65);
+
+  --destructive: oklch(0.704 0.191 22.216);
+  --destructive-foreground: oklch(0.985 0 0);
+
+  --ring: oklch(0.72 0.17 55);
+
+  --chart-1: oklch(0.72 0.17 55);
+  --chart-2: oklch(0.78 0.14 75);
+  --chart-3: oklch(0.62 0.15 40);
+  --chart-4: oklch(0.83 0.12 85);
+  --chart-5: oklch(0.68 0.13 30);
+}
