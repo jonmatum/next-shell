@@ -28,6 +28,9 @@
     "node": ">=20"
   },
   "type": "module",
+  "bin": {
+    "next-shell-theme": "./dist/cli/generate-theme.js"
+  },
   "sideEffects": [
     "**/*.css"
   ],
@@ -127,6 +130,12 @@
     "./styles/presets/red.css": "./src/styles/presets/red.css",
     "./styles/presets/violet.css": "./src/styles/presets/violet.css",
     "./fonts/BigBlueTerminal.woff2": "./dist/fonts/BigBlueTerminal.woff2",
+    "./cli/generate-theme": {
+      "source": "./src/cli/generate-theme.ts",
+      "types": "./dist/cli/generate-theme.d.ts",
+      "import": "./dist/cli/generate-theme.js",
+      "require": "./dist/cli/generate-theme.cjs"
+    },
     "./tailwind-preset": {
       "source": "./src/tailwind-preset/index.ts",
       "types": "./dist/tailwind-preset/index.d.ts",

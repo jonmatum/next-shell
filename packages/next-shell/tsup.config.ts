@@ -44,6 +44,7 @@ export default defineConfig({
     'formatters/index': 'src/formatters/index.ts',
     'tokens/index': 'src/tokens/index.ts',
     'tailwind-preset/index': 'src/tailwind-preset/index.ts',
+    'cli/generate-theme': 'src/cli/generate-theme.ts',
   },
   format: ['esm', 'cjs'],
   dts: true,
