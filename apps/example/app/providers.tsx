@@ -11,7 +11,7 @@ const authAdapter = createMockAuthAdapter({
 
 export function Providers({ children }: { children: ReactNode }) {
   return (
-    <AppProviders themeProps={{ defaultTheme: 'dark', forcedTheme: 'dark' }}>
+    <AppProviders themeProps={{ defaultTheme: 'dark' }}>
       <AuthProvider adapter={authAdapter}>{children}</AuthProvider>
     </AppProviders>
   );
