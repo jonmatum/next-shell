@@ -1,5 +1,12 @@
 # @jonmatum/next-shell
 
+[![npm version](https://img.shields.io/npm/v/@jonmatum/next-shell)](https://www.npmjs.com/package/@jonmatum/next-shell)
+[![CI](https://img.shields.io/github/actions/workflow/status/jonmatum/next-shell/ci.yml?branch=main)](https://github.com/jonmatum/next-shell/actions/workflows/ci.yml)
+[![License](https://img.shields.io/github/license/jonmatum/next-shell)](https://github.com/jonmatum/next-shell/blob/main/LICENSE)
+[![Bundle size](https://img.shields.io/bundlephobia/minzip/@jonmatum/next-shell)](https://bundlephobia.com/package/@jonmatum/next-shell)
+
+**[Documentation](https://jonmatum.github.io/next-shell/)**
+
 Reusable Next.js app shell built on **shadcn/ui** primitives with a strict **semantic-token** design system.
 
 > **Status:** Phases 1–3 usable today (tokens, theming, 42 primitives). Phase 4 (app-shell layout) in progress. Follow the rollout in [Epic #13](https://github.com/jonmatum/next-shell/issues/13).

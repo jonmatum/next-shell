@@ -76,6 +76,7 @@ New session picking up the work: `git pull`, read `CLAUDE.md`, check the most re
 
 ## Links
 
+- **Documentation** · [jonmatum.github.io/next-shell](https://jonmatum.github.io/next-shell/)
 - Package README · [`packages/next-shell/README.md`](./packages/next-shell/README.md)
 - Session onboarding · [`CLAUDE.md`](./CLAUDE.md)
 - Extraction plan · [Epic #13](https://github.com/jonmatum/next-shell/issues/13)

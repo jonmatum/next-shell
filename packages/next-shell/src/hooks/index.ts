@@ -4,7 +4,7 @@
  * Subpath: `@jonmatum/next-shell/hooks`
  *
  * Currently exposes `useIsMobile` (populated in Phase 4d to back the
- * Sidebar's mobile-drawer mode). The broader Phase 8 surface
+ * Sidebar's mobile-drawer mode). The broader Phase 7 surface
  * (`useBreakpoint`, `useDisclosure`, `useLocalStorage`, etc.) lands
  * separately.
  */

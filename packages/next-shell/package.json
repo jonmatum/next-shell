@@ -15,7 +15,7 @@
   ],
   "license": "MIT",
   "author": "Jonatan Mata <jonmatum@gmail.com>",
-  "homepage": "https://github.com/jonmatum/next-shell#readme",
+  "homepage": "https://jonmatum.github.io/next-shell/",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jonmatum/next-shell.git",
@@ -23,6 +23,9 @@
   },
   "bugs": {
     "url": "https://github.com/jonmatum/next-shell/issues"
+  },
+  "engines": {
+    "node": ">=20"
   },
   "type": "module",
   "sideEffects": [

@@ -152,7 +152,12 @@ Subpaths exported through `package.json#exports`:
 @jonmatum/next-shell/tailwind-preset
 @jonmatum/next-shell/styles/{tokens,preset}.css
 @jonmatum/next-shell/layout
+@jonmatum/next-shell/layout/server
+@jonmatum/next-shell/formatters
 @jonmatum/next-shell/auth
+@jonmatum/next-shell/auth/nextauth
+@jonmatum/next-shell/auth/mock
+@jonmatum/next-shell/auth/server
 @jonmatum/next-shell/hooks
 ```
 
