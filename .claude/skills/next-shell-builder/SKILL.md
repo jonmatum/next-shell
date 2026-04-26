@@ -25,6 +25,13 @@ Or manually:
 
 ```bash
 pnpm add @jonmatum/next-shell next@^15 react@^19 react-dom@^19 tailwindcss@^4
+pnpm add -D @tailwindcss/postcss@^4
+```
+
+### postcss.config.mjs (required)
+
+```js
+export default { plugins: { '@tailwindcss/postcss': {} } };
 ```
 
 ### globals.css (required)
@@ -34,6 +41,8 @@ pnpm add @jonmatum/next-shell next@^15 react@^19 react-dom@^19 tailwindcss@^4
 @source "node_modules/@jonmatum/next-shell/dist/**/*.{js,cjs}";
 @import '@jonmatum/next-shell/styles/preset.css';
 ```
+
+Both `tailwindcss` AND `@tailwindcss/postcss` are required dependencies. Without them, `@import 'tailwindcss'` in globals.css will fail with "Can't resolve 'tailwindcss'".
 
 The `@source` line is mandatory — Tailwind v4 skips node_modules by default.
 
