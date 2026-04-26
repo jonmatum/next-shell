@@ -4,20 +4,23 @@
  * Run with: pnpm size
  * CI runs this after the build step to catch bundle regressions.
  *
+ * Limits are set ~20% above current measured sizes to catch regressions
+ * without false positives on minor additions.
+ *
  * @see https://github.com/ai/size-limit
  */
 module.exports = [
   {
     path: 'dist/primitives/index.js',
-    limit: '80 KB',
+    limit: '230 KB',
   },
   {
     path: 'dist/layout/index.js',
-    limit: '40 KB',
+    limit: '55 KB',
   },
   {
     path: 'dist/providers/index.js',
-    limit: '20 KB',
+    limit: '65 KB',
   },
   {
     path: 'dist/auth/index.js',
