@@ -176,15 +176,44 @@ export default function Page() {
 
 ### AppShell
 
-| Prop                  | Type           | Default | Description                                                                                                            |
-| --------------------- | -------------- | ------- | ---------------------------------------------------------------------------------------------------------------------- |
-| `children`            | `ReactNode`    | —       | Page content rendered inside the main scrollable area between `topBar` and `footer`.                                   |
-| `sidebar`             | `ReactNode`    | —       | Sidebar nav tree. When omitted the sidebar rail and provider are not rendered and the content stretches to full width. |
-| `topBar`              | `ReactNode`    | —       | Top bar element (e.g. `<TopBar />`). Rendered as a sticky header inside `SidebarInset`.                                |
-| `footer`              | `ReactNode`    | —       | Footer element rendered below the content area inside `SidebarInset`.                                                  |
-| `commandBar`          | `boolean`      | `false` | Mount a `CommandBarProvider` wrapping the whole shell so descendants can call `useCommandBarActions`.                  |
-| `initialSidebarState` | `SidebarState` | —       | Initial sidebar open/closed state read from the SSR cookie so the server render matches the first client paint.        |
-| `className`           | `string`       | —       | Additional CSS class names.                                                                                            |
+<TypeTable
+  type={{
+    children: {
+      type: 'ReactNode',
+      description:
+        'Page content rendered inside the main scrollable area between topBar and footer.',
+    },
+    sidebar: {
+      type: 'ReactNode',
+      description:
+        'Sidebar nav tree. When omitted the sidebar rail and provider are not rendered and the content stretches to full width.',
+    },
+    topBar: {
+      type: 'ReactNode',
+      description:
+        'Top bar element (e.g. <TopBar />). Rendered as a sticky header inside SidebarInset.',
+    },
+    footer: {
+      type: 'ReactNode',
+      description: 'Footer element rendered below the content area inside SidebarInset.',
+    },
+    commandBar: {
+      type: 'boolean',
+      default: 'false',
+      description:
+        'Mount a CommandBarProvider wrapping the whole shell so descendants can call useCommandBarActions.',
+    },
+    initialSidebarState: {
+      type: 'SidebarState',
+      description:
+        'Initial sidebar open/closed state read from the SSR cookie so the server render matches the first client paint.',
+    },
+    className: {
+      type: 'string',
+      description: 'Additional CSS class names.',
+    },
+  }}
+/>
 
 ### SidebarProvider
 
@@ -199,34 +228,99 @@ export default function Page() {
 
 ### Sidebar
 
-| Prop          | Type                                 | Default       | Description                                                                                                       |
-| ------------- | ------------------------------------ | ------------- | ----------------------------------------------------------------------------------------------------------------- |
-| `side`        | `'left' \| 'right'`                  | `'left'`      | Which side of the viewport the sidebar renders on.                                                                |
-| `variant`     | `'sidebar' \| 'floating' \| 'inset'` | `'sidebar'`   | Visual style variant. `sidebar` is a standard rail, `floating` adds shadow, `inset` sits within the content area. |
-| `collapsible` | `'offcanvas' \| 'icon' \| 'none'`    | `'offcanvas'` | Collapse behavior. `offcanvas` slides off-screen, `icon` collapses to icon-only rail, `none` disables collapsing. |
-| `className`   | `string`                             | —             | Additional CSS class names.                                                                                       |
-| `children`    | `ReactNode`                          | —             | Sidebar content (e.g. `SidebarHeader`, `SidebarContent`, `SidebarFooter`).                                        |
+<TypeTable
+  type={{
+    side: {
+      type: "'left' | 'right'",
+      default: "'left'",
+      description: 'Which side of the viewport the sidebar renders on.',
+    },
+    variant: {
+      type: "'sidebar' | 'floating' | 'inset'",
+      default: "'sidebar'",
+      description:
+        'Visual style variant. sidebar is a standard rail, floating adds shadow, inset sits within the content area.',
+    },
+    collapsible: {
+      type: "'offcanvas' | 'icon' | 'none'",
+      default: "'offcanvas'",
+      description:
+        'Collapse behavior. offcanvas slides off-screen, icon collapses to icon-only rail, none disables collapsing.',
+    },
+    className: {
+      type: 'string',
+      description: 'Additional CSS class names.',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'Sidebar content (e.g. SidebarHeader, SidebarContent, SidebarFooter).',
+    },
+  }}
+/>
 
 ### TopBar
 
-| Prop        | Type        | Default | Description                                                                                       |
-| ----------- | ----------- | ------- | ------------------------------------------------------------------------------------------------- |
-| `left`      | `ReactNode` | —       | Left-anchored slot — typically the brand and breadcrumb.                                          |
-| `center`    | `ReactNode` | —       | Center slot — typically a search input or `CommandBarTrigger`. Stretches to fill available space. |
-| `right`     | `ReactNode` | —       | Right-anchored slot — typically the theme toggle, user menu, notifications, etc.                  |
-| `sticky`    | `boolean`   | `true`  | Sticky positioning at the top of the viewport. Set `false` to control positioning externally.     |
-| `className` | `string`    | —       | Additional CSS class names.                                                                       |
+<TypeTable
+  type={{
+    left: {
+      type: 'ReactNode',
+      description: 'Left-anchored slot — typically the brand and breadcrumb.',
+    },
+    center: {
+      type: 'ReactNode',
+      description:
+        'Center slot — typically a search input or CommandBarTrigger. Stretches to fill available space.',
+    },
+    right: {
+      type: 'ReactNode',
+      description:
+        'Right-anchored slot — typically the theme toggle, user menu, notifications, etc.',
+    },
+    sticky: {
+      type: 'boolean',
+      default: 'true',
+      description:
+        'Sticky positioning at the top of the viewport. Set false to control positioning externally.',
+    },
+    className: {
+      type: 'string',
+      description: 'Additional CSS class names.',
+    },
+  }}
+/>
 
 ### PageHeader
 
-| Prop          | Type                   | Default        | Description                                                                         |
-| ------------- | ---------------------- | -------------- | ----------------------------------------------------------------------------------- |
-| `title`       | `ReactNode`            | **(required)** | Page title rendered as a heading element.                                           |
-| `description` | `ReactNode`            | —              | Optional short description rendered under the title.                                |
-| `breadcrumb`  | `ReactNode`            | —              | Breadcrumb / eyebrow slot rendered above the title.                                 |
-| `actions`     | `ReactNode`            | —              | Action slot rendered to the right of the title on desktop, stacked below on mobile. |
-| `headingAs`   | `'h1' \| 'h2' \| 'h3'` | `'h1'`         | Heading level used for the title.                                                   |
-| `className`   | `string`               | —              | Additional CSS class names.                                                         |
+<TypeTable
+  type={{
+    title: {
+      type: 'ReactNode',
+      description: 'Page title rendered as a heading element. (required)',
+    },
+    description: {
+      type: 'ReactNode',
+      description: 'Optional short description rendered under the title.',
+    },
+    breadcrumb: {
+      type: 'ReactNode',
+      description: 'Breadcrumb / eyebrow slot rendered above the title.',
+    },
+    actions: {
+      type: 'ReactNode',
+      description:
+        'Action slot rendered to the right of the title on desktop, stacked below on mobile.',
+    },
+    headingAs: {
+      type: "'h1' | 'h2' | 'h3'",
+      default: "'h1'",
+      description: 'Heading level used for the title.',
+    },
+    className: {
+      type: 'string',
+      description: 'Additional CSS class names.',
+    },
+  }}
+/>
 
 ### Footer
 

@@ -14,15 +14,37 @@ description: Set up @jonmatum/next-shell in your Next.js 15 application.
 
 ## Installation
 
+{/* prettier-ignore */}
+<Tabs items={['pnpm', 'npm', 'yarn']}>
+<Tab value="pnpm">
 ```bash
 pnpm add @jonmatum/next-shell
-# Required peers
 pnpm add next@^15 react@^19 react-dom@^19
-# Recommended
 pnpm add tailwindcss@^4
 ```
+</Tab>
+<Tab value="npm">
+```bash
+npm install @jonmatum/next-shell
+npm install next@^15 react@^19 react-dom@^19
+npm install tailwindcss@^4
+```
+</Tab>
+<Tab value="yarn">
+```bash
+yarn add @jonmatum/next-shell
+yarn add next@^15 react@^19 react-dom@^19
+yarn add tailwindcss@^4
+```
+</Tab>
+</Tabs>
 
-## 1 — Load the preset
+## Setup
+
+<Steps>
+<Step>
+
+### Load the preset
 
 The Tailwind preset wires every semantic token into Tailwind's `@theme` scale and includes `tw-animate-css` animation utilities:
 
@@ -32,11 +54,18 @@ The Tailwind preset wires every semantic token into Tailwind's `@theme` scale an
 @import '@jonmatum/next-shell/styles/preset.css';
 ```
 
-The `@source` line is required — Tailwind v4 only generates CSS for classes it finds in scanned files, and `node_modules` is skipped by default. This tells Tailwind to scan the library's bundled output so all component classes are included.
+<Callout type="info">
+  The `@source` line is required — Tailwind v4 only generates CSS for classes it finds in scanned
+  files, and `node_modules` is skipped by default. This tells Tailwind to scan the library's bundled
+  output so all component classes are included.
+</Callout>
 
 Now utilities like `bg-background`, `text-foreground`, `border-border`, `animate-in`, and `duration-normal` are available everywhere.
 
-## 2 — Wrap with AppProviders
+</Step>
+<Step>
+
+### Wrap with AppProviders
 
 `AppProviders` composes the full provider stack in the correct order. Each layer is individually opt-out:
 
@@ -68,7 +97,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 }
 ```
 
-## 3 — Use the AppShell
+</Step>
+<Step>
+
+### Use the AppShell
 
 ```tsx title="app/(app)/layout.tsx"
 import { AppShell } from '@jonmatum/next-shell/layout';
@@ -84,12 +116,15 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 }
 ```
 
+</Step>
+</Steps>
+
 ## Next steps
 
 - [Design system](/docs/design-system) — token catalog, theming, brand overrides
 - [Providers](/docs/providers) — QueryProvider, ToastProvider, ErrorBoundary, I18nProvider
 - [Layout](/docs/layout) — AppShell, Sidebar, TopBar, CommandBar
 - [Auth](/docs/auth) — AuthProvider, useSession, guards
-- [Hooks](/docs/hooks) — useDisclosure, useLocalStorage, useHotkey, …
-- [Formatters](/docs/formatters) — formatDate, formatCurrency, truncate, …
+- [Hooks](/docs/hooks) — useDisclosure, useLocalStorage, useHotkey, ...
+- [Formatters](/docs/formatters) — formatDate, formatCurrency, truncate, ...
 - [Primitives](/docs/primitives) — 42 shadcn/ui primitives

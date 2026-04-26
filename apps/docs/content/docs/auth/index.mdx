@@ -5,6 +5,12 @@ description: Pluggable auth adapter pattern — wire in Auth.js, Clerk, Supabase
 
 The auth system is adapter-based: `AuthProvider` accepts any object that implements the `AuthAdapter` interface, so you can swap backends without touching component code.
 
+<Callout type="info">
+  The adapter pattern means next-shell has zero opinion on your auth backend. Auth.js, Clerk,
+  Supabase, or a custom JWT backend all work — just implement the `AuthAdapter` interface and pass
+  it to `AuthProvider`.
+</Callout>
+
 ## Quick start with Auth.js v5
 
 ```bash
@@ -132,6 +138,11 @@ render(
 The `onSignIn` and `onSignOut` options let you spy on auth calls in tests.
 
 ## Custom adapters
+
+<Callout type="warn">
+  Custom adapters must implement `useSession`, `signIn`, and `signOut`. The `useSession` hook is
+  called during render, so it must follow React's rules of hooks.
+</Callout>
 
 Implement `AuthAdapter` to support any backend (Clerk, Supabase, custom JWT):
 

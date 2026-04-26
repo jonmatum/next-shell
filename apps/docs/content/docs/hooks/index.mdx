@@ -5,6 +5,12 @@ description: Cross-cutting React hooks — state, storage, media, keyboard, and 
 
 All hooks live at `@jonmatum/next-shell/hooks`. They are client-only (`'use client'` is set on the subpath) and SSR-safe.
 
+<Callout type="info">
+  All hooks are SSR-safe — they return sensible defaults during server rendering and hydrate without
+  mismatches. Storage hooks (`useLocalStorage`, `useSessionStorage`) return the initial value on the
+  server and sync from the actual storage after mount.
+</Callout>
+
 ## State
 
 ### useDisclosure

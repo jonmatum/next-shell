@@ -1,7 +1,20 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { DocsPage, DocsBody, DocsTitle, DocsDescription } from 'fumadocs-ui/page';
+import defaultMdxComponents from 'fumadocs-ui/mdx';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+import { TypeTable } from 'fumadocs-ui/components/type-table';
 import { source } from '@/app/source';
+
+const mdxComponents = {
+  ...defaultMdxComponents,
+  Tab,
+  Tabs,
+  Step,
+  Steps,
+  TypeTable,
+};
 
 interface Props {
   params: Promise<{ slug?: string[] }>;
@@ -19,7 +32,7 @@ export default async function Page({ params }: Props) {
       <DocsTitle>{page.data.title}</DocsTitle>
       <DocsDescription>{page.data.description}</DocsDescription>
       <DocsBody>
-        <MDX />
+        <MDX components={mdxComponents} />
       </DocsBody>
     </DocsPage>
   );
