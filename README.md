@@ -2,7 +2,7 @@
 
 Monorepo for [`@jonmatum/next-shell`](./packages/next-shell) — a reusable Next.js app shell built on **shadcn/ui** primitives with a strict **semantic-token** design system.
 
-> **Status:** All 11 phases complete — extraction finished. 508 tests, full docs site, release pipeline, and a working example app all on `main`.
+> **Status:** All 11 phases complete — extraction finished. Open-source readiness ([epic #54](https://github.com/jonmatum/next-shell/issues/54)) done. 712 tests, full docs site, release pipeline, starter template, and a working example app all on `main`.
 
 ## What's in the box today
 
@@ -17,13 +17,13 @@ Monorepo for [`@jonmatum/next-shell`](./packages/next-shell) — a reusable Next
 |     6 | Providers composer — `AppProviders`, `QueryProvider` (TanStack Query v5), `ToastProvider` (Sonner), `ErrorBoundary`, `I18nProvider`                                          | ✅ Landed |
 |     7 | Auth adapter pattern — `AuthProvider`, `useSession`, `useUser`, `useHasPermission`, `useRequireAuth`, `SignedIn`, `SignedOut`, `RoleGate`, `requireSession` (server)         | ✅ Landed |
 |     8 | Hooks + formatters — `useDisclosure`, `useLocalStorage`, `useDebounced*`, `useHotkey`, `useBreakpoint`, `useCopyToClipboard` + `formatDate`, `formatCurrency`, `truncate`, … | ✅ Landed |
-|     9 | Docs site (fumadocs v14) — 8 content pages covering all phases; Storybook deferred                                                                                           | ✅ Landed |
+|     9 | Docs site (fumadocs v14) — 10 content pages covering all phases + recipes & migration; Storybook deferred                                                                    | ✅ Landed |
 |    10 | Publishing + changeset release workflow — `changesets/action`, npm provenance, `release.yml`                                                                                 | ✅ Landed |
 |    11 | Example consumer app — dashboard, data table, auth guards, settings form, toast demos                                                                                        | ✅ Landed |
 
 **42 primitives** (Phase 3): Accordion, Alert, AlertDialog, AspectRatio, Avatar, Badge, Breadcrumb, Button, Calendar, Card, Carousel, Chart, Checkbox, Collapsible, Command, ContextMenu, Dialog, Drawer, DropdownMenu, Form, HoverCard, Input, InputOTP, Label, Menubar, NavigationMenu, Pagination, Popover, Progress, RadioGroup, Resizable, ScrollArea, Select, Separator, Sheet, Skeleton, Slider, Switch, Table, Tabs, Textarea, Toaster (Sonner), Toggle, ToggleGroup, Tooltip.
 
-**508 unit tests** across 21 test files cover render, interaction, SSR helpers, provider composition, auth adapter contracts, and export-surface completeness.
+**712 unit tests** across 29 test files cover render, interaction, SSR helpers, provider composition, auth adapter contracts, and export-surface completeness.
 
 Deliberately **not** vendored (composed patterns documented as consumer-side recipes): DatePicker (Popover + Calendar + Button), DataTable (Table + `@tanstack/react-table`), Typography (styling-guide h1/h2/p patterns).
 
@@ -41,12 +41,16 @@ Deliberately **not** vendored (composed patterns documented as consumer-side rec
 next-shell/
 ├── packages/
 │   └── next-shell/               # The published @jonmatum/next-shell package
+├── apps/
+│   ├── docs/                     # Documentation site (fumadocs v14)
+│   └── example/                  # Example consumer app
+├── templates/
+│   └── starter/                  # Starter template (degit-ready)
 ├── tools/
-│   └── eslint-plugin-next-shell/ # Custom ESLint rules (no-raw-colors)
+│   ├── eslint-plugin-next-shell/ # Custom ESLint rules (no-raw-colors)
+│   └── next-shell-mcp/           # MCP server for AI tools
 ├── .claude/skills/               # Repo-local Claude Code skills
 ├── CLAUDE.md                     # Session onboarding guide
-├── eslint.config.js              # Flat ESLint config
-├── tsconfig.base.json            # Shared TS compiler options
 └── pnpm-workspace.yaml
 ```
 
@@ -57,7 +61,7 @@ nvm use              # Node version from .nvmrc
 pnpm install
 pnpm lint            # eslint --max-warnings=0
 pnpm typecheck
-pnpm test            # vitest run (508 tests)
+pnpm test            # vitest run (712 tests)
 pnpm build           # tsup + tailwind preset + DTS
 ```
 
@@ -76,11 +80,19 @@ This repo is set up for Claude Code sessions with a handful of durable conventio
 
 New session picking up the work: `git pull`, read `CLAUDE.md`, check the most recently merged phase PR for the current state, then continue on a `claude/phase-N-<slug>` branch.
 
+## Resources
+
+- **[Documentation site](https://jonmatum.github.io/next-shell/)** — full guides for every phase (fumadocs v14)
+- **[Starter template](./templates/starter/)** — degit-ready scaffold: `npx degit jonmatum/next-shell/templates/starter my-app`
+- **[Example app](./apps/example/)** — dashboard, data table, auth guards, settings form, toast demos
+- **[MCP server](./tools/next-shell-mcp/)** — Model Context Protocol server for AI tools
+
 ## Links
 
 - Package README · [`packages/next-shell/README.md`](./packages/next-shell/README.md)
 - Session onboarding · [`CLAUDE.md`](./CLAUDE.md)
 - Extraction plan · [Epic #13](https://github.com/jonmatum/next-shell/issues/13)
+- Open-source readiness · [Epic #54](https://github.com/jonmatum/next-shell/issues/54)
 - Per-phase tracking issues · [#1](https://github.com/jonmatum/next-shell/issues/1) · [#2](https://github.com/jonmatum/next-shell/issues/2) · [#3](https://github.com/jonmatum/next-shell/issues/3) · [#4](https://github.com/jonmatum/next-shell/issues/4) · [#5](https://github.com/jonmatum/next-shell/issues/5) · [#6](https://github.com/jonmatum/next-shell/issues/6) · [#7](https://github.com/jonmatum/next-shell/issues/7) · [#8](https://github.com/jonmatum/next-shell/issues/8) · [#9](https://github.com/jonmatum/next-shell/issues/9) · [#10](https://github.com/jonmatum/next-shell/issues/10) · [#11](https://github.com/jonmatum/next-shell/issues/11) · [#12](https://github.com/jonmatum/next-shell/issues/12)
 
 ## License
