@@ -32,7 +32,7 @@ Every color, radius, shadow, and motion value in `@jonmatum/next-shell` reaches 
 
 ## Radius tokens
 
-```css
+```css title="styles/tokens.css"
 --radius: 0.625rem; /* base — all variants derived from this */
 ```
 
@@ -70,7 +70,7 @@ Shadows are tuned per theme — the dark theme uses higher opacity so shadows re
 
 Use shadow tokens for layered surfaces like cards, popovers, and dropdown menus:
 
-```tsx
+```tsx title="components/surfaces.tsx"
 <div className="rounded-lg bg-card shadow-md">Elevated card</div>
 <div className="rounded-lg bg-popover shadow-xl">Popover panel</div>
 ```
@@ -88,7 +88,7 @@ Density tokens control component padding, gap, and row height. Override them on 
 
 Switch to a compact density by overriding all four tokens on a container:
 
-```css
+```css title="styles/compact.css"
 .compact {
   --density-pad-x: 0.5rem;
   --density-pad-y: 0.25rem;
@@ -105,7 +105,7 @@ Tokens are scoped to `[data-theme="dark"]`. next-themes writes `data-theme` on t
 Add `suppressHydrationWarning` to your `<html>` element to avoid React hydration warnings caused by next-themes writing `data-theme` before React hydrates.
 </Callout>
 
-```tsx
+```tsx title="app/layout.tsx"
 <html lang="en" suppressHydrationWarning>
 ```
 
@@ -113,7 +113,7 @@ Add `suppressHydrationWarning` to your `<html>` element to avoid React hydration
 
 Override any token per-theme via the `brand` prop on `ThemeProvider`:
 
-```tsx
+```tsx title="app/providers.tsx"
 import type { BrandOverrides } from '@jonmatum/next-shell/tokens';
 
 const brand: BrandOverrides = {
@@ -137,7 +137,7 @@ Overrides are applied as inline CSS custom properties — zero JS re-render on t
 
 If you prefer plain CSS (or don't use `ThemeProvider`), override tokens directly after the preset import:
 
-```css
+```css title="app/globals.css"
 /* app/globals.css */
 @import 'tailwindcss';
 @import '@jonmatum/next-shell/styles/preset.css';

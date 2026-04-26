@@ -13,7 +13,7 @@ The auth system is adapter-based: `AuthProvider` accepts any object that impleme
 
 ## Quick start with Auth.js v5
 
-```bash
+```bash title="Terminal"
 pnpm add next-auth@beta
 ```
 
@@ -37,7 +37,7 @@ export default function RootLayout({ children }) {
 
 Returns the raw session result:
 
-```tsx
+```tsx title="components/status.tsx"
 import { useSession } from '@jonmatum/next-shell/auth';
 
 function Status() {
@@ -52,7 +52,7 @@ function Status() {
 
 Shorthand for `useSession().data?.user ?? null`:
 
-```tsx
+```tsx title="use-user.tsx"
 const user = useUser();
 ```
 
@@ -60,7 +60,7 @@ const user = useUser();
 
 AND-semantics permission check against `user.roles` and `user.scopes`. Mirrors the nav `requires` field:
 
-```tsx
+```tsx title="use-has-permission.tsx"
 const isAdmin = useHasPermission('admin');
 const canEdit = useHasPermission(['editor', 'posts:write']);
 ```
@@ -69,7 +69,7 @@ const canEdit = useHasPermission(['editor', 'posts:write']);
 
 Suspense-compatible — throws while loading, throws `AuthRequiredError` when unauthenticated:
 
-```tsx
+```tsx title="secret-page.tsx"
 function SecretPage() {
   const user = useRequireAuth();
   return <div>Welcome, {user.name}</div>;
@@ -85,7 +85,7 @@ function SecretPage() {
 
 ## Conditional rendering
 
-```tsx
+```tsx title="components/nav.tsx"
 import { SignedIn, SignedOut, RoleGate } from '@jonmatum/next-shell/auth';
 
 function Nav() {
@@ -120,7 +120,7 @@ export async function GET() {
 
 ## Testing with the mock adapter
 
-```tsx
+```tsx title="my-component.test.tsx"
 import { createMockAuthAdapter } from '@jonmatum/next-shell/auth/mock';
 import { AuthProvider } from '@jonmatum/next-shell/auth';
 
@@ -146,7 +146,7 @@ The `onSignIn` and `onSignOut` options let you spy on auth calls in tests.
 
 Implement `AuthAdapter` to support any backend (Clerk, Supabase, custom JWT):
 
-```tsx
+```tsx title="lib/clerk-adapter.ts"
 import type { AuthAdapter } from '@jonmatum/next-shell/auth';
 import { useAuth } from '@clerk/nextjs';
 

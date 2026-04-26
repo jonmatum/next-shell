@@ -9,7 +9,7 @@ description: AppShell, Sidebar, TopBar, CommandBar, and content surface componen
 
 The root orchestrator. Conditionally wraps children in `SidebarProvider` and `CommandBarProvider`:
 
-```tsx
+```tsx title="app/layout.tsx"
 import { AppShell } from '@jonmatum/next-shell/layout';
 import { MySidebar } from './my-sidebar';
 
@@ -43,7 +43,7 @@ Four variants via the `variant` prop:
 
 On mobile the sidebar renders as a drawer. State is cookie-persisted so SSR and client agree.
 
-```tsx
+```tsx title="components/my-sidebar.tsx"
 import {
   Sidebar,
   SidebarHeader,
@@ -70,7 +70,7 @@ export function MySidebar() {
 
 Build permission-aware navigation from a config object:
 
-```tsx
+```tsx title="components/sidebar-content.tsx"
 import { buildNav, SidebarNav } from '@jonmatum/next-shell/layout';
 
 const config = {
@@ -94,7 +94,7 @@ function MySidebarContent() {
 
 `buildNav` also returns a `breadcrumbs` array and active item marker:
 
-```tsx
+```tsx title="components/breadcrumbs.tsx"
 import { Breadcrumbs } from '@jonmatum/next-shell/layout';
 
 <Breadcrumbs config={config} pathname={pathname} permissions={permissions} />;
@@ -104,7 +104,7 @@ import { Breadcrumbs } from '@jonmatum/next-shell/layout';
 
 A keyboard-driven action palette. Register actions from any component:
 
-```tsx
+```tsx title="components/my-component.tsx"
 import { useCommandBarActions } from '@jonmatum/next-shell/layout';
 
 function MyComponent() {
@@ -122,7 +122,7 @@ function MyComponent() {
 
 ### Wire nav actions automatically
 
-```tsx
+```tsx title="components/command-bar-actions.tsx"
 import { CommandBarActions } from '@jonmatum/next-shell/layout';
 
 <CommandBarActions
@@ -135,7 +135,7 @@ import { CommandBarActions } from '@jonmatum/next-shell/layout';
 
 ## Content surfaces
 
-```tsx
+```tsx title="app/users/page.tsx"
 import {
   ContentContainer,
   PageHeader,
@@ -440,7 +440,7 @@ Pre-configured variants (`BadRequest`, `Unauthorized`, `Forbidden`, `NotFound`, 
 
 Eliminate layout shift by reading the sidebar cookie in a Server Component:
 
-```tsx
+```tsx title="app/(app)/layout.tsx"
 // app/(app)/layout.tsx
 import { cookies } from 'next/headers';
 import { getSidebarStateFromCookies } from '@jonmatum/next-shell/layout/server';

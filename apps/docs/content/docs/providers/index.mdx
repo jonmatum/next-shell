@@ -27,7 +27,7 @@ ThemeProvider
 
 Each layer can be disabled by passing `false`:
 
-```tsx
+```tsx title="app/providers.tsx"
 import { AppProviders } from '@jonmatum/next-shell/providers';
 
 <AppProviders
@@ -44,7 +44,7 @@ import { AppProviders } from '@jonmatum/next-shell/providers';
 
 Wraps [next-themes](https://github.com/pacocoursey/next-themes). All props are forwarded.
 
-```tsx
+```tsx title="theme-setup.tsx"
 import { ThemeProvider, ThemeToggle } from '@jonmatum/next-shell/providers';
 
 <ThemeProvider defaultTheme="system" enableSystem disableTransitionOnChange>
@@ -54,7 +54,7 @@ import { ThemeProvider, ThemeToggle } from '@jonmatum/next-shell/providers';
 
 Use `useTheme()` to read and set the current theme:
 
-```tsx
+```tsx title="use-theme.tsx"
 import { useTheme } from '@jonmatum/next-shell/providers';
 
 function MyComponent() {
@@ -67,7 +67,7 @@ function MyComponent() {
 
 TanStack Query v5 with sane defaults (`staleTime: 60s`, `retry: 1`, `refetchOnWindowFocus: false`).
 
-```tsx
+```tsx title="query-setup.tsx"
 import { QueryProvider } from '@jonmatum/next-shell/providers';
 
 <QueryProvider>{children}</QueryProvider>;
@@ -75,7 +75,7 @@ import { QueryProvider } from '@jonmatum/next-shell/providers';
 
 ### SSR prefetching
 
-```tsx
+```tsx title="app/page.tsx"
 // app/page.tsx (Server Component)
 import { makeServerQueryClient } from '@jonmatum/next-shell/providers';
 import { HydrationBoundary, dehydrate } from '@tanstack/react-query';
@@ -96,7 +96,7 @@ export default async function Page() {
 
 Wraps [Sonner](https://sonner.emilkowal.ski/). Import `toast` from `sonner` directly in your code.
 
-```tsx
+```tsx title="toast-example.tsx"
 import { toast } from 'sonner';
 
 toast.success('Saved!');
@@ -105,7 +105,7 @@ toast.error('Something went wrong', { description: 'Try again later.' });
 
 Override position, theme, or any Sonner prop via `toastProps`:
 
-```tsx
+```tsx title="app/providers.tsx"
 <AppProviders toastProps={{ position: 'top-right', richColors: true }}>
 ```
 
@@ -113,7 +113,7 @@ Override position, theme, or any Sonner prop via `toastProps`:
 
 Class-based boundary with a default "Something went wrong / Try again" fallback. Accepts a custom `fallback` render prop:
 
-```tsx
+```tsx title="error-boundary.tsx"
 import { ErrorBoundary } from '@jonmatum/next-shell/providers';
 
 <ErrorBoundary
@@ -133,7 +133,7 @@ import { ErrorBoundary } from '@jonmatum/next-shell/providers';
 
 Adapter-based i18n — plug in any library:
 
-```tsx
+```tsx title="i18n-setup.tsx"
 import { I18nProvider } from '@jonmatum/next-shell/providers';
 import { useTranslations } from 'next-intl';
 
@@ -150,7 +150,7 @@ function Root({ children }: { children: React.ReactNode }) {
 
 In components:
 
-```tsx
+```tsx title="use-i18n.tsx"
 import { useI18n } from '@jonmatum/next-shell/providers';
 
 function MyComponent() {
@@ -163,7 +163,7 @@ function MyComponent() {
 
 A cycle button that rotates through light, dark, and system themes on click. Renders a sun/moon icon reflecting the current theme.
 
-```tsx
+```tsx title="header.tsx"
 'use client';
 
 import { ThemeToggle } from '@jonmatum/next-shell/providers';
@@ -182,7 +182,7 @@ export function Header() {
 
 A dropdown menu variant that lets users pick a specific theme from a list.
 
-```tsx
+```tsx title="settings.tsx"
 'use client';
 
 import { ThemeToggleDropdown } from '@jonmatum/next-shell/providers';
@@ -201,7 +201,7 @@ export function Settings() {
 
 For flash-free server rendering, use the cookie helpers from the server-safe subpath:
 
-```tsx
+```tsx title="middleware.ts"
 // Route handler or middleware
 import { getThemeFromCookies, buildThemeCookieHeader } from '@jonmatum/next-shell/providers/server';
 
