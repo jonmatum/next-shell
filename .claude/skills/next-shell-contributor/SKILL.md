@@ -19,13 +19,13 @@ Each phase has its own tracking issue and its own branch:
 |     2 | ThemeProvider + useTheme + ThemeToggle      | `#3`                  |
 |     3 | shadcn primitives (Button, Dialog, etc.)    | `#4`                  |
 |     4 | Layout primitives + AppShell                | `#5`                  |
-|     5 | Auth primitives (useSession, guards)        | `#6`                  |
+|     5 | Navigation (buildNav, SidebarNav, etc.)     | `#6`                  |
 |     6 | Providers composer (Query, Toast, Errors)   | `#7`                  |
-|     7 | Hooks grab-bag (useDebounce, useMedia, …)   | `#8`                  |
-|     8 | Utilities (`cn`, formatters, guards)        | `#9`                  |
+|     7 | Auth adapter (useSession, guards)           | `#8`                  |
+|     8 | Hooks + formatters (useDebounce, etc.)      | `#9`                  |
 |     9 | Docs site + Storybook                       | `#10`                 |
 |    10 | Publishing + changeset release workflow     | `#11`                 |
-|    11 | Integration back into Smart Pad Rules       | `#12`                 |
+|    11 | Example consumer app                        | `#12`                 |
 
 Refer to [#13](https://github.com/jonmatum/next-shell/issues/13) for the authoritative breakdown — the numbers above may shift as issues are reorganized.
 
@@ -78,7 +78,7 @@ Pre-commit runs `lint-staged` via Husky, which formats staged files and runs ESL
 
 ## Token discipline (the one rule that is NEVER negotiable)
 
-**No raw color literals.** Every color reaches the DOM through the semantic-token CSS variables defined in `packages/next-shell/src/tokens/tokens.css`. The custom `no-raw-colors` ESLint rule in `tools/eslint-plugin-next-shell` enforces this; a regression here will fail CI immediately. If you need a brand-specific value, use the `brand` prop on `ThemeProvider` — don't hardcode it in a component.
+**No raw color literals.** Every color reaches the DOM through the semantic-token CSS variables defined in `packages/next-shell/src/styles/tokens.css`. The custom `no-raw-colors` ESLint rule in `tools/eslint-plugin-next-shell` enforces this; a regression here will fail CI immediately. If you need a brand-specific value, use the `brand` prop on `ThemeProvider` — don't hardcode it in a component.
 
 See the companion `shadcn-next-shell` skill for the full token catalog and the Tailwind utility ↔ token mapping.
 

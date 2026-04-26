@@ -1,0 +1,518 @@
+---
+title: Recipes
+description: Composed patterns built from @jonmatum/next-shell primitives.
+---
+
+Ready-made patterns that combine multiple primitives. Each recipe is copy-pasteable — just make sure the required peer dependencies are installed.
+
+---
+
+## DatePicker
+
+Compose **Popover**, **Calendar**, and **Button** into a single date-picker control.
+
+**Peer dependencies:** `react-day-picker`, `lucide-react`
+
+```tsx title="components/date-picker.tsx"
+'use client';
+
+import * as React from 'react';
+import { format } from 'date-fns';
+import { CalendarIcon } from 'lucide-react';
+
+import {
+  Button,
+  Calendar,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@jonmatum/next-shell/primitives';
+import { cn } from '@jonmatum/next-shell/core';
+
+export function DatePicker() {
+  const [date, setDate] = React.useState<Date>();
+
+  return (
+    <Popover>
+      <PopoverTrigger asChild>
+        <Button
+          variant="outline"
+          className={cn(
+            'w-[280px] justify-start text-left font-normal',
+            !date && 'text-muted-foreground',
+          )}
+        >
+          <CalendarIcon className="mr-2 size-4" />
+          {date ? format(date, 'PPP') : <span>Pick a date</span>}
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-auto p-0">
+        <Calendar mode="single" selected={date} onSelect={setDate} autoFocus />
+      </PopoverContent>
+    </Popover>
+  );
+}
+```
+
+### DateRangePicker variant
+
+```tsx title="components/date-range-picker.tsx"
+'use client';
+
+import * as React from 'react';
+import { format } from 'date-fns';
+import { CalendarIcon } from 'lucide-react';
+import type { DateRange } from 'react-day-picker';
+
+import {
+  Button,
+  Calendar,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@jonmatum/next-shell/primitives';
+import { cn } from '@jonmatum/next-shell/core';
+
+export function DateRangePicker({ className }: React.HTMLAttributes<HTMLDivElement>) {
+  const [range, setRange] = React.useState<DateRange | undefined>();
+
+  return (
+    <div className={cn('grid gap-2', className)}>
+      <Popover>
+        <PopoverTrigger asChild>
+          <Button
+            variant="outline"
+            className={cn(
+              'w-[300px] justify-start text-left font-normal',
+              !range && 'text-muted-foreground',
+            )}
+          >
+            <CalendarIcon className="mr-2 size-4" />
+            {range?.from ? (
+              range.to ? (
+                <>
+                  {format(range.from, 'LLL dd, y')} – {format(range.to, 'LLL dd, y')}
+                </>
+              ) : (
+                format(range.from, 'LLL dd, y')
+              )
+            ) : (
+              <span>Pick a date range</span>
+            )}
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-auto p-0" align="start">
+          <Calendar
+            mode="range"
+            defaultMonth={range?.from}
+            selected={range}
+            onSelect={setRange}
+            numberOfMonths={2}
+          />
+        </PopoverContent>
+      </Popover>
+    </div>
+  );
+}
+```
+
+---
+
+## DataTable
+
+Compose **Table** with `@tanstack/react-table` for sortable, filterable, paginated data grids.
+
+**Peer dependencies:** `@tanstack/react-table`
+
+```bash
+pnpm add @tanstack/react-table
+```
+
+### Generic DataTable component
+
+```tsx title="components/data-table.tsx"
+'use client';
+
+import {
+  type ColumnDef,
+  flexRender,
+  getCoreRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  type SortingState,
+  useReactTable,
+} from '@tanstack/react-table';
+import * as React from 'react';
+
+import {
+  Button,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@jonmatum/next-shell/primitives';
+
+interface DataTableProps<TData, TValue> {
+  columns: ColumnDef<TData, TValue>[];
+  data: TData[];
+}
+
+export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
+  const [sorting, setSorting] = React.useState<SortingState>([]);
+
+  const table = useReactTable({
+    data,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    onSortingChange: setSorting,
+    state: { sorting },
+  });
+
+  return (
+    <div>
+      <div className="rounded-md border">
+        <Table>
+          <TableHeader>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <TableRow key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <TableHead key={header.id}>
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(header.column.columnDef.header, header.getContext())}
+                  </TableHead>
+                ))}
+              </TableRow>
+            ))}
+          </TableHeader>
+          <TableBody>
+            {table.getRowModel().rows?.length ? (
+              table.getRowModel().rows.map((row) => (
+                <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell key={cell.id}>
+                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={columns.length} className="h-24 text-center">
+                  No results.
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </div>
+      <div className="flex items-center justify-end gap-2 py-4">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => table.previousPage()}
+          disabled={!table.getCanPreviousPage()}
+        >
+          Previous
+        </Button>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => table.nextPage()}
+          disabled={!table.getCanNextPage()}
+        >
+          Next
+        </Button>
+      </div>
+    </div>
+  );
+}
+```
+
+### Usage example
+
+```tsx title="app/payments/columns.tsx"
+'use client';
+
+import type { ColumnDef } from '@tanstack/react-table';
+import { ArrowUpDownIcon } from 'lucide-react';
+
+import { Button } from '@jonmatum/next-shell/primitives';
+
+export type Payment = {
+  id: string;
+  amount: number;
+  status: 'pending' | 'processing' | 'success' | 'failed';
+  email: string;
+};
+
+export const columns: ColumnDef<Payment>[] = [
+  {
+    accessorKey: 'status',
+    header: 'Status',
+  },
+  {
+    accessorKey: 'email',
+    header: ({ column }) => (
+      <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
+        Email
+        <ArrowUpDownIcon className="ml-2 size-4" />
+      </Button>
+    ),
+  },
+  {
+    accessorKey: 'amount',
+    header: () => <div className="text-right">Amount</div>,
+    cell: ({ row }) => {
+      const amount = parseFloat(row.getValue('amount'));
+      const formatted = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+      }).format(amount);
+      return <div className="text-right font-medium">{formatted}</div>;
+    },
+  },
+];
+```
+
+```tsx title="app/payments/page.tsx"
+import { DataTable } from '@/components/data-table';
+import { columns, type Payment } from './columns';
+
+const data: Payment[] = [
+  { id: '1', amount: 100, status: 'pending', email: 'alice@example.com' },
+  { id: '2', amount: 250, status: 'success', email: 'bob@example.com' },
+  { id: '3', amount: 50, status: 'processing', email: 'carol@example.com' },
+];
+
+export default function PaymentsPage() {
+  return (
+    <div className="container mx-auto py-10">
+      <DataTable columns={columns} data={data} />
+    </div>
+  );
+}
+```
+
+---
+
+## Combobox
+
+Compose **Popover** and **Command** into an accessible, searchable select control.
+
+```tsx title="components/combobox.tsx"
+'use client';
+
+import * as React from 'react';
+import { CheckIcon, ChevronsUpDownIcon } from 'lucide-react';
+
+import {
+  Button,
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@jonmatum/next-shell/primitives';
+import { cn } from '@jonmatum/next-shell/core';
+
+interface ComboboxOption {
+  value: string;
+  label: string;
+}
+
+interface ComboboxProps {
+  options: ComboboxOption[];
+  placeholder?: string;
+  emptyMessage?: string;
+  value?: string;
+  onValueChange?: (value: string) => void;
+}
+
+export function Combobox({
+  options,
+  placeholder = 'Select an option...',
+  emptyMessage = 'No results found.',
+  value: controlledValue,
+  onValueChange,
+}: ComboboxProps) {
+  const [open, setOpen] = React.useState(false);
+  const [internalValue, setInternalValue] = React.useState('');
+
+  const value = controlledValue ?? internalValue;
+  const setValue = onValueChange ?? setInternalValue;
+
+  const selectedLabel = options.find((opt) => opt.value === value)?.label;
+
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <Button
+          variant="outline"
+          role="combobox"
+          aria-expanded={open}
+          className="w-[200px] justify-between"
+        >
+          {selectedLabel ?? placeholder}
+          <ChevronsUpDownIcon className="ml-2 size-4 shrink-0 opacity-50" />
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-[200px] p-0">
+        <Command>
+          <CommandInput placeholder={`Search...`} />
+          <CommandList>
+            <CommandEmpty>{emptyMessage}</CommandEmpty>
+            <CommandGroup>
+              {options.map((option) => (
+                <CommandItem
+                  key={option.value}
+                  value={option.value}
+                  onSelect={(currentValue) => {
+                    setValue(currentValue === value ? '' : currentValue);
+                    setOpen(false);
+                  }}
+                >
+                  <CheckIcon
+                    className={cn(
+                      'mr-2 size-4',
+                      value === option.value ? 'opacity-100' : 'opacity-0',
+                    )}
+                  />
+                  {option.label}
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          </CommandList>
+        </Command>
+      </PopoverContent>
+    </Popover>
+  );
+}
+```
+
+### Usage
+
+```tsx title="app/example/page.tsx"
+'use client';
+
+import { Combobox } from '@/components/combobox';
+
+const frameworks = [
+  { value: 'next', label: 'Next.js' },
+  { value: 'remix', label: 'Remix' },
+  { value: 'astro', label: 'Astro' },
+  { value: 'nuxt', label: 'Nuxt' },
+  { value: 'svelte', label: 'SvelteKit' },
+];
+
+export default function ExamplePage() {
+  return (
+    <div className="flex items-center gap-4 p-8">
+      <Combobox options={frameworks} placeholder="Select framework..." />
+    </div>
+  );
+}
+```
+
+---
+
+## Typography
+
+A styling guide for semantic heading and paragraph elements using Tailwind utility classes from the design system.
+
+These are not separate components — they are utility class recipes you can apply directly to standard HTML elements.
+
+### Heading styles
+
+```tsx title="components/typography-demo.tsx"
+export function TypographyDemo() {
+  return (
+    <div className="space-y-6">
+      <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
+        The Joke Tax Chronicles
+      </h1>
+
+      <p className="text-muted-foreground text-xl">
+        Once upon a time, in a far-off land, there was a very lazy king who spent all day lounging
+        on his throne.
+      </p>
+
+      <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
+        The King's Plan
+      </h2>
+
+      <p className="leading-7 [&:not(:first-child)]:mt-6">
+        The king thought long and hard, and finally came up with{' '}
+        <a href="#" className="text-primary font-medium underline underline-offset-4">
+          a brilliant plan
+        </a>
+        : he would tax the jokes.
+      </p>
+
+      <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">The Joke Tax</h3>
+
+      <p className="leading-7 [&:not(:first-child)]:mt-6">
+        The king's subjects were not amused. They grumbled and complained, but the king was firm.
+      </p>
+
+      <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
+        People stopped telling jokes
+      </h4>
+
+      <p className="leading-7 [&:not(:first-child)]:mt-6">
+        People stopped telling jokes, and the kingdom fell into a deep silence.
+      </p>
+    </div>
+  );
+}
+```
+
+### Quick reference
+
+| Element | Classes                                                           |
+| ------- | ----------------------------------------------------------------- |
+| `h1`    | `scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl`  |
+| `h2`    | `scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight` |
+| `h3`    | `scroll-m-20 text-2xl font-semibold tracking-tight`               |
+| `h4`    | `scroll-m-20 text-xl font-semibold tracking-tight`                |
+| `p`     | `leading-7 [&:not(:first-child)]:mt-6`                            |
+| `lead`  | `text-muted-foreground text-xl`                                   |
+| `large` | `text-lg font-semibold`                                           |
+| `small` | `text-sm font-medium leading-none`                                |
+| `muted` | `text-muted-foreground text-sm`                                   |
+| `a`     | `text-primary font-medium underline underline-offset-4`           |
+
+### Blockquote and list styles
+
+```tsx title="components/typography-extras.tsx"
+export function TypographyExtras() {
+  return (
+    <div className="space-y-6">
+      <blockquote className="border-l-2 pl-6 italic">
+        "After all," he said, "everyone enjoys a good joke, so it's only fair that they should pay
+        for the privilege."
+      </blockquote>
+
+      <ul className="my-6 ml-6 list-disc [&>li]:mt-2">
+        <li>1st level of puns: 5 gold coins</li>
+        <li>2nd level of jokes: 10 gold coins</li>
+        <li>3rd level of one-liners: 20 gold coins</li>
+      </ul>
+
+      <div className="my-6 w-full overflow-y-auto">
+        <code className="bg-muted relative rounded px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
+          @jonmatum/next-shell
+        </code>
+      </div>
+    </div>
+  );
+}
+```
