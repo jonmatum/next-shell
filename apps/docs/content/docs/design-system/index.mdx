@@ -51,6 +51,48 @@ The custom ESLint rule `next-shell/no-raw-colors` fails CI immediately on any re
 | `ease-decelerate` | `--ease-decelerate` | `cubic-bezier(0, 0, 0.2, 1)` |
 | `ease-accelerate` | `--ease-accelerate` | `cubic-bezier(0.3, 0, 1, 1)` |
 
+## Elevation / shadow tokens
+
+Shadows are tuned per theme — the dark theme uses higher opacity so shadows remain visible on dark surfaces.
+
+| Token          | Utility      | Light value                                                               |
+| -------------- | ------------ | ------------------------------------------------------------------------- |
+| `--shadow-xs`  | `shadow-xs`  | `0 1px 2px 0 oklch(0 0 0 / 0.05)`                                         |
+| `--shadow-sm`  | `shadow-sm`  | `0 1px 3px 0 oklch(0 0 0 / 0.1), 0 1px 2px -1px oklch(0 0 0 / 0.1)`       |
+| `--shadow-md`  | `shadow-md`  | `0 4px 6px -1px oklch(0 0 0 / 0.1), 0 2px 4px -2px oklch(0 0 0 / 0.1)`    |
+| `--shadow-lg`  | `shadow-lg`  | `0 10px 15px -3px oklch(0 0 0 / 0.1), 0 4px 6px -4px oklch(0 0 0 / 0.1)`  |
+| `--shadow-xl`  | `shadow-xl`  | `0 20px 25px -5px oklch(0 0 0 / 0.1), 0 8px 10px -6px oklch(0 0 0 / 0.1)` |
+| `--shadow-2xl` | `shadow-2xl` | `0 25px 50px -12px oklch(0 0 0 / 0.25)`                                   |
+
+Use shadow tokens for layered surfaces like cards, popovers, and dropdown menus:
+
+```tsx
+<div className="rounded-lg bg-card shadow-md">Elevated card</div>
+<div className="rounded-lg bg-popover shadow-xl">Popover panel</div>
+```
+
+## Density tokens
+
+Density tokens control component padding, gap, and row height. Override them on any container to switch between compact and comfortable density without touching individual components.
+
+| Token                  | Utility                         | Default value |
+| ---------------------- | ------------------------------- | ------------- |
+| `--density-pad-x`      | `px-[var(--density-pad-x)]`     | `1rem`        |
+| `--density-pad-y`      | `py-[var(--density-pad-y)]`     | `0.5rem`      |
+| `--density-gap`        | `gap-[var(--density-gap)]`      | `0.5rem`      |
+| `--density-row-height` | `h-[var(--density-row-height)]` | `2.5rem`      |
+
+Switch to a compact density by overriding all four tokens on a container:
+
+```css
+.compact {
+  --density-pad-x: 0.5rem;
+  --density-pad-y: 0.25rem;
+  --density-gap: 0.25rem;
+  --density-row-height: 2rem;
+}
+```
+
 ## Dark mode
 
 Tokens are scoped to `[data-theme="dark"]`. next-themes writes `data-theme` on the `<html>` element — add `suppressHydrationWarning` to avoid React hydration warnings:

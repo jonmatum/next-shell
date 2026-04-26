@@ -8,6 +8,8 @@
     "auth",
     "hooks",
     "formatters",
-    "primitives"
+    "primitives",
+    "recipes",
+    "migration"
   ]
 }

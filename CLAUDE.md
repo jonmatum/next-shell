@@ -133,8 +133,8 @@ packages/next-shell/
 │   │   └── preset.css           # Tailwind v4 @theme mappings
 │   ├── tailwind-preset/
 │   ├── layout/                  # (Phase 4)
-│   ├── auth/                    # (Phase 5)
-│   └── hooks/                   # (Phase 7)
+│   ├── auth/                    # (Phase 7)
+│   └── hooks/                   # (Phase 8)
 ├── tsup.config.ts
 ├── vitest.config.ts
 └── package.json
@@ -152,7 +152,12 @@ Subpaths exported through `package.json#exports`:
 @jonmatum/next-shell/tailwind-preset
 @jonmatum/next-shell/styles/{tokens,preset}.css
 @jonmatum/next-shell/layout
+@jonmatum/next-shell/layout/server
+@jonmatum/next-shell/formatters
 @jonmatum/next-shell/auth
+@jonmatum/next-shell/auth/nextauth
+@jonmatum/next-shell/auth/mock
+@jonmatum/next-shell/auth/server
 @jonmatum/next-shell/hooks
 ```
 
@@ -229,10 +234,10 @@ here alongside the existing ones.
 - Phase 2 (theme) · [#3](https://github.com/jonmatum/next-shell/issues/3)
 - Phase 3 (shadcn primitives) · [#4](https://github.com/jonmatum/next-shell/issues/4)
 - Phase 4 (app shell) · [#5](https://github.com/jonmatum/next-shell/issues/5)
-- Phase 5 (auth) · [#6](https://github.com/jonmatum/next-shell/issues/6)
+- Phase 5 (navigation) · [#6](https://github.com/jonmatum/next-shell/issues/6)
 - Phase 6 (providers composer) · [#7](https://github.com/jonmatum/next-shell/issues/7)
-- Phase 7 (hooks) · [#8](https://github.com/jonmatum/next-shell/issues/8)
-- Phase 8 (utilities) · [#9](https://github.com/jonmatum/next-shell/issues/9)
+- Phase 7 (auth) · [#8](https://github.com/jonmatum/next-shell/issues/8)
+- Phase 8 (hooks + formatters) · [#9](https://github.com/jonmatum/next-shell/issues/9)
 - Phase 9 (docs + Storybook) · [#10](https://github.com/jonmatum/next-shell/issues/10)
 - Phase 10 (publishing) · [#11](https://github.com/jonmatum/next-shell/issues/11)
-- Phase 11 (integration back into Smart Pad Rules) · [#12](https://github.com/jonmatum/next-shell/issues/12)
+- Phase 11 (example consumer app) · [#12](https://github.com/jonmatum/next-shell/issues/12)

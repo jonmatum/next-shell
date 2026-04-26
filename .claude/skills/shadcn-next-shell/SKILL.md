@@ -32,7 +32,7 @@ npx shadcn@latest add button dialog dropdown-menu   # etc.
 
 ### 1. Semantic tokens only — no raw colors
 
-Every primitive must style through the semantic token set defined in `src/tokens/tokens.css` and surfaced by `src/tokens/brand.ts`:
+Every primitive must style through the semantic token set defined in `src/styles/tokens.css` and surfaced by `src/tokens/index.ts`:
 
 | Intent                    | Use                                                    | Never                              |
 | ------------------------- | ------------------------------------------------------ | ---------------------------------- |
@@ -100,4 +100,4 @@ Never hard-code `duration-200` / `ease-in-out` when a semantic motion token exis
 
 - Read an existing primitive (once Phase 3 lands, `src/primitives/button/` is the canonical reference).
 - Consult the upstream shadcn docs via the MCP server; re-theme the generated output through the semantic tokens before committing.
-- If a new token is genuinely needed, add it in `src/tokens/brand.ts` + `src/tokens/tokens.css` *first*, update tests, then use it.
+- If a new token is genuinely needed, add it in `src/tokens/index.ts` + `src/styles/tokens.css` *first*, update tests, then use it.

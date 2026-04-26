@@ -48,3 +48,6 @@ jobs:
         run: pnpm test
         env:
           NODE_OPTIONS: '--max-old-space-size=6144'
+
+      - name: Size check
+        run: pnpm --filter @jonmatum/next-shell size

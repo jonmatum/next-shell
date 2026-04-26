@@ -59,6 +59,24 @@ chore(ci): cache pnpm store
 - Include tests for behavior changes
 - Fill out the PR template
 
+## Breaking Changes
+
+Any change that falls into the categories below is considered a breaking change:
+
+- **Token renames or removals** — changes to `tokens.css`, `preset.css`, or the `colorTokens` array in `src/tokens/index.ts`
+- **Removed exports** — a named export dropped from any public subpath barrel
+- **Changed component props** — required prop added, prop type narrowed, prop renamed or removed
+- **CSS class / data-attribute changes** — `data-theme` attribute renamed, Tailwind utility class prefix changed
+- **Peer dependency bumps** — minimum React, Next.js, or Tailwind version increased
+- **Subpath removals** — a `package.json#exports` entry removed or path changed
+
+When introducing a breaking change:
+
+1. Add a new version section to [`packages/next-shell/MIGRATION.md`](./packages/next-shell/MIGRATION.md) following the template at the top of that file.
+2. Include before/after code snippets and step-by-step migration instructions.
+3. Mention the breaking change prominently in the PR description.
+4. Update the docs migration page at `apps/docs/content/docs/migration/index.mdx`.
+
 ## Releasing
 
 Releases are automated via Changesets (lands in Phase 10). Don't publish manually.

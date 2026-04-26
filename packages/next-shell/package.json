@@ -146,6 +146,7 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
+    "size": "size-limit",
     "clean": "rm -rf dist"
   },
   "peerDependencies": {
@@ -187,6 +188,8 @@
     "vaul": "^1.1.2"
   },
   "devDependencies": {
+    "@size-limit/preset-small-lib": "^11.2.0",
+    "size-limit": "^11.2.0",
     "@tanstack/react-query": "^5.99.0",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
