@@ -5,6 +5,7 @@ import { Tooltip as TooltipPrimitive } from 'radix-ui';
 
 import { cn } from '@/core/cn';
 
+/** Accessible tooltip provider built on Radix UI. @see https://ui.shadcn.com/docs/components/tooltip */
 function TooltipProvider({
   delayDuration = 0,
   ...props
@@ -18,14 +19,17 @@ function TooltipProvider({
   );
 }
 
+/** Accessible tooltip component built on Radix UI. @see https://ui.shadcn.com/docs/components/tooltip */
 function Tooltip({ ...props }: React.ComponentProps<typeof TooltipPrimitive.Root>) {
   return <TooltipPrimitive.Root data-slot="tooltip" {...props} />;
 }
 
+/** Accessible tooltip trigger built on Radix UI. @see https://ui.shadcn.com/docs/components/tooltip */
 function TooltipTrigger({ ...props }: React.ComponentProps<typeof TooltipPrimitive.Trigger>) {
   return <TooltipPrimitive.Trigger data-slot="tooltip-trigger" {...props} />;
 }
 
+/** Accessible tooltip content built on Radix UI. @see https://ui.shadcn.com/docs/components/tooltip */
 function TooltipContent({
   className,
   sideOffset = 0,
