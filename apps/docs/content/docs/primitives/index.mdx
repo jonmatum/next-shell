@@ -32,16 +32,16 @@ yarn add @jonmatum/next-shell
 
 ## Available primitives
 
-| Category | Components |
-| --- | --- |
-| **Actions** | Button, Toggle, ToggleGroup |
-| **Forms** | Checkbox, Input, InputOTP, Label, RadioGroup, Select, Slider, Switch, Textarea |
-| **Layout** | Accordion, AspectRatio, Collapsible, Resizable, ScrollArea, Separator, Tabs |
-| **Data display** | Avatar, Badge, Calendar, Card, Carousel, Chart, Progress, Skeleton, Table |
-| **Feedback** | Alert, AlertDialog, Dialog, Drawer, Sheet, Sonner |
-| **Overlay** | ContextMenu, DropdownMenu, HoverCard, Menubar, NavigationMenu, Popover, Tooltip |
-| **Navigation** | Breadcrumb, Command, Pagination |
-| **Typography** | Form (with react-hook-form) |
+| Category         | Components                                                                      |
+| ---------------- | ------------------------------------------------------------------------------- |
+| **Actions**      | Button, Toggle, ToggleGroup                                                     |
+| **Forms**        | Checkbox, Input, InputOTP, Label, RadioGroup, Select, Slider, Switch, Textarea  |
+| **Layout**       | Accordion, AspectRatio, Collapsible, Resizable, ScrollArea, Separator, Tabs     |
+| **Data display** | Avatar, Badge, Calendar, Card, Carousel, Chart, Progress, Skeleton, Table       |
+| **Feedback**     | Alert, AlertDialog, Dialog, Drawer, Sheet, Sonner                               |
+| **Overlay**      | ContextMenu, DropdownMenu, HoverCard, Menubar, NavigationMenu, Popover, Tooltip |
+| **Navigation**   | Breadcrumb, Command, Pagination                                                 |
+| **Typography**   | Form (with react-hook-form)                                                     |
 
 ---
 
@@ -66,12 +66,12 @@ import { Button } from '@jonmatum/next-shell/primitives';
 <Button asChild><a href="/new">Link button</a></Button>
 ```
 
-| Prop | Values |
-| --- | --- |
-| `variant` | `default`, `outline`, `secondary`, `ghost`, `link`, `destructive` |
-| `size` | `default`, `sm`, `lg`, `icon` |
-| `asChild` | Render as a child element (e.g. `<a>`) |
-| `disabled` | Disables interaction and applies muted styling |
+| Prop       | Values                                                            |
+| ---------- | ----------------------------------------------------------------- |
+| `variant`  | `default`, `outline`, `secondary`, `ghost`, `link`, `destructive` |
+| `size`     | `default`, `sm`, `lg`, `icon`                                     |
+| `asChild`  | Render as a child element (e.g. `<a>`)                            |
+| `disabled` | Disables interaction and applies muted styling                    |
 
 ---
 
@@ -106,14 +106,14 @@ import {
 </Dialog>;
 ```
 
-| Sub-component | Purpose |
-| --- | --- |
-| `DialogTrigger` | Element that opens the dialog |
-| `DialogContent` | The modal container (includes overlay + close button) |
-| `DialogHeader` | Groups title and description |
-| `DialogTitle` | Accessible heading (required for screen readers) |
-| `DialogDescription` | Supplementary context text |
-| `DialogFooter` | Action button row |
+| Sub-component       | Purpose                                               |
+| ------------------- | ----------------------------------------------------- |
+| `DialogTrigger`     | Element that opens the dialog                         |
+| `DialogContent`     | The modal container (includes overlay + close button) |
+| `DialogHeader`      | Groups title and description                          |
+| `DialogTitle`       | Accessible heading (required for screen readers)      |
+| `DialogDescription` | Supplementary context text                            |
+| `DialogFooter`      | Action button row                                     |
 
 ---
 
@@ -143,13 +143,13 @@ import {
 </Card>;
 ```
 
-| Sub-component | Purpose |
-| --- | --- |
-| `CardHeader` | Top section with title and description |
-| `CardTitle` | Primary heading |
-| `CardDescription` | Secondary descriptive text |
-| `CardContent` | Main body area |
-| `CardFooter` | Bottom section for actions or metadata |
+| Sub-component     | Purpose                                |
+| ----------------- | -------------------------------------- |
+| `CardHeader`      | Top section with title and description |
+| `CardTitle`       | Primary heading                        |
+| `CardDescription` | Secondary descriptive text             |
+| `CardContent`     | Main body area                         |
+| `CardFooter`      | Bottom section for actions or metadata |
 
 ---
 
@@ -194,14 +194,14 @@ function LoginForm() {
 }
 ```
 
-| Sub-component | Purpose |
-| --- | --- |
-| `FormField` | Connects a field to `react-hook-form` control |
-| `FormItem` | Wraps label + control + message in a flex container |
-| `FormLabel` | Accessible label tied to the control |
-| `FormControl` | Passes `aria-*` attributes to the input |
-| `FormMessage` | Renders validation error or description text |
-| `FormDescription` | Helper text below the control |
+| Sub-component     | Purpose                                             |
+| ----------------- | --------------------------------------------------- |
+| `FormField`       | Connects a field to `react-hook-form` control       |
+| `FormItem`        | Wraps label + control + message in a flex container |
+| `FormLabel`       | Accessible label tied to the control                |
+| `FormControl`     | Passes `aria-*` attributes to the input             |
+| `FormMessage`     | Renders validation error or description text        |
+| `FormDescription` | Helper text below the control                       |
 
 ---
 
@@ -233,11 +233,11 @@ import {
 </Accordion>;
 ```
 
-| Prop | Values |
-| --- | --- |
-| `type` | `single` (one panel open at a time), `multiple` (any number) |
-| `collapsible` | When `type="single"`, allows closing the open panel |
-| `defaultValue` | Initially open item(s) |
+| Prop           | Values                                                       |
+| -------------- | ------------------------------------------------------------ |
+| `type`         | `single` (one panel open at a time), `multiple` (any number) |
+| `collapsible`  | When `type="single"`, allows closing the open panel          |
+| `defaultValue` | Initially open item(s)                                       |
 
 ---
 
@@ -263,8 +263,8 @@ import { Alert, AlertTitle, AlertDescription } from '@jonmatum/next-shell/primit
 </Alert>;
 ```
 
-| Prop | Values |
-| --- | --- |
+| Prop      | Values                   |
+| --------- | ------------------------ |
 | `variant` | `default`, `destructive` |
 
 ---
@@ -305,14 +305,14 @@ import {
 </AlertDialog>;
 ```
 
-| Sub-component | Purpose |
-| --- | --- |
-| `AlertDialogTrigger` | Opens the alert dialog |
-| `AlertDialogContent` | Modal container (no outside-click dismiss) |
-| `AlertDialogTitle` | Required accessible heading |
-| `AlertDialogDescription` | Explains the consequences |
-| `AlertDialogAction` | Confirm button (proceeds with the action) |
-| `AlertDialogCancel` | Cancel button (closes without acting) |
+| Sub-component            | Purpose                                    |
+| ------------------------ | ------------------------------------------ |
+| `AlertDialogTrigger`     | Opens the alert dialog                     |
+| `AlertDialogContent`     | Modal container (no outside-click dismiss) |
+| `AlertDialogTitle`       | Required accessible heading                |
+| `AlertDialogDescription` | Explains the consequences                  |
+| `AlertDialogAction`      | Confirm button (proceeds with the action)  |
+| `AlertDialogCancel`      | Cancel button (closes without acting)      |
 
 ---
 
@@ -333,9 +333,9 @@ import { Avatar, AvatarImage, AvatarFallback } from '@jonmatum/next-shell/primit
 </Avatar>;
 ```
 
-| Sub-component | Purpose |
-| --- | --- |
-| `AvatarImage` | The profile image (`src` + `alt`) |
+| Sub-component    | Purpose                                                                 |
+| ---------------- | ----------------------------------------------------------------------- |
+| `AvatarImage`    | The profile image (`src` + `alt`)                                       |
 | `AvatarFallback` | Renders when the image is missing or still loading (typically initials) |
 
 ---
@@ -353,8 +353,8 @@ import { Badge } from '@jonmatum/next-shell/primitives';
 <Badge variant="destructive">Destructive</Badge>;
 ```
 
-| Prop | Values |
-| --- | --- |
+| Prop      | Values                                           |
+| --------- | ------------------------------------------------ |
 | `variant` | `default`, `secondary`, `outline`, `destructive` |
 
 ---
@@ -378,12 +378,12 @@ import { Label } from '@jonmatum/next-shell/primitives';
 </div>;
 ```
 
-| Prop | Description |
-| --- | --- |
-| `checked` | Controlled checked state |
-| `defaultChecked` | Initial checked state (uncontrolled) |
+| Prop              | Description                             |
+| ----------------- | --------------------------------------- |
+| `checked`         | Controlled checked state                |
+| `defaultChecked`  | Initial checked state (uncontrolled)    |
 | `onCheckedChange` | Callback when the checked state changes |
-| `disabled` | Disables the checkbox |
+| `disabled`        | Disables the checkbox                   |
 
 ---
 
@@ -417,15 +417,15 @@ import {
 </DropdownMenu>;
 ```
 
-| Sub-component | Purpose |
-| --- | --- |
-| `DropdownMenuTrigger` | Element that opens the menu |
-| `DropdownMenuContent` | Floating container for menu items |
-| `DropdownMenuItem` | A single action in the menu |
-| `DropdownMenuLabel` | Non-interactive section heading |
-| `DropdownMenuSeparator` | Visual divider between groups |
+| Sub-component              | Purpose                               |
+| -------------------------- | ------------------------------------- |
+| `DropdownMenuTrigger`      | Element that opens the menu           |
+| `DropdownMenuContent`      | Floating container for menu items     |
+| `DropdownMenuItem`         | A single action in the menu           |
+| `DropdownMenuLabel`        | Non-interactive section heading       |
+| `DropdownMenuSeparator`    | Visual divider between groups         |
 | `DropdownMenuCheckboxItem` | Toggleable menu item with a checkmark |
-| `DropdownMenuRadioGroup` | Radio-style single-select group |
+| `DropdownMenuRadioGroup`   | Radio-style single-select group       |
 
 ---
 
@@ -446,11 +446,11 @@ import { Label } from '@jonmatum/next-shell/primitives';
 <Input type="file" />;
 ```
 
-| Prop | Description |
-| --- | --- |
-| `type` | Any HTML input type (`text`, `email`, `password`, `file`, etc.) |
-| `placeholder` | Placeholder text |
-| `disabled` | Disables the input |
+| Prop          | Description                                                     |
+| ------------- | --------------------------------------------------------------- |
+| `type`        | Any HTML input type (`text`, `email`, `password`, `file`, etc.) |
+| `placeholder` | Placeholder text                                                |
+| `disabled`    | Disables the input                                              |
 
 ---
 
@@ -477,9 +477,9 @@ import { Popover, PopoverContent, PopoverTrigger } from '@jonmatum/next-shell/pr
 </Popover>;
 ```
 
-| Sub-component | Purpose |
-| --- | --- |
-| `PopoverTrigger` | Element that toggles the popover |
+| Sub-component    | Purpose                                                           |
+| ---------------- | ----------------------------------------------------------------- |
+| `PopoverTrigger` | Element that toggles the popover                                  |
 | `PopoverContent` | Floating container (supports `side`, `align`, `sideOffset` props) |
 
 ---
@@ -515,15 +515,15 @@ import {
 </Select>;
 ```
 
-| Sub-component | Purpose |
-| --- | --- |
-| `SelectTrigger` | The button that opens the dropdown |
-| `SelectValue` | Displays the selected value or placeholder |
-| `SelectContent` | Floating list container |
-| `SelectGroup` | Groups items under a label |
-| `SelectLabel` | Non-interactive group heading |
-| `SelectItem` | A selectable option |
-| `SelectSeparator` | Visual divider between groups |
+| Sub-component     | Purpose                                    |
+| ----------------- | ------------------------------------------ |
+| `SelectTrigger`   | The button that opens the dropdown         |
+| `SelectValue`     | Displays the selected value or placeholder |
+| `SelectContent`   | Floating list container                    |
+| `SelectGroup`     | Groups items under a label                 |
+| `SelectLabel`     | Non-interactive group heading              |
+| `SelectItem`      | A selectable option                        |
+| `SelectSeparator` | Visual divider between groups              |
 
 ---
 
@@ -559,13 +559,13 @@ import {
 </Sheet>;
 ```
 
-| Sub-component / Prop | Purpose |
-| --- | --- |
-| `SheetTrigger` | Element that opens the sheet |
-| `SheetContent` | The sliding panel container |
-| `SheetHeader` | Groups title and description |
-| `SheetTitle` | Accessible heading |
-| `SheetDescription` | Supplementary context text |
+| Sub-component / Prop       | Purpose                                             |
+| -------------------------- | --------------------------------------------------- |
+| `SheetTrigger`             | Element that opens the sheet                        |
+| `SheetContent`             | The sliding panel container                         |
+| `SheetHeader`              | Groups title and description                        |
+| `SheetTitle`               | Accessible heading                                  |
+| `SheetDescription`         | Supplementary context text                          |
 | `side` (on `SheetContent`) | `top`, `right`, `bottom`, `left` (default: `right`) |
 
 ---
@@ -589,12 +589,12 @@ import { Label } from '@jonmatum/next-shell/primitives';
 </div>;
 ```
 
-| Prop | Description |
-| --- | --- |
-| `checked` | Controlled on/off state |
-| `defaultChecked` | Initial state (uncontrolled) |
-| `onCheckedChange` | Callback when toggled |
-| `disabled` | Disables the switch |
+| Prop              | Description                  |
+| ----------------- | ---------------------------- |
+| `checked`         | Controlled on/off state      |
+| `defaultChecked`  | Initial state (uncontrolled) |
+| `onCheckedChange` | Callback when toggled        |
+| `disabled`        | Disables the switch          |
 
 ---
 
@@ -634,15 +634,15 @@ import {
 </Table>;
 ```
 
-| Sub-component | Maps to |
-| --- | --- |
-| `Table` | `<table>` |
-| `TableHeader` | `<thead>` |
-| `TableBody` | `<tbody>` |
-| `TableFooter` | `<tfoot>` |
-| `TableRow` | `<tr>` |
-| `TableHead` | `<th>` |
-| `TableCell` | `<td>` |
+| Sub-component  | Maps to     |
+| -------------- | ----------- |
+| `Table`        | `<table>`   |
+| `TableHeader`  | `<thead>`   |
+| `TableBody`    | `<tbody>`   |
+| `TableFooter`  | `<tfoot>`   |
+| `TableRow`     | `<tr>`      |
+| `TableHead`    | `<th>`      |
+| `TableCell`    | `<td>`      |
 | `TableCaption` | `<caption>` |
 
 ---
@@ -668,12 +668,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@jonmatum/next-shell/p
 </Tabs>;
 ```
 
-| Sub-component | Purpose |
-| --- | --- |
-| `TabsList` | Container for the tab triggers |
-| `TabsTrigger` | Clickable tab header (matches `value` to `TabsContent`) |
-| `TabsContent` | Content panel shown when its tab is active |
-| `defaultValue` | Initially active tab (prop on `Tabs`) |
+| Sub-component  | Purpose                                                 |
+| -------------- | ------------------------------------------------------- |
+| `TabsList`     | Container for the tab triggers                          |
+| `TabsTrigger`  | Clickable tab header (matches `value` to `TabsContent`) |
+| `TabsContent`  | Content panel shown when its tab is active              |
+| `defaultValue` | Initially active tab (prop on `Tabs`)                   |
 
 ---
 
@@ -693,11 +693,11 @@ import { Label } from '@jonmatum/next-shell/primitives';
 <Textarea disabled placeholder="Disabled textarea" />;
 ```
 
-| Prop | Description |
-| --- | --- |
-| `placeholder` | Placeholder text |
-| `disabled` | Disables the textarea |
-| `rows` | Number of visible text lines |
+| Prop          | Description                  |
+| ------------- | ---------------------------- |
+| `placeholder` | Placeholder text             |
+| `disabled`    | Disables the textarea        |
+| `rows`        | Number of visible text lines |
 
 ---
 
@@ -725,12 +725,12 @@ import {
 </TooltipProvider>;
 ```
 
-| Sub-component | Purpose |
-| --- | --- |
+| Sub-component     | Purpose                                                        |
+| ----------------- | -------------------------------------------------------------- |
 | `TooltipProvider` | Wrap once at the app root; shares delay group for all tooltips |
-| `Tooltip` | Controls open/close state for a single tooltip |
-| `TooltipTrigger` | Element that activates the tooltip on hover/focus |
-| `TooltipContent` | The floating label (supports `side`, `sideOffset`) |
+| `Tooltip`         | Controls open/close state for a single tooltip                 |
+| `TooltipTrigger`  | Element that activates the tooltip on hover/focus              |
+| `TooltipContent`  | The floating label (supports `side`, `sideOffset`)             |
 
 ---
 
