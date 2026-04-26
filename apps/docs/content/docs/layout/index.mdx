@@ -170,6 +170,178 @@ export default function Page() {
 }
 ```
 
+---
+
+## API Reference
+
+### AppShell
+
+| Prop                  | Type           | Default | Description                                                                                                            |
+| --------------------- | -------------- | ------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `children`            | `ReactNode`    | —       | Page content rendered inside the main scrollable area between `topBar` and `footer`.                                   |
+| `sidebar`             | `ReactNode`    | —       | Sidebar nav tree. When omitted the sidebar rail and provider are not rendered and the content stretches to full width. |
+| `topBar`              | `ReactNode`    | —       | Top bar element (e.g. `<TopBar />`). Rendered as a sticky header inside `SidebarInset`.                                |
+| `footer`              | `ReactNode`    | —       | Footer element rendered below the content area inside `SidebarInset`.                                                  |
+| `commandBar`          | `boolean`      | `false` | Mount a `CommandBarProvider` wrapping the whole shell so descendants can call `useCommandBarActions`.                  |
+| `initialSidebarState` | `SidebarState` | —       | Initial sidebar open/closed state read from the SSR cookie so the server render matches the first client paint.        |
+| `className`           | `string`       | —       | Additional CSS class names.                                                                                            |
+
+### SidebarProvider
+
+| Prop           | Type                      | Default | Description                               |
+| -------------- | ------------------------- | ------- | ----------------------------------------- |
+| `defaultOpen`  | `boolean`                 | `true`  | Initial open state for uncontrolled mode. |
+| `open`         | `boolean`                 | —       | Controlled open state.                    |
+| `onOpenChange` | `(open: boolean) => void` | —       | Callback when the open state changes.     |
+| `className`    | `string`                  | —       | Additional CSS class names.               |
+| `style`        | `CSSProperties`           | —       | Inline styles.                            |
+| `children`     | `ReactNode`               | —       | Child elements.                           |
+
+### Sidebar
+
+| Prop          | Type                                 | Default       | Description                                                                                                       |
+| ------------- | ------------------------------------ | ------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `side`        | `'left' \| 'right'`                  | `'left'`      | Which side of the viewport the sidebar renders on.                                                                |
+| `variant`     | `'sidebar' \| 'floating' \| 'inset'` | `'sidebar'`   | Visual style variant. `sidebar` is a standard rail, `floating` adds shadow, `inset` sits within the content area. |
+| `collapsible` | `'offcanvas' \| 'icon' \| 'none'`    | `'offcanvas'` | Collapse behavior. `offcanvas` slides off-screen, `icon` collapses to icon-only rail, `none` disables collapsing. |
+| `className`   | `string`                             | —             | Additional CSS class names.                                                                                       |
+| `children`    | `ReactNode`                          | —             | Sidebar content (e.g. `SidebarHeader`, `SidebarContent`, `SidebarFooter`).                                        |
+
+### TopBar
+
+| Prop        | Type        | Default | Description                                                                                       |
+| ----------- | ----------- | ------- | ------------------------------------------------------------------------------------------------- |
+| `left`      | `ReactNode` | —       | Left-anchored slot — typically the brand and breadcrumb.                                          |
+| `center`    | `ReactNode` | —       | Center slot — typically a search input or `CommandBarTrigger`. Stretches to fill available space. |
+| `right`     | `ReactNode` | —       | Right-anchored slot — typically the theme toggle, user menu, notifications, etc.                  |
+| `sticky`    | `boolean`   | `true`  | Sticky positioning at the top of the viewport. Set `false` to control positioning externally.     |
+| `className` | `string`    | —       | Additional CSS class names.                                                                       |
+
+### PageHeader
+
+| Prop          | Type                   | Default        | Description                                                                         |
+| ------------- | ---------------------- | -------------- | ----------------------------------------------------------------------------------- |
+| `title`       | `ReactNode`            | **(required)** | Page title rendered as a heading element.                                           |
+| `description` | `ReactNode`            | —              | Optional short description rendered under the title.                                |
+| `breadcrumb`  | `ReactNode`            | —              | Breadcrumb / eyebrow slot rendered above the title.                                 |
+| `actions`     | `ReactNode`            | —              | Action slot rendered to the right of the title on desktop, stacked below on mobile. |
+| `headingAs`   | `'h1' \| 'h2' \| 'h3'` | `'h1'`         | Heading level used for the title.                                                   |
+| `className`   | `string`               | —              | Additional CSS class names.                                                         |
+
+### Footer
+
+| Prop        | Type        | Default | Description                 |
+| ----------- | ----------- | ------- | --------------------------- |
+| `children`  | `ReactNode` | —       | Footer content.             |
+| `className` | `string`    | —       | Additional CSS class names. |
+
+Extends all native `<footer>` HTML attributes.
+
+### ContentContainer
+
+| Prop        | Type                                        | Default | Description                                                                                                |
+| ----------- | ------------------------------------------- | ------- | ---------------------------------------------------------------------------------------------------------- |
+| `size`      | `'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'`    | `'lg'`  | Max-width tier. `sm` = `max-w-3xl`, `md` = `max-w-5xl`, `lg` = `max-w-7xl`, `xl` = `96rem`, `full` = none. |
+| `as`        | `'div' \| 'section' \| 'main' \| 'article'` | `'div'` | HTML element to render. Use `as="main"` for the primary page landmark.                                     |
+| `className` | `string`                                    | —       | Additional CSS class names.                                                                                |
+| `children`  | `ReactNode`                                 | —       | Page body content.                                                                                         |
+
+### CommandBarProvider
+
+| Prop           | Type                      | Default | Description                                                                                      |
+| -------------- | ------------------------- | ------- | ------------------------------------------------------------------------------------------------ |
+| `children`     | `ReactNode`               | —       | App subtree that can register and trigger command-bar actions.                                   |
+| `open`         | `boolean`                 | —       | Controlled open state. Uncontrolled when omitted.                                                |
+| `onOpenChange` | `(open: boolean) => void` | —       | Callback when the open state changes.                                                            |
+| `shortcut`     | `string \| null`          | `'k'`   | Keyboard shortcut that toggles the bar (fires on `Cmd+key` / `Ctrl+key`). Set `null` to disable. |
+
+### CommandBar
+
+| Prop          | Type        | Default                               | Description                                      |
+| ------------- | ----------- | ------------------------------------- | ------------------------------------------------ |
+| `title`       | `string`    | `'Command palette'`                   | Label announced to screen readers on the dialog. |
+| `description` | `string`    | `'Search for an action or navigate.'` | Description for screen readers.                  |
+| `placeholder` | `string`    | `'Type a command or search…'`         | Placeholder for the search input.                |
+| `emptyState`  | `ReactNode` | `'No matching actions.'`              | Content rendered when there are zero matches.    |
+
+### CommandBarTrigger
+
+| Prop        | Type            | Default     | Description                                         |
+| ----------- | --------------- | ----------- | --------------------------------------------------- |
+| `label`     | `string`        | `'Search…'` | Display label rendered alongside the search icon.   |
+| `shortcut`  | `string`        | `'⌘K'`      | Shortcut hint text displayed in the button.         |
+| `variant`   | `ButtonVariant` | `'outline'` | Button variant passed to the underlying `<Button>`. |
+| `className` | `string`        | —           | Additional CSS class names.                         |
+
+### SidebarNav
+
+| Prop         | Type                              | Default        | Description                                                                                       |
+| ------------ | --------------------------------- | -------------- | ------------------------------------------------------------------------------------------------- |
+| `items`      | `ReadonlyArray<ResolvedNavItem>`  | **(required)** | Resolved nav items from `buildNav()`. The component handles nested collapsible groups.            |
+| `label`      | `string`                          | —              | Label rendered as a `SidebarGroupLabel` above the menu. Omit for an unlabelled group.             |
+| `onNavigate` | `(item: ResolvedNavItem) => void` | —              | Override the default anchor-tag navigation. Useful with client-side routers (e.g. `router.push`). |
+| `className`  | `string`                          | —              | Additional CSS class names.                                                                       |
+
+### Breadcrumbs
+
+| Prop          | Type                                                        | Default        | Description                                                                                  |
+| ------------- | ----------------------------------------------------------- | -------------- | -------------------------------------------------------------------------------------------- |
+| `config`      | `NavConfig`                                                 | **(required)** | Nav config to derive the breadcrumb trail from. Pass the same config used by `<SidebarNav>`. |
+| `pathname`    | `string`                                                    | **(required)** | Current pathname. Must match the format used in `NavItem.href` values.                       |
+| `permissions` | `ReadonlyArray<string>`                                     | `[]`           | Permission keys the current user holds — must match what was passed to `buildNav`.           |
+| `renderLink`  | `(item: ResolvedNavItem, children: ReactNode) => ReactNode` | —              | Custom link renderer for each ancestor item (e.g. Next.js `<Link>`).                         |
+
+### ErrorPage
+
+| Prop          | Type        | Default        | Description                                          |
+| ------------- | ----------- | -------------- | ---------------------------------------------------- |
+| `statusCode`  | `number`    | **(required)** | HTTP status code displayed prominently.              |
+| `title`       | `string`    | **(required)** | Short subtitle below the status code.                |
+| `description` | `string`    | —              | Explanatory text below the title.                    |
+| `icon`        | `ReactNode` | —              | Icon rendered above the status code.                 |
+| `action`      | `ReactNode` | —              | Action slot (e.g. "Go home" button or button group). |
+| `className`   | `string`    | —              | Additional CSS class names.                          |
+| `children`    | `ReactNode` | —              | Additional content rendered inside the card.         |
+
+Pre-configured variants (`BadRequest`, `Unauthorized`, `Forbidden`, `NotFound`, `InternalServerError`, `ServiceUnavailable`) accept the same props minus `statusCode` (preset) and with `title` optional (has a sensible default per status code).
+
+### EmptyState
+
+| Prop          | Type        | Default     | Description                                         |
+| ------------- | ----------- | ----------- | --------------------------------------------------- |
+| `icon`        | `ReactNode` | `<Inbox />` | Leading icon.                                       |
+| `title`       | `ReactNode` | —           | Headline text.                                      |
+| `description` | `ReactNode` | —           | Supporting description text.                        |
+| `action`      | `ReactNode` | —           | Action slot (e.g. a button to create a first item). |
+| `className`   | `string`    | —           | Additional CSS class names.                         |
+| `children`    | `ReactNode` | —           | Additional content.                                 |
+
+### ErrorState
+
+| Prop            | Type        | Default             | Description                                   |
+| --------------- | ----------- | ------------------- | --------------------------------------------- |
+| `icon`          | `ReactNode` | `<AlertTriangle />` | Leading icon (tinted destructive by default). |
+| `title`         | `ReactNode` | —                   | Headline text.                                |
+| `description`   | `ReactNode` | —                   | Supporting description text.                  |
+| `action`        | `ReactNode` | —                   | Action slot (e.g. a retry button).            |
+| `iconClassName` | `string`    | —                   | Additional class names for the icon wrapper.  |
+| `className`     | `string`    | —                   | Additional CSS class names.                   |
+| `children`      | `ReactNode` | —                   | Additional content.                           |
+
+### LoadingState
+
+| Prop            | Type        | Default                          | Description                                  |
+| --------------- | ----------- | -------------------------------- | -------------------------------------------- |
+| `icon`          | `ReactNode` | `<Loader2 />` (animated spinner) | Leading icon.                                |
+| `title`         | `ReactNode` | —                                | Headline text.                               |
+| `description`   | `ReactNode` | —                                | Supporting description text.                 |
+| `action`        | `ReactNode` | —                                | Action slot.                                 |
+| `iconClassName` | `string`    | —                                | Additional class names for the icon wrapper. |
+| `className`     | `string`    | —                                | Additional CSS class names.                  |
+| `children`      | `ReactNode` | —                                | Additional content.                          |
+
+---
+
 ## SSR sidebar state
 
 Eliminate layout shift by reading the sidebar cookie in a Server Component:

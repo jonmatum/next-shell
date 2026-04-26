@@ -24,6 +24,9 @@
   "bugs": {
     "url": "https://github.com/jonmatum/next-shell/issues"
   },
+  "engines": {
+    "node": ">=20"
+  },
   "type": "module",
   "sideEffects": [
     "**/*.css"
@@ -118,6 +121,11 @@
     },
     "./styles/tokens.css": "./dist/styles/tokens.css",
     "./styles/preset.css": "./dist/styles/preset.css",
+    "./styles/presets/neutral.css": "./src/styles/presets/neutral.css",
+    "./styles/presets/green.css": "./src/styles/presets/green.css",
+    "./styles/presets/orange.css": "./src/styles/presets/orange.css",
+    "./styles/presets/red.css": "./src/styles/presets/red.css",
+    "./styles/presets/violet.css": "./src/styles/presets/violet.css",
     "./fonts/BigBlueTerminal.woff2": "./dist/fonts/BigBlueTerminal.woff2",
     "./tailwind-preset": {
       "source": "./src/tailwind-preset/index.ts",
@@ -128,6 +136,7 @@
   },
   "files": [
     "dist",
+    "src/styles/presets",
     "README.md",
     "LICENSE"
   ],
@@ -194,7 +203,8 @@
     "tsup": "^8.3.5",
     "typescript": "^5.6.3",
     "vite": "^6.4.2",
-    "vitest": "^4.0.0"
+    "vitest": "^4.0.0",
+    "vitest-axe": "^0.1.0"
   },
   "publishConfig": {
     "access": "public",

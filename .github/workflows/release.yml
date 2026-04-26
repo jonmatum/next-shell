@@ -37,6 +37,20 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Build library
+        run: pnpm build
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Test
+        run: pnpm test
+        env:
+          NODE_OPTIONS: '--max-old-space-size=6144'
+
       - name: Create Release PR or Publish
         uses: changesets/action@v1
         with:
