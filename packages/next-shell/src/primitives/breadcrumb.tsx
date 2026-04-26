@@ -4,10 +4,12 @@ import { Slot } from 'radix-ui';
 
 import { cn } from '@/core/cn';
 
+/** Accessible breadcrumb navigation component. @see https://ui.shadcn.com/docs/components/breadcrumb */
 function Breadcrumb({ ...props }: React.ComponentProps<'nav'>) {
   return <nav aria-label="breadcrumb" data-slot="breadcrumb" {...props} />;
 }
 
+/** Accessible breadcrumb list container. @see https://ui.shadcn.com/docs/components/breadcrumb */
 function BreadcrumbList({ className, ...props }: React.ComponentProps<'ol'>) {
   return (
     <ol
@@ -21,6 +23,7 @@ function BreadcrumbList({ className, ...props }: React.ComponentProps<'ol'>) {
   );
 }
 
+/** Accessible breadcrumb item component. @see https://ui.shadcn.com/docs/components/breadcrumb */
 function BreadcrumbItem({ className, ...props }: React.ComponentProps<'li'>) {
   return (
     <li
@@ -31,6 +34,7 @@ function BreadcrumbItem({ className, ...props }: React.ComponentProps<'li'>) {
   );
 }
 
+/** Accessible breadcrumb link component. @see https://ui.shadcn.com/docs/components/breadcrumb */
 function BreadcrumbLink({
   asChild,
   className,
@@ -49,6 +53,7 @@ function BreadcrumbLink({
   );
 }
 
+/** Accessible breadcrumb current page indicator. @see https://ui.shadcn.com/docs/components/breadcrumb */
 function BreadcrumbPage({ className, ...props }: React.ComponentProps<'span'>) {
   return (
     <span
@@ -62,6 +67,7 @@ function BreadcrumbPage({ className, ...props }: React.ComponentProps<'span'>) {
   );
 }
 
+/** Accessible breadcrumb separator component. @see https://ui.shadcn.com/docs/components/breadcrumb */
 function BreadcrumbSeparator({ children, className, ...props }: React.ComponentProps<'li'>) {
   return (
     <li
@@ -76,6 +82,7 @@ function BreadcrumbSeparator({ children, className, ...props }: React.ComponentP
   );
 }
 
+/** Accessible breadcrumb ellipsis overflow indicator. @see https://ui.shadcn.com/docs/components/breadcrumb */
 function BreadcrumbEllipsis({ className, ...props }: React.ComponentProps<'span'>) {
   return (
     <span
