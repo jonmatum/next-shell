@@ -17,7 +17,7 @@ All hooks live at `@jonmatum/next-shell/hooks`. They are client-only (`'use clie
 
 Open / close / toggle primitive for dialogs, drawers, and popovers:
 
-```tsx
+```tsx title="use-disclosure.tsx"
 import { useDisclosure } from '@jonmatum/next-shell/hooks';
 
 function MyDialog() {
@@ -38,7 +38,7 @@ function MyDialog() {
 
 Radix-style controlled / uncontrolled state — use when building components that accept both `value` and `defaultValue`:
 
-```tsx
+```tsx title="use-controllable-state.tsx"
 import { useControllableState } from '@jonmatum/next-shell/hooks';
 
 function Select({ value, defaultValue, onValueChange }) {
@@ -57,7 +57,7 @@ function Select({ value, defaultValue, onValueChange }) {
 
 JSON-serialised, SSR-safe, with a functional updater and `removeValue`:
 
-```tsx
+```tsx title="use-local-storage.tsx"
 import { useLocalStorage } from '@jonmatum/next-shell/hooks';
 
 const [theme, setTheme, removeTheme] = useLocalStorage('theme', 'system');
@@ -70,7 +70,7 @@ removeTheme();
 
 ### useDebouncedValue
 
-```tsx
+```tsx title="use-debounced-value.tsx"
 import { useDebouncedValue } from '@jonmatum/next-shell/hooks';
 
 const [search, setSearch] = useState('');
@@ -83,7 +83,7 @@ useEffect(() => {
 
 ### useDebouncedCallback
 
-```tsx
+```tsx title="use-debounced-callback.tsx"
 import { useDebouncedCallback } from '@jonmatum/next-shell/hooks';
 
 const save = useDebouncedCallback(async (value: string) => {
@@ -95,7 +95,7 @@ const save = useDebouncedCallback(async (value: string) => {
 
 ### useMediaQuery
 
-```tsx
+```tsx title="use-media-query.tsx"
 import { useMediaQuery } from '@jonmatum/next-shell/hooks';
 
 const isDark = useMediaQuery('(prefers-color-scheme: dark)');
@@ -106,7 +106,7 @@ const isTouch = useMediaQuery('(pointer: coarse)');
 
 Tailwind v4 default breakpoints — returns booleans and the current largest active breakpoint:
 
-```tsx
+```tsx title="use-breakpoint.tsx"
 import { useBreakpoint } from '@jonmatum/next-shell/hooks';
 
 const { isMd, isLg, current } = useBreakpoint();
@@ -117,7 +117,7 @@ const { isMd, isLg, current } = useBreakpoint();
 
 ### useHotkey
 
-```tsx
+```tsx title="use-hotkey.tsx"
 import { useHotkey } from '@jonmatum/next-shell/hooks';
 
 useHotkey('k', openCommandBar, { meta: true }); // ⌘K
@@ -131,7 +131,7 @@ useHotkey('s', save, { ctrl: true, meta: true }); // Ctrl+S / ⌘S
 
 Returns `true` after the first render — use to avoid SSR/client mismatch in conditional rendering:
 
-```tsx
+```tsx title="use-mounted.tsx"
 import { useMounted } from '@jonmatum/next-shell/hooks';
 
 function ClientOnly({ children }) {
@@ -145,7 +145,7 @@ function ClientOnly({ children }) {
 
 `useLayoutEffect` on the client, `useEffect` on the server:
 
-```tsx
+```tsx title="use-isomorphic-layout-effect.tsx"
 import { useIsomorphicLayoutEffect } from '@jonmatum/next-shell/hooks';
 
 useIsomorphicLayoutEffect(() => {
@@ -157,7 +157,7 @@ useIsomorphicLayoutEffect(() => {
 
 ### useCopyToClipboard
 
-```tsx
+```tsx title="use-copy-to-clipboard.tsx"
 import { useCopyToClipboard } from '@jonmatum/next-shell/hooks';
 
 function CopyButton({ text }) {
@@ -172,7 +172,7 @@ function CopyButton({ text }) {
 
 Returns the active locale string. Reads from `I18nAdapter.locale` if exposed, falls back to `navigator.language`:
 
-```tsx
+```tsx title="use-locale.tsx"
 import { useLocale } from '@jonmatum/next-shell/hooks';
 import { formatCurrency } from '@jonmatum/next-shell/formatters';
 

@@ -7,24 +7,24 @@ description: 42 shadcn/ui primitives vendored and token-audited for next-shell.
 
 All imports are named and tree-shakeable:
 
-```tsx
+```tsx title="import.tsx"
 import { Button, Dialog, DialogContent, DialogTitle } from '@jonmatum/next-shell/primitives';
 ```
 
 {/* prettier-ignore */}
 <Tabs items={['pnpm', 'npm', 'yarn']}>
 <Tab value="pnpm">
-```bash
+```bash title="terminal"
 pnpm add @jonmatum/next-shell
 ```
 </Tab>
 <Tab value="npm">
-```bash
+```bash title="terminal"
 npm install @jonmatum/next-shell
 ```
 </Tab>
 <Tab value="yarn">
-```bash
+```bash title="terminal"
 yarn add @jonmatum/next-shell
 ```
 </Tab>
@@ -32,11 +32,24 @@ yarn add @jonmatum/next-shell
 
 ## Available primitives
 
-Accordion · Alert · AlertDialog · AspectRatio · Avatar · Badge · Breadcrumb · Button · Calendar · Card · Carousel · Chart · Checkbox · Collapsible · Command · ContextMenu · Dialog · Drawer · DropdownMenu · Form · HoverCard · Input · InputOTP · Label · Menubar · NavigationMenu · Pagination · Popover · Progress · RadioGroup · Resizable · ScrollArea · Select · Separator · Sheet · Skeleton · Slider · Switch · Table · Tabs · Textarea · Toaster (Sonner) · Toggle · ToggleGroup · Tooltip
+| Category         | Components                                                                      |
+| ---------------- | ------------------------------------------------------------------------------- |
+| **Actions**      | Button, Toggle, ToggleGroup                                                     |
+| **Forms**        | Checkbox, Input, InputOTP, Label, RadioGroup, Select, Slider, Switch, Textarea  |
+| **Layout**       | Accordion, AspectRatio, Collapsible, Resizable, ScrollArea, Separator, Tabs     |
+| **Data display** | Avatar, Badge, Calendar, Card, Carousel, Chart, Progress, Skeleton, Table       |
+| **Feedback**     | Alert, AlertDialog, Dialog, Drawer, Sheet, Sonner                               |
+| **Overlay**      | ContextMenu, DropdownMenu, HoverCard, Menubar, NavigationMenu, Popover, Tooltip |
+| **Navigation**   | Breadcrumb, Command, Pagination                                                 |
+| **Typography**   | Form (with react-hook-form)                                                     |
+
+---
 
 ## Button
 
-```tsx
+A clickable action trigger with multiple visual variants and sizes. Supports polymorphic rendering via `asChild`.
+
+```tsx title="Button variants"
 import { Button } from '@jonmatum/next-shell/primitives';
 
 <Button>Default</Button>
@@ -53,13 +66,20 @@ import { Button } from '@jonmatum/next-shell/primitives';
 <Button asChild><a href="/new">Link button</a></Button>
 ```
 
-Variants: `default` · `outline` · `secondary` · `ghost` · `link` · `destructive`
+| Prop       | Values                                                            |
+| ---------- | ----------------------------------------------------------------- |
+| `variant`  | `default`, `outline`, `secondary`, `ghost`, `link`, `destructive` |
+| `size`     | `default`, `sm`, `lg`, `icon`                                     |
+| `asChild`  | Render as a child element (e.g. `<a>`)                            |
+| `disabled` | Disables interaction and applies muted styling                    |
 
-Sizes: `default` · `sm` · `lg` · `icon`
+---
 
 ## Dialog
 
-```tsx
+A modal window that overlays the page to capture user attention for confirmations, forms, or critical information.
+
+```tsx title="Confirmation dialog"
 import {
   Dialog,
   DialogContent,
@@ -86,9 +106,22 @@ import {
 </Dialog>;
 ```
 
+| Sub-component       | Purpose                                               |
+| ------------------- | ----------------------------------------------------- |
+| `DialogTrigger`     | Element that opens the dialog                         |
+| `DialogContent`     | The modal container (includes overlay + close button) |
+| `DialogHeader`      | Groups title and description                          |
+| `DialogTitle`       | Accessible heading (required for screen readers)      |
+| `DialogDescription` | Supplementary context text                            |
+| `DialogFooter`      | Action button row                                     |
+
+---
+
 ## Card
 
-```tsx
+A container with a header, body, and footer for grouping related content like stats, profiles, or settings.
+
+```tsx title="Revenue summary card"
 import {
   Card,
   CardHeader,
@@ -110,11 +143,21 @@ import {
 </Card>;
 ```
 
+| Sub-component     | Purpose                                |
+| ----------------- | -------------------------------------- |
+| `CardHeader`      | Top section with title and description |
+| `CardTitle`       | Primary heading                        |
+| `CardDescription` | Secondary descriptive text             |
+| `CardContent`     | Main body area                         |
+| `CardFooter`      | Bottom section for actions or metadata |
+
+---
+
 ## Form
 
-Works with `react-hook-form` via the `Form` primitive:
+Structured form fields with built-in validation messaging, powered by `react-hook-form`. Wraps inputs with accessible labels and error states.
 
-```tsx
+```tsx title="Contact form with validation"
 import { useForm } from 'react-hook-form';
 import {
   Form,
@@ -151,9 +194,22 @@ function LoginForm() {
 }
 ```
 
+| Sub-component     | Purpose                                             |
+| ----------------- | --------------------------------------------------- |
+| `FormField`       | Connects a field to `react-hook-form` control       |
+| `FormItem`        | Wraps label + control + message in a flex container |
+| `FormLabel`       | Accessible label tied to the control                |
+| `FormControl`     | Passes `aria-*` attributes to the input             |
+| `FormMessage`     | Renders validation error or description text        |
+| `FormDescription` | Helper text below the control                       |
+
+---
+
 ## Accordion
 
-```tsx
+A vertically stacked set of collapsible sections, ideal for FAQs and dense content that should stay scannable.
+
+```tsx title="FAQ accordion"
 import {
   Accordion,
   AccordionItem,
@@ -177,9 +233,19 @@ import {
 </Accordion>;
 ```
 
+| Prop           | Values                                                       |
+| -------------- | ------------------------------------------------------------ |
+| `type`         | `single` (one panel open at a time), `multiple` (any number) |
+| `collapsible`  | When `type="single"`, allows closing the open panel          |
+| `defaultValue` | Initially open item(s)                                       |
+
+---
+
 ## Alert
 
-```tsx
+A prominent banner for surfacing contextual messages like tips, warnings, or errors to the user.
+
+```tsx title="Info and error alerts"
 import { Alert, AlertTitle, AlertDescription } from '@jonmatum/next-shell/primitives';
 
 <Alert>
@@ -197,9 +263,17 @@ import { Alert, AlertTitle, AlertDescription } from '@jonmatum/next-shell/primit
 </Alert>;
 ```
 
+| Prop      | Values                   |
+| --------- | ------------------------ |
+| `variant` | `default`, `destructive` |
+
+---
+
 ## AlertDialog
 
-```tsx
+A modal dialog that interrupts the user to confirm a destructive or irreversible action. Unlike `Dialog`, it cannot be dismissed by clicking the overlay.
+
+```tsx title="Destructive confirmation alert"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -231,9 +305,22 @@ import {
 </AlertDialog>;
 ```
 
+| Sub-component            | Purpose                                    |
+| ------------------------ | ------------------------------------------ |
+| `AlertDialogTrigger`     | Opens the alert dialog                     |
+| `AlertDialogContent`     | Modal container (no outside-click dismiss) |
+| `AlertDialogTitle`       | Required accessible heading                |
+| `AlertDialogDescription` | Explains the consequences                  |
+| `AlertDialogAction`      | Confirm button (proceeds with the action)  |
+| `AlertDialogCancel`      | Cancel button (closes without acting)      |
+
+---
+
 ## Avatar
 
-```tsx
+A circular image with an automatic fallback to initials when the image is missing or still loading.
+
+```tsx title="User avatar with fallback"
 import { Avatar, AvatarImage, AvatarFallback } from '@jonmatum/next-shell/primitives';
 
 <Avatar>
@@ -246,11 +333,18 @@ import { Avatar, AvatarImage, AvatarFallback } from '@jonmatum/next-shell/primit
 </Avatar>;
 ```
 
-The `AvatarFallback` renders when the image is missing or still loading.
+| Sub-component    | Purpose                                                                 |
+| ---------------- | ----------------------------------------------------------------------- |
+| `AvatarImage`    | The profile image (`src` + `alt`)                                       |
+| `AvatarFallback` | Renders when the image is missing or still loading (typically initials) |
+
+---
 
 ## Badge
 
-```tsx
+A small label for status indicators, categories, or counts. Renders inline and supports multiple visual variants.
+
+```tsx title="Badge variants"
 import { Badge } from '@jonmatum/next-shell/primitives';
 
 <Badge>Default</Badge>
@@ -259,11 +353,17 @@ import { Badge } from '@jonmatum/next-shell/primitives';
 <Badge variant="destructive">Destructive</Badge>;
 ```
 
-Variants: `default` · `secondary` · `outline` · `destructive`
+| Prop      | Values                                           |
+| --------- | ------------------------------------------------ |
+| `variant` | `default`, `secondary`, `outline`, `destructive` |
+
+---
 
 ## Checkbox
 
-```tsx
+A toggle control for boolean choices. Pair with `Label` for accessibility. Supports controlled and uncontrolled usage.
+
+```tsx title="Labeled checkboxes"
 import { Checkbox } from '@jonmatum/next-shell/primitives';
 import { Label } from '@jonmatum/next-shell/primitives';
 
@@ -278,9 +378,20 @@ import { Label } from '@jonmatum/next-shell/primitives';
 </div>;
 ```
 
+| Prop              | Description                             |
+| ----------------- | --------------------------------------- |
+| `checked`         | Controlled checked state                |
+| `defaultChecked`  | Initial checked state (uncontrolled)    |
+| `onCheckedChange` | Callback when the checked state changes |
+| `disabled`        | Disables the checkbox                   |
+
+---
+
 ## DropdownMenu
 
-```tsx
+A menu triggered by a button click, ideal for action lists like account menus or context actions. Supports keyboard navigation.
+
+```tsx title="Account dropdown menu"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -306,9 +417,23 @@ import {
 </DropdownMenu>;
 ```
 
+| Sub-component              | Purpose                               |
+| -------------------------- | ------------------------------------- |
+| `DropdownMenuTrigger`      | Element that opens the menu           |
+| `DropdownMenuContent`      | Floating container for menu items     |
+| `DropdownMenuItem`         | A single action in the menu           |
+| `DropdownMenuLabel`        | Non-interactive section heading       |
+| `DropdownMenuSeparator`    | Visual divider between groups         |
+| `DropdownMenuCheckboxItem` | Toggleable menu item with a checkmark |
+| `DropdownMenuRadioGroup`   | Radio-style single-select group       |
+
+---
+
 ## Input
 
-```tsx
+A styled text input that supports all native HTML input types. Pair with `Label` for accessible form fields.
+
+```tsx title="Text input with label"
 import { Input } from '@jonmatum/next-shell/primitives';
 import { Label } from '@jonmatum/next-shell/primitives';
 
@@ -321,9 +446,19 @@ import { Label } from '@jonmatum/next-shell/primitives';
 <Input type="file" />;
 ```
 
+| Prop          | Description                                                     |
+| ------------- | --------------------------------------------------------------- |
+| `type`        | Any HTML input type (`text`, `email`, `password`, `file`, etc.) |
+| `placeholder` | Placeholder text                                                |
+| `disabled`    | Disables the input                                              |
+
+---
+
 ## Popover
 
-```tsx
+A floating panel anchored to a trigger element, useful for inline editing, filters, or supplementary forms.
+
+```tsx title="Dimensions popover"
 import { Popover, PopoverContent, PopoverTrigger } from '@jonmatum/next-shell/primitives';
 
 <Popover>
@@ -342,9 +477,18 @@ import { Popover, PopoverContent, PopoverTrigger } from '@jonmatum/next-shell/pr
 </Popover>;
 ```
 
+| Sub-component    | Purpose                                                           |
+| ---------------- | ----------------------------------------------------------------- |
+| `PopoverTrigger` | Element that toggles the popover                                  |
+| `PopoverContent` | Floating container (supports `side`, `align`, `sideOffset` props) |
+
+---
+
 ## Select
 
-```tsx
+A dropdown picker for single-value selection. Renders a native-feeling custom listbox with keyboard navigation and grouping support.
+
+```tsx title="Fruit picker select"
 import {
   Select,
   SelectContent,
@@ -371,9 +515,23 @@ import {
 </Select>;
 ```
 
+| Sub-component     | Purpose                                    |
+| ----------------- | ------------------------------------------ |
+| `SelectTrigger`   | The button that opens the dropdown         |
+| `SelectValue`     | Displays the selected value or placeholder |
+| `SelectContent`   | Floating list container                    |
+| `SelectGroup`     | Groups items under a label                 |
+| `SelectLabel`     | Non-interactive group heading              |
+| `SelectItem`      | A selectable option                        |
+| `SelectSeparator` | Visual divider between groups              |
+
+---
+
 ## Sheet
 
-```tsx
+A panel that slides in from the edge of the screen, suitable for secondary forms, filters, or mobile navigation.
+
+```tsx title="Profile edit sheet"
 import {
   Sheet,
   SheetContent,
@@ -401,9 +559,22 @@ import {
 </Sheet>;
 ```
 
+| Sub-component / Prop       | Purpose                                             |
+| -------------------------- | --------------------------------------------------- |
+| `SheetTrigger`             | Element that opens the sheet                        |
+| `SheetContent`             | The sliding panel container                         |
+| `SheetHeader`              | Groups title and description                        |
+| `SheetTitle`               | Accessible heading                                  |
+| `SheetDescription`         | Supplementary context text                          |
+| `side` (on `SheetContent`) | `top`, `right`, `bottom`, `left` (default: `right`) |
+
+---
+
 ## Switch
 
-```tsx
+A toggle switch for binary on/off settings. Visually distinct from Checkbox and better suited for immediate-effect settings.
+
+```tsx title="Toggle switches"
 import { Switch } from '@jonmatum/next-shell/primitives';
 import { Label } from '@jonmatum/next-shell/primitives';
 
@@ -418,9 +589,20 @@ import { Label } from '@jonmatum/next-shell/primitives';
 </div>;
 ```
 
+| Prop              | Description                  |
+| ----------------- | ---------------------------- |
+| `checked`         | Controlled on/off state      |
+| `defaultChecked`  | Initial state (uncontrolled) |
+| `onCheckedChange` | Callback when toggled        |
+| `disabled`        | Disables the switch          |
+
+---
+
 ## Table
 
-```tsx
+A styled HTML table with header, body, and footer sections. Composable sub-components replace raw `<table>` elements with token-aware styling.
+
+```tsx title="Invoice table"
 import {
   Table,
   TableBody,
@@ -452,9 +634,24 @@ import {
 </Table>;
 ```
 
+| Sub-component  | Maps to     |
+| -------------- | ----------- |
+| `Table`        | `<table>`   |
+| `TableHeader`  | `<thead>`   |
+| `TableBody`    | `<tbody>`   |
+| `TableFooter`  | `<tfoot>`   |
+| `TableRow`     | `<tr>`      |
+| `TableHead`    | `<th>`      |
+| `TableCell`    | `<td>`      |
+| `TableCaption` | `<caption>` |
+
+---
+
 ## Tabs
 
-```tsx
+A tabbed interface for switching between related content panels without navigating away. Fully keyboard-accessible.
+
+```tsx title="Settings tabs"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@jonmatum/next-shell/primitives';
 
 <Tabs defaultValue="account" className="w-[400px]">
@@ -471,9 +668,20 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@jonmatum/next-shell/p
 </Tabs>;
 ```
 
+| Sub-component  | Purpose                                                 |
+| -------------- | ------------------------------------------------------- |
+| `TabsList`     | Container for the tab triggers                          |
+| `TabsTrigger`  | Clickable tab header (matches `value` to `TabsContent`) |
+| `TabsContent`  | Content panel shown when its tab is active              |
+| `defaultValue` | Initially active tab (prop on `Tabs`)                   |
+
+---
+
 ## Textarea
 
-```tsx
+A multi-line text input for longer-form content like messages, notes, or descriptions.
+
+```tsx title="Message textarea"
 import { Textarea } from '@jonmatum/next-shell/primitives';
 import { Label } from '@jonmatum/next-shell/primitives';
 
@@ -485,9 +693,19 @@ import { Label } from '@jonmatum/next-shell/primitives';
 <Textarea disabled placeholder="Disabled textarea" />;
 ```
 
+| Prop          | Description                  |
+| ------------- | ---------------------------- |
+| `placeholder` | Placeholder text             |
+| `disabled`    | Disables the textarea        |
+| `rows`        | Number of visible text lines |
+
+---
+
 ## Tooltip
 
-```tsx
+A small floating label that appears on hover or focus to describe an element. Requires a `TooltipProvider` wrapper.
+
+```tsx title="Button with tooltip"
 import {
   Tooltip,
   TooltipContent,
@@ -507,7 +725,14 @@ import {
 </TooltipProvider>;
 ```
 
-Wrap your app (or a subtree) with `TooltipProvider` once; all nested `Tooltip` instances share the same delay group.
+| Sub-component     | Purpose                                                        |
+| ----------------- | -------------------------------------------------------------- |
+| `TooltipProvider` | Wrap once at the app root; shares delay group for all tooltips |
+| `Tooltip`         | Controls open/close state for a single tooltip                 |
+| `TooltipTrigger`  | Element that activates the tooltip on hover/focus              |
+| `TooltipContent`  | The floating label (supports `side`, `sideOffset`)             |
+
+---
 
 ## Not vendored (recipes)
 
@@ -518,6 +743,8 @@ These are common patterns intentionally left as consumer-side compositions:
 - **Typography** — utility class patterns (`text-3xl font-bold`, `text-muted-foreground`, etc.)
 - **Combobox** — `Popover` + `Command`
 
+---
+
 ## Custom styling
 
 <Callout type="info">
@@ -525,7 +752,7 @@ These are common patterns intentionally left as consumer-side compositions:
   class selectors. Use these for global style tweaks across your app.
 </Callout>
 
-```css
+```css title="global-overrides.css"
 [data-slot='button'] {
   letter-spacing: 0.05em;
 }
