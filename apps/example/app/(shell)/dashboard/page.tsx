@@ -1,12 +1,7 @@
 'use client';
 
 import { toast } from 'sonner';
-import {
-  ContentContainer,
-  PageHeader,
-  EmptyState,
-  LoadingState,
-} from '@jonmatum/next-shell/layout';
+import { ContentContainer, PageHeader } from '@jonmatum/next-shell/layout';
 import {
   Button,
   Card,
@@ -16,25 +11,18 @@ import {
   CardTitle,
   Badge,
   Progress,
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
   Avatar,
   AvatarFallback,
-  Separator,
   Dialog,
   DialogContent,
-  DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
-  Input,
+  Separator,
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
 } from '@jonmatum/next-shell/primitives';
-import { useUser, SignedIn } from '@jonmatum/next-shell/auth';
 
-/* Showcases the @jonmatum/next-shell/formatters subpath — locale-aware,
-   pure formatting functions built on Intl. */
 import {
   formatCurrency,
   formatRelativeTime,
@@ -42,7 +30,6 @@ import {
   formatNumber,
 } from '@jonmatum/next-shell/formatters';
 
-/* Showcases the @jonmatum/next-shell/hooks subpath — client-side utility hooks. */
 import {
   useCopyToClipboard,
   useDisclosure,
@@ -58,122 +45,136 @@ import {
   Activity,
   ShoppingCart,
   Plus,
-  RefreshCw,
-  ArrowUpRight,
   Copy,
   Check,
   Keyboard,
   Terminal,
   LayoutGrid,
   LayoutList,
+  FileText,
+  MessageSquare,
+  CreditCard,
+  Star,
+  UserPlus,
+  ShieldCheck,
 } from 'lucide-react';
 
 /* ────────────────────────────────────────────────────────────────────────
  * Mock data — raw values fed through library formatters at render time
  * ──────────────────────────────────────────────────────────────────────── */
 
-const stats = [
+const STATS = [
   {
+    id: 'stat-revenue',
     label: 'Total Revenue',
     rawValue: 48295,
     change: 0.125,
     trend: 'up' as const,
+    progress: 78,
     description: 'vs. last month',
     icon: DollarSign,
     format: 'currency' as const,
   },
   {
+    id: 'stat-users',
     label: 'Active Users',
     rawValue: 2841,
     change: 0.043,
     trend: 'up' as const,
+    progress: 65,
     description: 'vs. last month',
     icon: Users,
     format: 'number' as const,
   },
   {
+    id: 'stat-orders',
     label: 'Orders',
     rawValue: 1023,
     change: -0.021,
     trend: 'down' as const,
+    progress: 42,
     description: 'vs. last month',
     icon: ShoppingCart,
     format: 'number' as const,
   },
   {
+    id: 'stat-conversion',
     label: 'Conversion Rate',
     rawValue: 0.0324,
     change: 0.008,
     trend: 'up' as const,
+    progress: 54,
     description: 'vs. last month',
     icon: Activity,
     format: 'percent' as const,
   },
 ];
 
-const revenueByChannel = [
-  { label: 'Direct Sales', value: 62, rawAmount: 29943 },
-  { label: 'Affiliate', value: 21, rawAmount: 10142 },
-  { label: 'Organic Search', value: 11, rawAmount: 5312 },
-  { label: 'Social Media', value: 6, rawAmount: 2898 },
+const WEEKLY_REVENUE = [
+  { day: 'Mon', value: 4200 },
+  { day: 'Tue', value: 5800 },
+  { day: 'Wed', value: 3900 },
+  { day: 'Thu', value: 6700 },
+  { day: 'Fri', value: 7400 },
 ];
 
-const monthlyRevenue = [
-  { month: 'Jan', revenue: 18200 },
-  { month: 'Feb', revenue: 21400 },
-  { month: 'Mar', revenue: 19800 },
-  { month: 'Apr', revenue: 24100 },
-  { month: 'May', revenue: 28900 },
-  { month: 'Jun', revenue: 32400 },
-  { month: 'Jul', revenue: 29600 },
-  { month: 'Aug', revenue: 35100 },
-  { month: 'Sep', revenue: 38700 },
-  { month: 'Oct', revenue: 42300 },
-  { month: 'Nov', revenue: 45100 },
-  { month: 'Dec', revenue: 48295 },
-];
-
-const recentActivity = [
+const RECENT_ACTIVITY = [
   {
     id: 'act-alice-order',
     user: 'Alice Chen',
     action: 'placed an order',
+    type: 'order',
     rawAmount: 249.0,
     timeOffset: 2 * 60 * 1000,
+    icon: CreditCard,
   },
   {
     id: 'act-bob-subscribe',
     user: 'Bob Smith',
-    action: 'subscribed to Pro',
+    action: 'subscribed to Pro plan',
+    type: 'subscription',
     rawAmount: null,
-    subscription: '$29/mo',
     timeOffset: 5 * 60 * 1000,
+    icon: Star,
   },
   {
     id: 'act-carol-review',
     user: 'Carol Davis',
-    action: 'left a review',
+    action: 'left a 5-star review',
+    type: 'review',
     rawAmount: null,
     timeOffset: 12 * 60 * 1000,
+    icon: MessageSquare,
   },
   {
-    id: 'act-dan-upgrade',
+    id: 'act-dan-signup',
     user: 'Dan Wilson',
-    action: 'upgraded plan',
+    action: 'created an account',
+    type: 'signup',
     rawAmount: null,
-    subscription: '$99/mo',
     timeOffset: 18 * 60 * 1000,
+    icon: UserPlus,
   },
   {
     id: 'act-eve-order',
     user: 'Eve Martinez',
     action: 'placed an order',
+    type: 'order',
     rawAmount: 512.0,
     timeOffset: 24 * 60 * 1000,
+    icon: CreditCard,
+  },
+  {
+    id: 'act-frank-upgrade',
+    user: 'Frank Lee',
+    action: 'upgraded to Enterprise',
+    type: 'upgrade',
+    rawAmount: null,
+    timeOffset: 45 * 60 * 1000,
+    icon: ShieldCheck,
   },
 ];
 
-/** Demo API key for the copy-to-clipboard hook showcase. */
 const DEMO_API_KEY = 'nxsh_live_k8f2a9Qx7mPwR3jL5nBvY6dH';
 
 /* ────────────────────────────────────────────────────────────────────────
@@ -196,57 +197,89 @@ function formatStatChange(change: number): string {
   return sign + formatPercent(change, { maximumFractionDigits: 1 });
 }
 
+const BADGE_VARIANT: Record<string, 'default' | 'secondary' | 'outline' | 'destructive'> = {
+  order: 'default',
+  subscription: 'secondary',
+  review: 'outline',
+  signup: 'secondary',
+  upgrade: 'default',
+};
+
 /* ────────────────────────────────────────────────────────────────────────
  * Page
  * ──────────────────────────────────────────────────────────────────────── */
 
 export default function DashboardPage() {
-  const user = useUser();
-  const maxRevenue = Math.max(...monthlyRevenue.map((m) => m.revenue));
+  const maxRevenue = Math.max(...WEEKLY_REVENUE.map((d) => d.value));
 
   /* ── Hooks demos ────────────────────────────────────────────────────── */
   const { isCopied, copy } = useCopyToClipboard();
-  const settingsDialog = useDisclosure();
+  const reportDialog = useDisclosure();
   const [dashboardLayout, setDashboardLayout] = useLocalStorage<'grid' | 'list'>(
     'dashboard-layout',
     'grid',
   );
 
-  // Ctrl+K / Cmd+K opens the settings dialog
-  useHotkey('k', () => settingsDialog.open(), { meta: true });
+  // Ctrl+N / Cmd+N opens the new-report dialog
+  useHotkey('n', () => reportDialog.open(), { meta: true });
 
   return (
     <ContentContainer>
+      {/* ── Page Header ───────────────────────────────────────────────── */}
       <PageHeader
-        title={`Welcome back, ${user?.name ?? 'Demo User'}`}
-        description="Here's what's happening with your project today."
+        title="Dashboard"
+        description="Key metrics, recent activity, and quick actions at a glance."
         actions={
-          <div className="flex gap-2">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => toast.info('Refreshed!', { description: 'Data is up to date.' })}
-            >
-              <RefreshCw className="size-4" />
-              Refresh
-            </Button>
-            <Button
-              size="sm"
-              onClick={() =>
-                toast.success('Created!', { description: 'New item added successfully.' })
-              }
-            >
+          <Dialog open={reportDialog.isOpen} onOpenChange={reportDialog.onOpenChange}>
+            <Button size="sm" onClick={reportDialog.open}>
               <Plus className="size-4" />
-              New Item
+              New Report
             </Button>
-          </div>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Create New Report</DialogTitle>
+              </DialogHeader>
+              <div className="grid gap-4 py-4">
+                <p className="text-muted-foreground text-sm">
+                  This dialog is controlled by{' '}
+                  <code className="bg-muted rounded px-1 py-0.5 text-xs">useDisclosure</code> and
+                  can be opened with{' '}
+                  <kbd className="bg-muted text-muted-foreground rounded px-1.5 py-0.5 font-mono text-xs">
+                    {'⌘'}N
+                  </kbd>
+                  .
+                </p>
+                <Separator />
+                <p className="text-muted-foreground text-xs">
+                  Report generation would go here in a production app.
+                </p>
+              </div>
+              <div className="flex justify-end gap-2">
+                <Button variant="outline" size="sm" onClick={reportDialog.close}>
+                  Cancel
+                </Button>
+                <Button
+                  size="sm"
+                  onClick={() => {
+                    reportDialog.close();
+                    toast.success('Report created!', {
+                      description: 'Your new report has been generated.',
+                    });
+                  }}
+                >
+                  <FileText className="size-4" />
+                  Generate
+                </Button>
+              </div>
+            </DialogContent>
+          </Dialog>
         }
       />
 
-      {/* Stats Grid — values generated through formatters */}
+      {/* ── Stat Cards ────────────────────────────────────────────────── */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {stats.map((stat) => (
-          <Card key={stat.label} className="relative overflow-hidden">
+        {STATS.map((stat) => (
+          <Card key={stat.id} className="relative overflow-hidden">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="text-muted-foreground text-xs font-medium uppercase tracking-wider">
                 {stat.label}
@@ -255,11 +288,11 @@ export default function DashboardPage() {
                 <stat.icon className="size-4" />
               </div>
             </CardHeader>
-            <CardContent>
+            <CardContent className="space-y-3">
               <div className="text-foreground text-3xl font-bold tracking-tight">
                 {formatStatValue(stat.rawValue, stat.format)}
               </div>
-              <div className="mt-1 flex items-center gap-1 text-xs">
+              <div className="flex items-center gap-1 text-xs">
                 {stat.trend === 'up' ? (
                   <TrendingUp className="text-primary size-3" />
                 ) : (
@@ -276,67 +309,102 @@ export default function DashboardPage() {
                 </span>
                 <span className="text-muted-foreground">{stat.description}</span>
               </div>
+              {/* Sparkline-style visual indicator */}
+              <Progress value={stat.progress} className="h-1.5" />
             </CardContent>
           </Card>
         ))}
       </div>
 
-      {/* Charts Section */}
-      <div className="grid gap-4 lg:grid-cols-7">
-        {/* Revenue Overview — bar chart using div heights */}
-        <Card className="lg:col-span-4">
-          <CardHeader>
-            <CardTitle className="text-base">Revenue Overview</CardTitle>
-            <CardDescription>Monthly revenue for the current year</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="flex h-[200px] items-end gap-2">
-              {monthlyRevenue.map((m) => {
-                const height = Math.round((m.revenue / maxRevenue) * 100);
-                return (
-                  <div key={m.month} className="flex flex-1 flex-col items-center gap-1">
-                    <span className="text-muted-foreground text-[10px] font-medium tabular-nums">
-                      {Math.round(m.revenue / 1000)}k
-                    </span>
-                    <div className="relative w-full flex-1">
-                      <div
-                        className="bg-primary/80 hover:bg-primary absolute bottom-0 w-full rounded-t-sm transition-colors"
-                        style={{ height: `${height}%` }}
-                      />
+      {/* ── Revenue Overview — CSS bar chart ──────────────────────────── */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-base">Revenue Overview</CardTitle>
+          <CardDescription>Weekly revenue (Mon-Fri) using semantic bar colors</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="flex h-[200px] items-end gap-4">
+            {WEEKLY_REVENUE.map((bar) => {
+              const height = Math.round((bar.value / maxRevenue) * 100);
+              return (
+                <Tooltip key={bar.day}>
+                  <TooltipTrigger asChild>
+                    <div className="flex flex-1 flex-col items-center gap-1">
+                      <span className="text-muted-foreground text-[10px] font-medium tabular-nums">
+                        {formatCurrency(bar.value, 'USD', { maximumFractionDigits: 0 })}
+                      </span>
+                      <div className="relative w-full flex-1">
+                        <div
+                          className="bg-primary/80 hover:bg-primary absolute bottom-0 w-full rounded-t-sm transition-colors"
+                          style={{ height: `${height}%` }}
+                        />
+                      </div>
+                      <span className="text-muted-foreground text-xs font-medium">{bar.day}</span>
                     </div>
-                    <span className="text-muted-foreground text-[10px]">{m.month}</span>
-                  </div>
-                );
-              })}
-            </div>
-          </CardContent>
-        </Card>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    {bar.day}: {formatCurrency(bar.value, 'USD')}
+                  </TooltipContent>
+                </Tooltip>
+              );
+            })}
+          </div>
+        </CardContent>
+      </Card>
 
-        {/* Revenue by Channel — amounts generated through formatCurrency */}
-        <Card className="lg:col-span-3">
-          <CardHeader>
-            <CardTitle className="text-base">Revenue by Channel</CardTitle>
-            <CardDescription>Distribution across acquisition channels</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {revenueByChannel.map((channel) => (
-                <div key={channel.label} className="space-y-2">
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="font-medium">{channel.label}</span>
-                    <span className="text-muted-foreground tabular-nums">
-                      {formatCurrency(channel.rawAmount, 'USD')}
-                    </span>
+      {/* ── Recent Activity Feed ──────────────────────────────────────── */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-base">Recent Activity</CardTitle>
+          <CardDescription>
+            Latest transactions and user actions across the platform
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-0">
+            {RECENT_ACTIVITY.map((item, i) => {
+              const ActivityIcon = item.icon;
+              return (
+                <div key={item.id}>
+                  <div className="flex items-center gap-3 py-3">
+                    <Avatar className="size-9">
+                      <AvatarFallback className="text-xs">
+                        {item.user
+                          .split(' ')
+                          .map((n) => n[0])
+                          .join('')}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div className="flex-1 space-y-0.5">
+                      <p className="text-sm">
+                        <span className="font-medium">{item.user}</span>{' '}
+                        <span className="text-muted-foreground">{item.action}</span>
+                      </p>
+                      <p className="text-muted-foreground text-xs">
+                        {formatRelativeTime(new Date(Date.now() - item.timeOffset))}
+                      </p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      {item.rawAmount != null && (
+                        <span className="text-sm font-medium tabular-nums">
+                          {formatCurrency(item.rawAmount, 'USD')}
+                        </span>
+                      )}
+                      <Badge variant={BADGE_VARIANT[item.type] ?? 'secondary'}>
+                        <ActivityIcon className="mr-1 size-3" />
+                        {item.type}
+                      </Badge>
+                    </div>
                   </div>
-                  <Progress value={channel.value} className="h-2" />
+                  {i < RECENT_ACTIVITY.length - 1 && <Separator />}
                 </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+              );
+            })}
+          </div>
+        </CardContent>
+      </Card>
 
-      {/* Developer Tools — hooks demo section */}
+      {/* ── Quick Actions — hooks demos ───────────────────────────────── */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {/* Copy to Clipboard — useCopyToClipboard */}
         <Card>
@@ -351,98 +419,67 @@ export default function DashboardPage() {
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-2">
-              <Input readOnly value={DEMO_API_KEY} className="font-mono text-xs" />
-              <Button
-                variant="outline"
-                size="icon"
-                className="shrink-0"
-                onClick={() => copy(DEMO_API_KEY)}
-              >
-                {isCopied ? <Check className="text-primary size-4" /> : <Copy className="size-4" />}
-              </Button>
+              <code className="bg-muted flex-1 truncate rounded px-2 py-1.5 font-mono text-xs">
+                {DEMO_API_KEY}
+              </code>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="shrink-0"
+                    aria-label="Copy API key"
+                    onClick={() => {
+                      copy(DEMO_API_KEY);
+                      toast.success('Copied!', {
+                        description: 'API key copied to clipboard.',
+                      });
+                    }}
+                  >
+                    {isCopied ? (
+                      <Check className="text-primary size-4" />
+                    ) : (
+                      <Copy className="size-4" />
+                    )}
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>{isCopied ? 'Copied!' : 'Copy to clipboard'}</TooltipContent>
+              </Tooltip>
             </div>
           </CardContent>
         </Card>
 
-        {/* Keyboard Shortcut — useHotkey + useDisclosure */}
+        {/* Keyboard Shortcut — useHotkey */}
         <Card>
           <CardHeader className="pb-3">
             <CardTitle className="flex items-center gap-2 text-sm">
               <Keyboard className="size-4" />
-              Quick Settings
+              Hotkey Demo
             </CardTitle>
             <CardDescription>
               Press{' '}
               <kbd className="bg-muted text-muted-foreground rounded px-1.5 py-0.5 font-mono text-xs">
-                {'⌘'}K
+                {'⌘'}N
               </kbd>{' '}
-              or click below &mdash; powered by <code className="text-xs">useHotkey</code> +{' '}
-              <code className="text-xs">useDisclosure</code>
+              to open the New Report dialog via <code className="text-xs">useHotkey</code>
             </CardDescription>
           </CardHeader>
-          <CardContent>
-            <Dialog open={settingsDialog.isOpen} onOpenChange={settingsDialog.onOpenChange}>
-              <Button
-                variant="outline"
-                size="sm"
-                className="w-full justify-between"
-                onClick={settingsDialog.open}
-              >
-                Open Settings
-                <kbd className="bg-muted text-muted-foreground ml-2 rounded px-1.5 py-0.5 font-mono text-xs">
-                  {'⌘'}K
-                </kbd>
-              </Button>
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle>Quick Settings</DialogTitle>
-                  <DialogDescription>
-                    This dialog is controlled by <code>useDisclosure</code> and opened via{' '}
-                    <code>useHotkey</code> ({'⌘'}K).
-                  </DialogDescription>
-                </DialogHeader>
-                <div className="grid gap-4 py-4">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium">Dashboard Layout</span>
-                    <div className="flex gap-1">
-                      <Button
-                        variant={dashboardLayout === 'grid' ? 'default' : 'outline'}
-                        size="icon"
-                        className="size-8"
-                        onClick={() => setDashboardLayout('grid')}
-                      >
-                        <LayoutGrid className="size-4" />
-                      </Button>
-                      <Button
-                        variant={dashboardLayout === 'list' ? 'default' : 'outline'}
-                        size="icon"
-                        className="size-8"
-                        onClick={() => setDashboardLayout('list')}
-                      >
-                        <LayoutList className="size-4" />
-                      </Button>
-                    </div>
-                  </div>
-                  <Separator />
-                  <p className="text-muted-foreground text-xs">
-                    Layout preference is persisted to <code>localStorage</code> via{' '}
-                    <code>useLocalStorage</code>. Current:{' '}
-                    <Badge variant="secondary" className="ml-1">
-                      {dashboardLayout}
-                    </Badge>
-                  </p>
-                </div>
-                <DialogFooter>
-                  <Button variant="outline" onClick={settingsDialog.close}>
-                    Close
-                  </Button>
-                </DialogFooter>
-              </DialogContent>
-            </Dialog>
+          <CardContent className="flex flex-col gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              className="w-full justify-between"
+              onClick={reportDialog.open}
+            >
+              Open New Report
+              <kbd className="bg-muted text-muted-foreground ml-2 rounded px-1.5 py-0.5 font-mono text-xs">
+                {'⌘'}N
+              </kbd>
+            </Button>
           </CardContent>
         </Card>
 
-        {/* Persisted Preference — useLocalStorage */}
+        {/* Layout Preference — useLocalStorage */}
         <Card>
           <CardHeader className="pb-3">
             <CardTitle className="flex items-center gap-2 text-sm">
@@ -454,7 +491,7 @@ export default function DashboardPage() {
               Layout Preference
             </CardTitle>
             <CardDescription>
-              Persisted via <code className="text-xs">useLocalStorage</code>
+              Persisted via <code className="text-xs">useLocalStorage</code> — survives page reloads
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -463,7 +500,10 @@ export default function DashboardPage() {
                 variant={dashboardLayout === 'grid' ? 'default' : 'outline'}
                 size="sm"
                 className="flex-1"
-                onClick={() => setDashboardLayout('grid')}
+                onClick={() => {
+                  setDashboardLayout('grid');
+                  toast.info('Layout changed', { description: 'Switched to grid view.' });
+                }}
               >
                 <LayoutGrid className="size-4" />
                 Grid
@@ -472,173 +512,71 @@ export default function DashboardPage() {
                 variant={dashboardLayout === 'list' ? 'default' : 'outline'}
                 size="sm"
                 className="flex-1"
-                onClick={() => setDashboardLayout('list')}
+                onClick={() => {
+                  setDashboardLayout('list');
+                  toast.info('Layout changed', { description: 'Switched to list view.' });
+                }}
               >
                 <LayoutList className="size-4" />
                 List
               </Button>
             </div>
             <p className="text-muted-foreground mt-2 text-xs">
-              Survives page reloads. Try switching and refreshing.
+              Current:{' '}
+              <Badge variant="secondary" className="ml-1">
+                {dashboardLayout}
+              </Badge>
             </p>
           </CardContent>
         </Card>
       </div>
 
-      {/* Activity + States */}
-      <Tabs defaultValue="activity" className="w-full">
-        <TabsList>
-          <TabsTrigger value="activity">Recent Activity</TabsTrigger>
-          <TabsTrigger value="states">State Demos</TabsTrigger>
-          <TabsTrigger value="toasts">Toast Demos</TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="activity">
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-base">Recent Activity</CardTitle>
-              <CardDescription>Latest transactions and user actions</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-0">
-                {recentActivity.map((item, i) => (
-                  <div key={item.id}>
-                    <div className="flex items-center gap-3 py-3">
-                      <Avatar className="size-8">
-                        <AvatarFallback className="text-xs">
-                          {item.user
-                            .split(' ')
-                            .map((n) => n[0])
-                            .join('')}
-                        </AvatarFallback>
-                      </Avatar>
-                      <div className="flex-1 space-y-0.5">
-                        <p className="text-sm">
-                          <span className="font-medium">{item.user}</span>{' '}
-                          <span className="text-muted-foreground">{item.action}</span>
-                        </p>
-                        <p className="text-muted-foreground text-xs">
-                          {formatRelativeTime(new Date(Date.now() - item.timeOffset))}
-                        </p>
-                      </div>
-                      {item.rawAmount ? (
-                        <Badge variant="secondary" className="tabular-nums">
-                          {formatCurrency(item.rawAmount, 'USD')}
-                        </Badge>
-                      ) : item.subscription ? (
-                        <Badge variant="secondary" className="tabular-nums">
-                          {item.subscription}
-                        </Badge>
-                      ) : null}
-                      <Button variant="ghost" size="icon" className="size-7">
-                        <ArrowUpRight className="size-3.5" />
-                      </Button>
-                    </div>
-                    {i < recentActivity.length - 1 && <Separator />}
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="states">
-          <div className="grid gap-4 md:grid-cols-2">
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-sm">Loading State</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <LoadingState description="Fetching analytics..." />
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-sm">Empty State</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <EmptyState
-                  title="No recent activity"
-                  description="Activity will appear here once events are recorded."
-                  action={
-                    <Button variant="outline" size="sm">
-                      <Plus className="size-4" />
-                      Add first item
-                    </Button>
-                  }
-                />
-              </CardContent>
-            </Card>
-          </div>
-        </TabsContent>
-
-        <TabsContent value="toasts">
-          <SignedIn>
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-base">Toast Variants</CardTitle>
-                <CardDescription>
-                  Click each button to see different toast styles powered by Sonner.
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="flex flex-wrap gap-2">
-                <Button variant="outline" size="sm" onClick={() => toast.success('Success toast!')}>
-                  Success
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => toast.error('Something went wrong.')}
-                >
-                  Error
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => toast.warning('This is a warning.')}
-                >
-                  Warning
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => toast.info('Here is some information.')}
-                >
-                  Info
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => {
-                    toast.promise(new Promise((r) => setTimeout(r, 2000)), {
-                      loading: 'Processing...',
-                      success: 'Done!',
-                      error: 'Failed.',
-                    });
-                  }}
-                >
-                  Promise
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() =>
-                    toast('Event created', {
-                      description: 'Monday, January 3rd at 6:00 PM',
-                      action: {
-                        label: 'Undo',
-                        onClick: () => toast.info('Undone!'),
-                      },
-                    })
-                  }
-                >
-                  With Action
-                </Button>
-              </CardContent>
-            </Card>
-          </SignedIn>
-        </TabsContent>
-      </Tabs>
+      {/* ── Toast Demos ───────────────────────────────────────────────── */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-base">Toast Patterns</CardTitle>
+          <CardDescription>
+            Success, error, and promise toast patterns powered by Sonner
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="flex flex-wrap gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() =>
+              toast.success('Operation successful!', {
+                description: 'Your changes have been saved.',
+              })
+            }
+          >
+            Success
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() =>
+              toast.error('Something went wrong', {
+                description: 'Please try again or contact support.',
+              })
+            }
+          >
+            Error
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => {
+              toast.promise(new Promise((resolve) => setTimeout(resolve, 2000)), {
+                loading: 'Processing your request...',
+                success: 'All done!',
+                error: 'Request failed.',
+              });
+            }}
+          >
+            Promise
+          </Button>
+        </CardContent>
+      </Card>
     </ContentContainer>
   );
 }

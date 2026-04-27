@@ -1,300 +1,576 @@
 'use client';
 
-import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
+import * as React from 'react';
 import { ContentContainer, PageHeader } from '@jonmatum/next-shell/layout';
 import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+  Badge,
   Button,
   Card,
   CardContent,
+  CardDescription,
   CardHeader,
   CardTitle,
-  CardDescription,
+  Checkbox,
   Input,
   Label,
-  Separator,
-  Switch,
-  Checkbox,
-  Textarea,
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
+  Separator,
+  Switch,
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
-  Badge,
+  Textarea,
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
 } from '@jonmatum/next-shell/primitives';
 import { ThemeToggleDropdown } from '@jonmatum/next-shell/providers';
-import { useUser } from '@jonmatum/next-shell/auth';
-import { User, Bell, Shield, Palette } from 'lucide-react';
+import { useDisclosure, useCopyToClipboard, useLocalStorage } from '@jonmatum/next-shell/hooks';
+import {
+  User,
+  Bell,
+  Shield,
+  Palette,
+  Upload,
+  Copy,
+  Check,
+  Trash2,
+  Monitor,
+  Smartphone,
+  Tablet,
+} from 'lucide-react';
 
 /* ────────────────────────────────────────────────────────────────────────
- * Types
- * ──────────────────────────────────────────────────────────────────────── */
-
-interface ProfileForm {
-  name: string;
-  email: string;
-  bio: string;
-}
-
-/* ────────────────────────────────────────────────────────────────────────
- * Profile Section
+ * Profile Tab
  * ──────────────────────────────────────────────────────────────────────── */
 
 function ProfileSection() {
-  const user = useUser();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<ProfileForm>({
-    defaultValues: {
-      name: user?.name ?? '',
-      email: user?.email ?? '',
-      bio: 'Product designer and developer based in San Francisco.',
-    },
-  });
-
-  function onSubmit(data: ProfileForm) {
-    toast.promise(new Promise((r) => setTimeout(r, 1200)), {
-      loading: 'Saving profile...',
-      success: `Profile updated for ${data.name}`,
-      error: 'Failed to save.',
-    });
-  }
+  const [name, setName] = useLocalStorage('settings-name', 'Jane Doe');
+  const [email, setEmail] = useLocalStorage('settings-email', 'jane@example.com');
+  const [bio, setBio] = useLocalStorage(
+    'settings-bio',
+    'Product designer and developer based in San Francisco.',
+  );
+  const [website, setWebsite] = useLocalStorage('settings-website', 'https://example.com');
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Profile</CardTitle>
-        <CardDescription>Update your personal information and public profile.</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
-          <div className="grid gap-4 sm:grid-cols-2">
-            <div className="grid gap-2">
-              <Label htmlFor="name">Display name</Label>
-              <Input
-                id="name"
-                placeholder="Your display name"
-                {...register('name', {
-                  required: 'Display name is required',
-                  minLength: { value: 2, message: 'Must be at least 2 characters' },
-                })}
-              />
-              {errors.name && <p className="text-destructive text-sm">{errors.name.message}</p>}
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="you@example.com"
-                {...register('email', {
-                  required: 'Email is required',
-                  pattern: { value: /^\S+@\S+\.\S+$/, message: 'Invalid email address' },
-                })}
-              />
-              {errors.email && <p className="text-destructive text-sm">{errors.email.message}</p>}
+    <div className="space-y-6">
+      {/* Avatar upload area */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Profile Photo</CardTitle>
+          <CardDescription>Upload a photo to personalize your account.</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="flex items-center gap-6">
+            <Avatar className="size-20">
+              <AvatarImage src={undefined} alt="Profile photo" />
+              <AvatarFallback className="text-lg">
+                {name
+                  .split(' ')
+                  .map((n) => n[0])
+                  .join('')
+                  .toUpperCase()}
+              </AvatarFallback>
+            </Avatar>
+            <div className="space-y-2">
+              <Button variant="outline" size="sm" className="gap-2">
+                <Upload className="size-3.5" />
+                Upload photo
+              </Button>
+              <p className="text-muted-foreground text-xs">JPG, PNG, or GIF. Max 2 MB.</p>
             </div>
           </div>
+        </CardContent>
+      </Card>
 
-          <div className="grid gap-2">
-            <Label htmlFor="role">Role</Label>
-            <Select defaultValue="admin">
-              <SelectTrigger id="role">
-                <SelectValue placeholder="Select a role" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="admin">Admin</SelectItem>
-                <SelectItem value="editor">Editor</SelectItem>
-                <SelectItem value="viewer">Viewer</SelectItem>
-                <SelectItem value="billing">Billing</SelectItem>
-              </SelectContent>
-            </Select>
-            <p className="text-muted-foreground text-sm">
-              This controls your access level across the platform.
-            </p>
-          </div>
+      {/* Profile form fields */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Personal Information</CardTitle>
+          <CardDescription>Update your name, email, and public profile details.</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="flex flex-col gap-5">
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="grid gap-2">
+                <Label htmlFor="profile-name">Name</Label>
+                <Input
+                  id="profile-name"
+                  placeholder="Your display name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="profile-email">Email</Label>
+                <Input
+                  id="profile-email"
+                  type="email"
+                  placeholder="you@example.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
+            </div>
 
-          <div className="grid gap-2">
-            <Label htmlFor="bio">Bio</Label>
-            <Textarea
-              id="bio"
-              placeholder="Tell us about yourself..."
-              rows={3}
-              {...register('bio', {
-                maxLength: { value: 300, message: 'Bio must be under 300 characters' },
-              })}
-            />
-            {errors.bio && <p className="text-destructive text-sm">{errors.bio.message}</p>}
-            <p className="text-muted-foreground text-sm">
-              Brief description for your profile. Max 300 characters.
-            </p>
-          </div>
+            <div className="grid gap-2">
+              <Label htmlFor="profile-bio">Bio</Label>
+              <Textarea
+                id="profile-bio"
+                placeholder="Tell us about yourself..."
+                rows={3}
+                value={bio}
+                onChange={(e) => setBio(e.target.value)}
+              />
+              <p className="text-muted-foreground text-sm">
+                Brief description for your profile. Max 300 characters.
+              </p>
+            </div>
 
-          <div className="flex justify-end">
-            <Button type="submit" size="sm">
-              Save changes
-            </Button>
+            <div className="grid gap-2">
+              <Label htmlFor="profile-website">Website</Label>
+              <Input
+                id="profile-website"
+                type="url"
+                placeholder="https://example.com"
+                value={website}
+                onChange={(e) => setWebsite(e.target.value)}
+              />
+            </div>
+
+            <div className="flex justify-end gap-2">
+              <Button variant="outline" size="sm">
+                Cancel
+              </Button>
+              <Button size="sm">Save changes</Button>
+            </div>
           </div>
-        </form>
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+    </div>
   );
 }
 
 /* ────────────────────────────────────────────────────────────────────────
- * Notifications Section
+ * Notifications Tab
  * ──────────────────────────────────────────────────────────────────────── */
+
+function NotificationToggle({
+  label,
+  description,
+  defaultChecked = false,
+}: {
+  label: string;
+  description: string;
+  defaultChecked?: boolean;
+}) {
+  return (
+    <div className="flex items-center justify-between">
+      <div className="space-y-0.5">
+        <Label>{label}</Label>
+        <p className="text-muted-foreground text-sm">{description}</p>
+      </div>
+      <Switch defaultChecked={defaultChecked} />
+    </div>
+  );
+}
 
 function NotificationsSection() {
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Notifications</CardTitle>
-        <CardDescription>Choose how and when you want to be notified.</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <div className="flex flex-col gap-5">
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <div className="space-y-0.5">
-                <Label>Email notifications</Label>
-                <p className="text-muted-foreground text-sm">
-                  Receive email updates about your account activity.
-                </p>
-              </div>
-              <Switch defaultChecked />
-            </div>
-            <Separator />
-            <div className="flex items-center justify-between">
-              <div className="space-y-0.5">
-                <Label>Push notifications</Label>
-                <p className="text-muted-foreground text-sm">
-                  Get notified in your browser when something happens.
-                </p>
-              </div>
-              <Switch defaultChecked />
-            </div>
-            <Separator />
-            <div className="flex items-center justify-between">
-              <div className="space-y-0.5">
-                <div className="flex items-center gap-2">
-                  <Label>Security alerts</Label>
-                  <Badge variant="secondary" className="text-xs">
-                    Recommended
-                  </Badge>
-                </div>
-                <p className="text-muted-foreground text-sm">
-                  Critical alerts about your account security.
-                </p>
-              </div>
-              <Switch defaultChecked />
-            </div>
-            <Separator />
-            <div className="space-y-3">
-              <Label className="text-base">Communication preferences</Label>
-              <div className="flex items-start gap-2">
-                <Checkbox id="marketing" />
-                <div className="grid gap-0.5 leading-none">
-                  <Label htmlFor="marketing" className="font-normal">
-                    Marketing emails
-                  </Label>
-                  <p className="text-muted-foreground text-sm">
-                    Receive emails about new features and product updates.
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-start gap-2">
-                <Checkbox id="digest" defaultChecked />
-                <div className="grid gap-0.5 leading-none">
-                  <Label htmlFor="digest" className="font-normal">
-                    Weekly digest
-                  </Label>
-                  <p className="text-muted-foreground text-sm">
-                    Get a weekly summary of your account activity.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
+    <div className="space-y-6">
+      {/* Email notifications */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Email Notifications</CardTitle>
+          <CardDescription>Choose which emails you want to receive.</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <NotificationToggle
+            label="New messages"
+            description="Receive an email when someone sends you a direct message."
+            defaultChecked
+          />
+          <Separator />
+          <NotificationToggle
+            label="Task updates"
+            description="Get notified when tasks you follow are updated or completed."
+            defaultChecked
+          />
+          <Separator />
+          <NotificationToggle
+            label="Weekly digest"
+            description="A summary of your account activity sent every Monday."
+          />
+        </CardContent>
+      </Card>
 
-          <div className="flex justify-end">
-            <Button
-              size="sm"
-              onClick={() =>
-                toast.promise(new Promise((r) => setTimeout(r, 800)), {
-                  loading: 'Updating preferences...',
-                  success: 'Notification preferences saved',
-                  error: 'Failed to update.',
-                })
-              }
-            >
-              Save preferences
-            </Button>
-          </div>
-        </div>
-      </CardContent>
-    </Card>
+      {/* Push notifications */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Push Notifications</CardTitle>
+          <CardDescription>Configure browser and mobile push notifications.</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <NotificationToggle
+            label="Mentions"
+            description="Get notified when someone mentions you in a comment or discussion."
+            defaultChecked
+          />
+          <Separator />
+          <NotificationToggle
+            label="Deadlines"
+            description="Receive reminders before upcoming task deadlines."
+            defaultChecked
+          />
+          <Separator />
+          <NotificationToggle
+            label="Announcements"
+            description="Important system-wide announcements and updates."
+          />
+        </CardContent>
+      </Card>
+    </div>
   );
 }
 
 /* ────────────────────────────────────────────────────────────────────────
- * Appearance Section
+ * Appearance Tab
  * ──────────────────────────────────────────────────────────────────────── */
 
 function AppearanceSection() {
+  const [density, setDensity] = useLocalStorage('settings-density', 'comfortable');
+  const [sidebarPosition, setSidebarPosition] = useLocalStorage(
+    'settings-sidebar-position',
+    'left',
+  );
+  const [reduceAnimations, setReduceAnimations] = useLocalStorage(
+    'settings-reduce-animations',
+    false,
+  );
+
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Appearance</CardTitle>
-        <CardDescription>Customize the look and feel of the application.</CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        <div className="flex items-center justify-between">
-          <div className="space-y-0.5">
-            <Label>Color scheme</Label>
-            <p className="text-muted-foreground text-sm">
-              Toggle between light, dark, and system theme.
+    <div className="space-y-6">
+      <Card>
+        <CardHeader>
+          <CardTitle>Theme</CardTitle>
+          <CardDescription>Customize the look and feel of the application.</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="flex items-center justify-between">
+            <div className="space-y-0.5">
+              <Label>Color scheme</Label>
+              <p className="text-muted-foreground text-sm">
+                Toggle between light, dark, and system theme.
+              </p>
+            </div>
+            <ThemeToggleDropdown />
+          </div>
+          <Separator />
+          <div className="flex items-center justify-between">
+            <div className="space-y-0.5">
+              <Label>Density</Label>
+              <p className="text-muted-foreground text-sm">Control the spacing of UI elements.</p>
+            </div>
+            <Select value={density} onValueChange={setDensity}>
+              <SelectTrigger className="w-36">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="compact">Compact</SelectItem>
+                <SelectItem value="comfortable">Comfortable</SelectItem>
+                <SelectItem value="spacious">Spacious</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <Separator />
+          <div className="flex items-center justify-between">
+            <div className="space-y-0.5">
+              <Label>Sidebar position</Label>
+              <p className="text-muted-foreground text-sm">
+                Choose where the navigation sidebar appears.
+              </p>
+            </div>
+            <Select value={sidebarPosition} onValueChange={setSidebarPosition}>
+              <SelectTrigger className="w-36">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="left">Left</SelectItem>
+                <SelectItem value="right">Right</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <Separator />
+          <div className="flex items-center justify-between">
+            <div className="space-y-0.5">
+              <Label htmlFor="reduce-animations">Reduce animations</Label>
+              <p className="text-muted-foreground text-sm">
+                Minimize motion for accessibility or preference.
+              </p>
+            </div>
+            <Checkbox
+              id="reduce-animations"
+              checked={reduceAnimations}
+              onCheckedChange={(checked) => setReduceAnimations(checked === true)}
+            />
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Theme preview */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Preview</CardTitle>
+          <CardDescription>See how your current settings look.</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div
+            className="bg-muted/50 space-y-3 rounded-lg border p-4"
+            data-density={density}
+            data-sidebar={sidebarPosition}
+          >
+            <div className="flex items-center gap-3">
+              <div className="bg-primary size-8 rounded-md" />
+              <div className="space-y-1">
+                <div className="bg-foreground/80 h-3 w-32 rounded" />
+                <div className="bg-muted-foreground/40 h-2 w-48 rounded" />
+              </div>
+            </div>
+            <div className="flex gap-2">
+              <Badge>Default</Badge>
+              <Badge variant="secondary">Secondary</Badge>
+              <Badge variant="outline">Outline</Badge>
+              <Badge variant="destructive">Destructive</Badge>
+            </div>
+            <div className="flex gap-2">
+              <Button size="sm">Primary</Button>
+              <Button size="sm" variant="outline">
+                Outline
+              </Button>
+              <Button size="sm" variant="ghost">
+                Ghost
+              </Button>
+            </div>
+            <p className="text-muted-foreground text-xs">
+              Density: {density} | Sidebar: {sidebarPosition} | Animations:{' '}
+              {reduceAnimations ? 'reduced' : 'normal'}
             </p>
           </div>
-          <ThemeToggleDropdown />
-        </div>
-        <Separator />
-        <div className="flex items-center justify-between">
-          <div className="space-y-0.5">
-            <Label>Sidebar position</Label>
-            <p className="text-muted-foreground text-sm">
-              Choose where the navigation sidebar appears.
-            </p>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+
+/* ────────────────────────────────────────────────────────────────────────
+ * Security Tab
+ * ──────────────────────────────────────────────────────────────────────── */
+
+const MOCK_API_KEY = 'nxsh_live_4f8a2b1c9d3e7f0a5b6c8d9e2f4a7b3c';
+
+const MOCK_SESSIONS = [
+  {
+    id: '1',
+    device: 'Chrome on macOS',
+    icon: Monitor,
+    location: 'San Francisco, CA',
+    lastActive: '2 minutes ago',
+    current: true,
+  },
+  {
+    id: '2',
+    device: 'Safari on iPhone',
+    icon: Smartphone,
+    location: 'San Francisco, CA',
+    lastActive: '1 hour ago',
+    current: false,
+  },
+  {
+    id: '3',
+    device: 'Firefox on iPad',
+    icon: Tablet,
+    location: 'New York, NY',
+    lastActive: '3 days ago',
+    current: false,
+  },
+];
+
+function SecuritySection() {
+  const { isCopied, copy } = useCopyToClipboard();
+  const deleteDialog = useDisclosure();
+  const [currentPassword, setCurrentPassword] = React.useState('');
+  const [newPassword, setNewPassword] = React.useState('');
+  const [confirmPassword, setConfirmPassword] = React.useState('');
+
+  return (
+    <div className="space-y-6">
+      {/* API Key */}
+      <Card>
+        <CardHeader>
+          <CardTitle>API Key</CardTitle>
+          <CardDescription>Use this key to authenticate API requests.</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="flex gap-2">
+            <Input value={MOCK_API_KEY} readOnly className="font-mono text-sm" />
+            <Button
+              variant="outline"
+              size="icon"
+              className="shrink-0"
+              onClick={() => copy(MOCK_API_KEY)}
+              aria-label={isCopied ? 'Copied' : 'Copy API key'}
+            >
+              {isCopied ? <Check className="size-4" /> : <Copy className="size-4" />}
+            </Button>
           </div>
-          <Select defaultValue="left">
-            <SelectTrigger className="w-32">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="left">Left</SelectItem>
-              <SelectItem value="right">Right</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-        <Separator />
-        <div className="flex items-center justify-between">
-          <div className="space-y-0.5">
-            <Label>Compact mode</Label>
-            <p className="text-muted-foreground text-sm">
-              Reduce spacing and padding for a denser layout.
-            </p>
+          <p className="text-muted-foreground mt-2 text-xs">
+            Keep this key secret. Do not share it in client-side code.
+          </p>
+        </CardContent>
+      </Card>
+
+      {/* Change Password */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Change Password</CardTitle>
+          <CardDescription>Update your password to keep your account secure.</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="flex flex-col gap-4">
+            <div className="grid gap-2">
+              <Label htmlFor="current-password">Current password</Label>
+              <Input
+                id="current-password"
+                type="password"
+                placeholder="Enter current password"
+                value={currentPassword}
+                onChange={(e) => setCurrentPassword(e.target.value)}
+              />
+            </div>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="grid gap-2">
+                <Label htmlFor="new-password">New password</Label>
+                <Input
+                  id="new-password"
+                  type="password"
+                  placeholder="Enter new password"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="confirm-password">Confirm new password</Label>
+                <Input
+                  id="confirm-password"
+                  type="password"
+                  placeholder="Confirm new password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                />
+              </div>
+            </div>
+            <div className="flex justify-end">
+              <Button size="sm">Update password</Button>
+            </div>
           </div>
-          <Switch />
-        </div>
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+
+      {/* Active Sessions */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Active Sessions</CardTitle>
+          <CardDescription>Devices currently signed in to your account.</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-3">
+            {MOCK_SESSIONS.map((session) => {
+              const Icon = session.icon;
+              return (
+                <div key={session.id} className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="bg-muted flex size-9 items-center justify-center rounded-md">
+                      <Icon className="text-muted-foreground size-4" />
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <p className="text-sm font-medium">{session.device}</p>
+                        {session.current && (
+                          <Badge variant="secondary" className="text-xs">
+                            Current
+                          </Badge>
+                        )}
+                      </div>
+                      <p className="text-muted-foreground text-xs">
+                        {session.location} &middot; {session.lastActive}
+                      </p>
+                    </div>
+                  </div>
+                  {!session.current && (
+                    <Button variant="ghost" size="sm">
+                      Revoke
+                    </Button>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Delete Account */}
+      <Card className="border-destructive/50">
+        <CardHeader>
+          <CardTitle className="text-destructive">Delete Account</CardTitle>
+          <CardDescription>
+            Permanently delete your account and all associated data. This action cannot be undone.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <AlertDialog open={deleteDialog.isOpen} onOpenChange={deleteDialog.onOpenChange}>
+            <AlertDialogTrigger asChild>
+              <Button variant="destructive" size="sm" className="gap-2">
+                <Trash2 className="size-3.5" />
+                Delete account
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This action cannot be undone. This will permanently delete your account and remove
+                  all your data from our servers.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction
+                  onClick={deleteDialog.close}
+                  className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                >
+                  Yes, delete my account
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+        </CardContent>
+      </Card>
+    </div>
   );
 }
 
@@ -307,7 +583,7 @@ export default function SettingsPage() {
     <ContentContainer size="sm">
       <PageHeader
         title="Settings"
-        description="Manage your profile, notifications, and preferences."
+        description="Manage your profile, notifications, appearance, and security."
       />
 
       <Tabs defaultValue="profile" className="w-full">
@@ -343,64 +619,7 @@ export default function SettingsPage() {
         </TabsContent>
 
         <TabsContent value="security">
-          <Card>
-            <CardHeader>
-              <CardTitle>Security</CardTitle>
-              <CardDescription>Manage your password and two-factor authentication.</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="flex items-center justify-between">
-                <div className="space-y-0.5">
-                  <Label>Password</Label>
-                  <p className="text-muted-foreground text-sm">Last changed 30 days ago.</p>
-                </div>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => toast.info('Password change dialog would open here.')}
-                >
-                  Change password
-                </Button>
-              </div>
-              <Separator />
-              <div className="flex items-center justify-between">
-                <div className="space-y-0.5">
-                  <div className="flex items-center gap-2">
-                    <Label>Two-factor authentication</Label>
-                    <Badge variant="outline" className="text-xs">
-                      Off
-                    </Badge>
-                  </div>
-                  <p className="text-muted-foreground text-sm">
-                    Add an extra layer of security to your account.
-                  </p>
-                </div>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => toast.info('2FA setup wizard would open here.')}
-                >
-                  Enable
-                </Button>
-              </div>
-              <Separator />
-              <div className="flex items-center justify-between">
-                <div className="space-y-0.5">
-                  <Label>Active sessions</Label>
-                  <p className="text-muted-foreground text-sm">
-                    You are currently signed in on 1 device.
-                  </p>
-                </div>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => toast.warning('This would sign out all other sessions.')}
-                >
-                  Sign out all
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
+          <SecuritySection />
         </TabsContent>
       </Tabs>
     </ContentContainer>
