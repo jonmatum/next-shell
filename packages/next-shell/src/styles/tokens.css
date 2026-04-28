@@ -45,32 +45,37 @@
    * 1. Color — light theme
    *
    * Brand palette: a barely-perceptible blue tint on neutral surfaces ties
-   * the light mode to the navy dark theme (brand hue 258 °). Primary is the
+   * the light mode to the navy dark theme (brand hue 258°). Primary is the
    * same brand blue used across jonmatum.dev / jonmatum.com.
+   *
+   * Pure-white card/surface/popover surfaces float above the blue-tinted
+   * background, creating the visual lift characteristic of enterprise SaaS
+   * (Linear, Vercel, Stripe). Foreground is aligned to the brand hue for
+   * subtle warmth without visible color cast.
    * ───────────────────────────────────────────────────────────────────── */
   --background: oklch(0.975 0.004 265);
-  --foreground: oklch(0.205 0.015 265);
+  --foreground: oklch(0.19 0.018 258);
 
-  --surface: oklch(0.99 0.002 265);
-  --surface-foreground: oklch(0.205 0.015 265);
+  --surface: oklch(1 0 0);
+  --surface-foreground: oklch(0.19 0.018 258);
 
-  --card: oklch(0.993 0.002 265);
-  --card-foreground: oklch(0.205 0.015 265);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.19 0.018 258);
 
-  --popover: oklch(0.993 0.002 265);
-  --popover-foreground: oklch(0.205 0.015 265);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.19 0.018 258);
 
-  --muted: oklch(0.955 0.006 265);
-  --muted-foreground: oklch(0.46 0.015 265);
+  --muted: oklch(0.953 0.007 265);
+  --muted-foreground: oklch(0.44 0.018 258);
 
-  --accent: oklch(0.94 0.012 258);
-  --accent-foreground: oklch(0.205 0.015 265);
+  --accent: oklch(0.943 0.016 258);
+  --accent-foreground: oklch(0.19 0.018 258);
 
   --primary: oklch(0.52 0.2 258);
   --primary-foreground: oklch(0.985 0 0);
 
-  --secondary: oklch(0.95 0.006 265);
-  --secondary-foreground: oklch(0.24 0.015 265);
+  --secondary: oklch(0.952 0.007 265);
+  --secondary-foreground: oklch(0.22 0.018 258);
 
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.985 0 0);
@@ -79,13 +84,15 @@
   --success-foreground: oklch(0.985 0 0);
 
   --warning: oklch(0.78 0.17 85);
-  --warning-foreground: oklch(0.205 0.015 265);
+  --warning-foreground: oklch(0.19 0.018 258);
 
   --info: oklch(0.539 0.13 230);
   --info-foreground: oklch(0.985 0 0);
 
-  --border: oklch(0.915 0.004 265);
-  --input: oklch(0.9 0.006 265);
+  /* Visible borders for data-dense enterprise UIs (tables, forms, panels).
+     Slightly more chroma than the old value ties them to the brand hue. */
+  --border: oklch(0.895 0.009 265);
+  --input: oklch(0.895 0.009 265);
   --ring: oklch(0.52 0.2 258);
 
   /* Overlay — modal backdrop scrim. Kept consistently dark in both themes
@@ -96,13 +103,13 @@
 
   /* Sidebar — blue-tinted surface reinforces brand hue; primary wired to the
      brand blue so active nav items use the same accent as dark mode. */
-  --sidebar: oklch(0.96 0.008 265);
-  --sidebar-foreground: oklch(0.205 0.015 265);
+  --sidebar: oklch(0.963 0.008 258);
+  --sidebar-foreground: oklch(0.19 0.018 258);
   --sidebar-primary: oklch(0.52 0.2 258);
   --sidebar-primary-foreground: oklch(0.985 0 0);
   --sidebar-accent: oklch(0.935 0.012 258);
-  --sidebar-accent-foreground: oklch(0.205 0.015 265);
-  --sidebar-border: oklch(0.9 0.006 265);
+  --sidebar-accent-foreground: oklch(0.19 0.018 258);
+  --sidebar-border: oklch(0.895 0.009 265);
   --sidebar-ring: oklch(0.52 0.2 258);
 
   /* Chart colors — 5 perceptually distinct hues for categorical data. */
@@ -115,22 +122,29 @@
   /* ─────────────────────────────────────────────────────────────────────
    * 2. Radius — scale driven by a single `--radius` base so brand
    *    overrides only need to change one variable.
+   *
+   *    8 px base (0.5 rem) matches the professional enterprise convention
+   *    used by Linear, Vercel, and Stripe — friendly but not bubbly.
    * ───────────────────────────────────────────────────────────────────── */
-  --radius: 0.75rem;
-  --radius-xs: calc(var(--radius) - 6px);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
+  --radius: 0.5rem;
+  --radius-xs: calc(var(--radius) - 4px);
+  --radius-sm: calc(var(--radius) - 2px);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 2px);
   --radius-xl: calc(var(--radius) + 4px);
   --radius-2xl: calc(var(--radius) + 8px);
   --radius-full: 9999px;
 
   /* ─────────────────────────────────────────────────────────────────────
    * 3. Typography
+   *
+   *    Inter is listed first so consumers who load it via next/font/google
+   *    get it automatically without any additional configuration.
    * ───────────────────────────────────────────────────────────────────── */
   --font-sans:
-    ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+    'Inter', 'Inter Variable', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji';
   --font-mono:
     ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', 'Courier New',
     monospace;
@@ -158,6 +172,15 @@
   --tracking-normal: 0;
   --tracking-wide: 0.02em;
   --tracking-wider: 0.04em;
+  --tracking-widest: 0.08em;
+
+  /* Font weights — exposed as CSS variables so custom components can use
+     them without hardcoding numeric values. Tailwind utilities (font-bold
+     etc.) still work as normal. */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
 
   /* ─────────────────────────────────────────────────────────────────────
    * 4. Motion — Material-inspired standard easings, Radix-inspired speeds.
@@ -177,12 +200,12 @@
    * 5. Elevation — shadows tuned for a white surface. Dark theme overrides
    *    these with higher opacity so they remain visible on dark surfaces.
    * ───────────────────────────────────────────────────────────────────── */
-  --shadow-xs: 0 1px 2px 0 oklch(0 0 0 / 0.06);
-  --shadow-sm: 0 1px 3px 0 oklch(0 0 0 / 0.08), 0 1px 2px -1px oklch(0 0 0 / 0.12);
-  --shadow-md: 0 4px 8px -2px oklch(0 0 0 / 0.1), 0 2px 4px -2px oklch(0 0 0 / 0.08);
-  --shadow-lg: 0 12px 20px -4px oklch(0 0 0 / 0.12), 0 4px 8px -4px oklch(0 0 0 / 0.08);
-  --shadow-xl: 0 20px 28px -6px oklch(0 0 0 / 0.14), 0 10px 14px -6px oklch(0 0 0 / 0.08);
-  --shadow-2xl: 0 25px 50px -12px oklch(0 0 0 / 0.3);
+  --shadow-xs: 0 1px 2px 0 oklch(0 0 0 / 0.05);
+  --shadow-sm: 0 1px 3px 0 oklch(0 0 0 / 0.07), 0 1px 2px -1px oklch(0 0 0 / 0.1);
+  --shadow-md: 0 4px 8px -2px oklch(0 0 0 / 0.09), 0 2px 4px -2px oklch(0 0 0 / 0.06);
+  --shadow-lg: 0 12px 20px -4px oklch(0 0 0 / 0.1), 0 4px 8px -4px oklch(0 0 0 / 0.06);
+  --shadow-xl: 0 20px 28px -6px oklch(0 0 0 / 0.12), 0 10px 14px -6px oklch(0 0 0 / 0.07);
+  --shadow-2xl: 0 25px 50px -12px oklch(0 0 0 / 0.28);
 
   /* ─────────────────────────────────────────────────────────────────────
    * 6. Density — used by components for padding / gap. Consumer apps can
@@ -200,30 +223,32 @@
  * ───────────────────────────────────────────────────────────────────── */
 [data-theme='dark'] {
   /* Background matches the #0b0f14 navy-black brand color from jonmatum.dev.
-     All layered surfaces step up in lightness to stay visually distinct. */
+     All layered surfaces step up in lightness to stay visually distinct.
+     Card is explicitly lighter than surface so elevation is perceptible
+     even at low ambient light levels. */
   --background: oklch(0.095 0.015 265);
-  --foreground: oklch(0.93 0.006 265);
+  --foreground: oklch(0.94 0.007 258);
 
-  --surface: oklch(0.145 0.014 265);
-  --surface-foreground: oklch(0.93 0.006 265);
+  --surface: oklch(0.148 0.015 258);
+  --surface-foreground: oklch(0.94 0.007 258);
 
-  --card: oklch(0.155 0.016 262);
-  --card-foreground: oklch(0.93 0.006 265);
+  --card: oklch(0.165 0.018 258);
+  --card-foreground: oklch(0.94 0.007 258);
 
-  --popover: oklch(0.155 0.016 262);
-  --popover-foreground: oklch(0.93 0.006 265);
+  --popover: oklch(0.165 0.018 258);
+  --popover-foreground: oklch(0.94 0.007 258);
 
   --muted: oklch(0.2 0.015 262);
-  --muted-foreground: oklch(0.62 0.01 265);
+  --muted-foreground: oklch(0.63 0.012 258);
 
   --accent: oklch(0.22 0.022 258);
-  --accent-foreground: oklch(0.93 0.006 265);
+  --accent-foreground: oklch(0.94 0.007 258);
 
   --primary: oklch(0.558 0.19 258);
   --primary-foreground: oklch(0.985 0 0);
 
   --secondary: oklch(0.2 0.015 262);
-  --secondary-foreground: oklch(0.93 0.006 265);
+  --secondary-foreground: oklch(0.94 0.007 258);
 
   --destructive: oklch(0.576 0.191 22.216);
   --destructive-foreground: oklch(0.985 0 0);
@@ -237,19 +262,19 @@
   --info: oklch(0.542 0.12 230);
   --info-foreground: oklch(0.985 0 0);
 
-  --border: oklch(0.22 0.016 262);
-  --input: oklch(0.26 0.018 262);
+  --border: oklch(0.225 0.018 258);
+  --input: oklch(0.265 0.02 258);
   --ring: oklch(0.558 0.19 258);
 
   /* Scrim stays dark in both themes. */
   --overlay: oklch(0 0 0 / 0.6);
 
   --sidebar: oklch(0.075 0.012 265);
-  --sidebar-foreground: oklch(0.93 0.006 265);
+  --sidebar-foreground: oklch(0.94 0.007 258);
   --sidebar-primary: oklch(0.558 0.19 258);
   --sidebar-primary-foreground: oklch(0.985 0 0);
   --sidebar-accent: oklch(0.18 0.02 258);
-  --sidebar-accent-foreground: oklch(0.93 0.006 265);
+  --sidebar-accent-foreground: oklch(0.94 0.007 258);
   --sidebar-border: oklch(0.2 0.014 262);
   --sidebar-ring: oklch(0.558 0.19 258);
 
