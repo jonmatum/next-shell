@@ -62,6 +62,7 @@ export {
   ChartTooltip,
   ChartTooltipContent,
 } from './chart.js';
+export type { ChartConfig } from './chart.js';
 export {
   Card,
   CardAction,

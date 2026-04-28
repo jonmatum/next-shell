@@ -110,7 +110,7 @@ export type TextSizeToken = (typeof textSizeTokens)[number];
 export const leadingTokens = ['tight', 'snug', 'normal', 'relaxed', 'loose'] as const;
 export type LeadingToken = (typeof leadingTokens)[number];
 
-export const trackingTokens = ['tight', 'normal', 'wide', 'wider'] as const;
+export const trackingTokens = ['tight', 'normal', 'wide', 'wider', 'widest'] as const;
 export type TrackingToken = (typeof trackingTokens)[number];
 
 /* ────────────────────────────────────────────────────────────────────────
